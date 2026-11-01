@@ -2,68 +2,62 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Lightbox from './Lightbox.jsx'
 import VideoShowcase from './VideoShowcase.jsx'
+import PixelWindow from './PixelWindow.jsx'
 import ComingSoon from './ComingSoon.jsx'
 
 /**
- * Lays out a list of media items. Videos get a full-width player row;
- * images sit in a responsive grid. Clicking any image opens the Lightbox.
+ * Lays out a list of media items: videos first (full width), then images.
+ * Clicking any image opens the Lightbox.
  *
- *   items        — [{ type, src, poster, caption, alt, project?, section? }]
+ *   items        — [{ type, src, poster, caption, alt }]
+ *   label        — small text in each window's title bar (e.g. the screen name)
+ *   pixelated    — keep images crisp (pixel art)
+ *   layout       — 'stack' (every image full width) or 'grid'
  *   emptyMessage — what to show when there is nothing yet
- *   showSource   — print "Project · Category" above captions (used on homepage)
  */
-export default function MediaGallery({ items = [], emptyMessage = 'Media coming soon.', showSource = false }) {
+export default function MediaGallery({ items = [], label, pixelated = false, layout = 'grid', emptyMessage = 'Media coming soon.' }) {
   const [open, setOpen] = useState(null)
 
   if (!items.length) return <ComingSoon message={emptyMessage} compact />
 
-  const videos = items.map((it, i) => ({ it, i })).filter(({ it }) => it.type === 'video')
-  const images = items.map((it, i) => ({ it, i })).filter(({ it }) => it.type !== 'video')
+  const indexed = items.map((it, i) => ({ it, i }))
+  const videos = indexed.filter(({ it }) => it.type === 'video')
+  const images = indexed.filter(({ it }) => it.type !== 'video')
 
-  // Grid rhythm: 1 image → full width, 2 → halves, 3+ → first one wide.
-  const span = (n, idx) => {
-    if (n === 1) return 'md:col-span-6'
-    if (n === 2) return 'md:col-span-3'
-    if (idx === 0) return 'md:col-span-6'
-    return 'md:col-span-3'
-  }
+  // Grid rhythm: first image wide, the rest in halves. 'stack' = all full width.
+  const span = (idx) => (layout === 'stack' || idx === 0 || images.length === 1 ? 'md:col-span-2' : 'md:col-span-1')
 
   return (
     <div className="space-y-8">
       {videos.length > 0 && (
-        <div className={`grid gap-6 ${videos.length > 1 ? 'lg:grid-cols-2' : ''}`}>
+        <div className="grid gap-8">
           {videos.map(({ it, i }) => (
-            <div key={i}>
-              {showSource && <Source item={it} />}
-              <VideoShowcase item={it} onExpand={() => setOpen(i)} />
-            </div>
+            <VideoShowcase key={i} item={it} label={label} pixelated={pixelated} onExpand={() => setOpen(i)} />
           ))}
         </div>
       )}
 
       {images.length > 0 && (
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-6">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           {images.map(({ it, i }, idx) => (
             <motion.figure
               key={i}
-              className={`group ${span(images.length, idx)}`}
-              initial={{ opacity: 0, y: 20 }}
+              className={`group ${span(idx)}`}
+              initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-5% 0px' }}
-              transition={{ duration: 0.7, delay: Math.min(idx * 0.06, 0.3), ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.6, delay: Math.min(idx * 0.05, 0.25), ease: [0.16, 1, 0.3, 1] }}
             >
-              {showSource && <Source item={it} />}
               <button
                 type="button"
                 onClick={() => setOpen(i)}
-                className="media-frame block w-full cursor-zoom-in text-left transition duration-500 hover:-translate-y-0.5 hover:shadow-[var(--shadow-glow)]"
+                className="block w-full cursor-zoom-in text-left transition-transform duration-300 hover:-translate-x-0.5 hover:-translate-y-0.5"
                 aria-label={`Open ${it.alt ?? 'image'} in viewer`}
               >
-                <img src={it.src} alt={it.alt ?? ''} loading="lazy" className="transition duration-700 group-hover:scale-[1.015]" />
-                <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent opacity-0 transition duration-500 group-hover:opacity-100" />
-                <span className="pointer-events-none absolute bottom-3 right-3 rounded-md border border-white/10 bg-ink/70 px-2 py-1 font-mono text-[10px] tracking-widest text-muted uppercase opacity-0 backdrop-blur transition group-hover:opacity-100">
-                  Expand
-                </span>
+                <PixelWindow label={label} badge={`${String(idx + 1).padStart(2, '0')}`}>
+                  <img src={it.src} alt={it.alt ?? ''} loading="lazy" className={pixelated ? 'pixelated' : ''} />
+                  <span className="pointer-events-none absolute inset-0 bg-accent/0 transition group-hover:bg-accent/5" />
+                </PixelWindow>
               </button>
               {it.caption && <figcaption className="mt-3 text-sm text-muted">{it.caption}</figcaption>}
             </motion.figure>
@@ -71,17 +65,7 @@ export default function MediaGallery({ items = [], emptyMessage = 'Media coming 
         </div>
       )}
 
-      <Lightbox items={items} index={open} onClose={() => setOpen(null)} onChange={setOpen} />
+      <Lightbox items={items} index={open} pixelated={pixelated} onClose={() => setOpen(null)} onChange={setOpen} />
     </div>
-  )
-}
-
-function Source({ item }) {
-  if (!item.project) return null
-  return (
-    <p className="mb-2 font-mono text-[11px] tracking-widest text-dim uppercase">
-      {item.project.title}
-      {item.section ? <span className="text-dim/70"> · {item.section.title}</span> : null}
-    </p>
   )
 }

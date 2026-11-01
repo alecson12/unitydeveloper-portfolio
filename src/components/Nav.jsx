@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { PROFILE } from '../content/profile.js'
 import { SECTIONS } from '../content/sections.js'
+import { otherProjects } from '../lib/content.js'
 
 /**
  * Sticky top navigation. On the homepage it highlights the section that is
@@ -11,6 +12,7 @@ export default function Nav({ mode = 'home' }) {
   const [active, setActive] = useState('')
   const [scrolled, setScrolled] = useState(false)
   const [menu, setMenu] = useState(false)
+  const sections = SECTIONS.filter((s) => s.id !== 'projects' || otherProjects().length > 0)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -19,10 +21,9 @@ export default function Nav({ mode = 'home' }) {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Track which section is in view (homepage only).
   useEffect(() => {
     if (mode !== 'home') return
-    const els = SECTIONS.map((s) => document.getElementById(s.id)).filter(Boolean)
+    const els = sections.map((s) => document.getElementById(s.id)).filter(Boolean)
     if (!els.length) return
     const io = new IntersectionObserver(
       (entries) => {
@@ -33,7 +34,7 @@ export default function Nav({ mode = 'home' }) {
     )
     els.forEach((el) => io.observe(el))
     return () => io.disconnect()
-  }, [mode])
+  }, [mode, sections])
 
   useEffect(() => {
     if (!menu) return
@@ -69,51 +70,40 @@ export default function Nav({ mode = 'home' }) {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
-      <div
-        className={`transition-all duration-500 ${scrolled || menu ? 'border-b border-line bg-ink/75 backdrop-blur-xl' : 'bg-transparent'}`}
-      >
-        <div className="container-x flex h-16 items-center justify-between gap-4">
+      <div className={`transition-colors duration-300 ${scrolled || menu ? 'border-b-2 border-white/10 bg-ink/85 backdrop-blur-md' : 'bg-transparent'}`}>
+        <div className="container-x flex h-[72px] items-center justify-between gap-4">
           <a href="#" onClick={goTop} className="group flex items-center gap-3">
             <Mark />
             <span className="flex flex-col leading-tight">
-              <span className="font-display text-sm font-semibold tracking-tight">{PROFILE.name}</span>
-              <span className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase">{PROFILE.title}</span>
+              <span className="font-display text-lg font-semibold tracking-tight">{PROFILE.name}</span>
+              <span className="font-pixel text-[8px] tracking-[0.18em] text-muted uppercase">{PROFILE.title}</span>
             </span>
           </a>
 
           {mode === 'home' ? (
-            <nav className="hidden items-center gap-1 lg:flex" aria-label="Sections">
-              {SECTIONS.map((s) => (
+            <nav className="hidden items-center gap-7 lg:flex" aria-label="Sections">
+              {sections.map((s) => (
                 <a
                   key={s.id}
                   href={`#${s.id}`}
                   onClick={(e) => go(e, s.id)}
-                  className={`relative rounded-full px-3.5 py-1.5 text-sm transition ${active === s.id ? 'text-text' : 'text-muted hover:text-text'}`}
+                  className={`relative py-2 font-pixel text-[10px] tracking-[0.16em] uppercase transition ${active === s.id ? 'text-text' : 'text-muted hover:text-text'}`}
                 >
+                  {s.nav}
                   {active === s.id && (
-                    <motion.span
-                      layoutId="nav-pill"
-                      className="absolute inset-0 rounded-full border border-line bg-white/5"
-                      transition={{ type: 'spring', stiffness: 400, damping: 34 }}
-                    />
+                    <motion.span layoutId="nav-bar" className="absolute inset-x-0 -bottom-0.5 h-0.5 bg-accent" transition={{ type: 'spring', stiffness: 400, damping: 34 }} />
                   )}
-                  <span className="relative">{s.nav}</span>
                 </a>
               ))}
             </nav>
           ) : (
-            <a href="#" onClick={goTop} className="hidden items-center gap-2 text-sm text-muted transition hover:text-text lg:flex">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M11 6l-6 6 6 6" /></svg>
-              Back to all work
+            <a href="#" onClick={goTop} className="hidden items-center gap-2 font-pixel text-[10px] tracking-[0.16em] text-muted uppercase transition hover:text-text lg:flex">
+              ◀ Back
             </a>
           )}
 
-          <div className="flex items-center gap-2">
-            <a
-              href="#contact"
-              onClick={(e) => go(e, 'contact')}
-              className="hidden rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-sm text-accent transition hover:bg-accent/20 sm:inline-flex"
-            >
+          <div className="flex items-center gap-3">
+            <a href="#contact" onClick={(e) => go(e, 'contact')} className="px-btn px-btn-primary hidden !px-4 !py-2 sm:inline-flex">
               Contact
             </a>
             <button
@@ -121,13 +111,15 @@ export default function Nav({ mode = 'home' }) {
               aria-label={menu ? 'Close menu' : 'Open menu'}
               aria-expanded={menu}
               onClick={() => setMenu((m) => !m)}
-              className="grid h-10 w-10 place-items-center rounded-full border border-line text-text lg:hidden"
+              className="px-btn px-btn-ghost !p-3 lg:hidden"
             >
-              <span className="relative block h-3 w-4">
-                <span className={`absolute left-0 top-0 h-px w-4 bg-current transition ${menu ? 'translate-y-1.5 rotate-45' : ''}`} />
-                <span className={`absolute left-0 top-1.5 h-px w-4 bg-current transition ${menu ? 'opacity-0' : ''}`} />
-                <span className={`absolute left-0 top-3 h-px w-4 bg-current transition ${menu ? '-translate-y-1.5 -rotate-45' : ''}`} />
-              </span>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" shapeRendering="crispEdges" aria-hidden>
+                {menu ? (
+                  <path d="M1 1h2v2H1zM3 3h2v2H3zM5 5h4v4H5zM3 9h2v2H3zM1 11h2v2H1zM11 1h2v2h-2zM9 3h2v2H9zM9 9h2v2H9zM11 11h2v2h-2z" />
+                ) : (
+                  <path d="M0 2h14v2H0zM0 6h14v2H0zM0 10h14v2H0z" />
+                )}
+              </svg>
             </button>
           </div>
         </div>
@@ -140,20 +132,21 @@ export default function Nav({ mode = 'home' }) {
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
               className="overflow-hidden lg:hidden"
             >
-              <div className="container-x grid gap-1 pb-5 pt-2">
+              <div className="container-x grid gap-1 pb-6 pt-2">
                 {mode !== 'home' && (
-                  <a href="#" onClick={goTop} className="rounded-lg px-3 py-2.5 text-sm text-muted hover:bg-white/5 hover:text-text">← Back to all work</a>
+                  <a href="#" onClick={goTop} className="px-3 py-3 font-pixel text-[11px] tracking-[0.16em] text-muted uppercase hover:text-text">◀ Back</a>
                 )}
-                {SECTIONS.map((s) => (
+                {sections.map((s) => (
                   <a
                     key={s.id}
                     href={`#${s.id}`}
                     onClick={(e) => go(e, s.id)}
-                    className={`rounded-lg px-3 py-2.5 text-base transition hover:bg-white/5 ${active === s.id ? 'text-text' : 'text-muted hover:text-text'}`}
+                    className={`flex items-center gap-3 px-3 py-3 font-pixel text-[11px] tracking-[0.16em] uppercase transition ${active === s.id ? 'text-accent' : 'text-muted hover:text-text'}`}
                   >
+                    <span className={`h-2 w-2 ${active === s.id ? 'bg-accent' : 'bg-white/15'}`} />
                     {s.nav}
                   </a>
                 ))}
@@ -166,18 +159,15 @@ export default function Nav({ mode = 'home' }) {
   )
 }
 
+/** Pixel logo mark: a small isometric cube. */
 function Mark() {
   return (
-    <span className="grid h-9 w-9 place-items-center rounded-xl border border-line bg-ink-2 shadow-[var(--shadow-card)] transition group-hover:border-accent/40">
-      <svg width="20" height="20" viewBox="0 0 64 64" fill="none" aria-hidden>
-        <defs>
-          <linearGradient id="markg" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="#7cc4ff" />
-            <stop offset="1" stopColor="#c6a3ff" />
-          </linearGradient>
-        </defs>
-        <path d="M32 8 L54 20.5 L54 43.5 L32 56 L10 43.5 L10 20.5 Z" stroke="url(#markg)" strokeWidth="4" strokeLinejoin="round" />
-        <path d="M32 8 L32 32 L54 20.5 M32 32 L10 20.5 M32 32 L32 56" stroke="url(#markg)" strokeWidth="2.5" opacity="0.75" />
+    <span className="px-border grid h-10 w-10 place-items-center bg-ink-2 transition group-hover:bg-ink-3">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" shapeRendering="crispEdges" aria-hidden>
+        <path d="M8 2h4v2h2v2h2v2h2v4h-2v2h-2v2h-2v2H8v-2H6v-2H4v-2H2V8h2V6h2V4h2z" fill="#ffd166" fillOpacity="0.15" />
+        <path d="M8 2h4v2h2v2h2v2H4V6h2V4h2z" fill="#ffd166" />
+        <path d="M4 8h6v10H8v-2H6v-2H4v-2H2V8z" fill="#7ee8fa" fillOpacity="0.8" />
+        <path d="M10 8h6v4h-2v2h-2v2h-2z" fill="#eef0ff" fillOpacity="0.85" />
       </svg>
     </span>
   )

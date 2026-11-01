@@ -18,7 +18,7 @@ export default function App() {
   }, [route])
 
   return (
-    <div className="grain relative min-h-screen">
+    <div className="scanlines relative min-h-screen">
       <Nav mode={route.name} />
       <main>
         {route.name === 'project' ? <ProjectPage id={route.id} /> : <Home />}

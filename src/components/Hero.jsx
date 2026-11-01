@@ -1,124 +1,126 @@
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { PROFILE } from '../content/profile.js'
 import { featuredProject } from '../lib/content.js'
+import PixelWindow from './PixelWindow.jsx'
+
+const STARS = [
+  [6, 18, 3.2, 0], [14, 42, 2.6, 0.7], [22, 10, 4.1, 1.3], [31, 30, 2.9, 0.2], [40, 8, 3.6, 1.9],
+  [52, 22, 2.4, 0.9], [61, 12, 3.8, 0.4], [70, 36, 2.7, 1.6], [79, 16, 3.3, 1.1], [88, 28, 2.5, 0.5],
+  [94, 9, 4.0, 1.4], [47, 48, 3.1, 0.3], [84, 52, 2.8, 1.8], [10, 60, 3.5, 1.0], [66, 58, 2.6, 0.6],
+]
 
 export default function Hero() {
   const { hero } = PROFILE
   const reduce = useReducedMotion()
   const { scrollY } = useScroll()
-  const y = useTransform(scrollY, [0, 600], [0, reduce ? 0 : 80])
-  const fade = useTransform(scrollY, [0, 500], [1, 0.25])
+  const y = useTransform(scrollY, [0, 600], [0, reduce ? 0 : 60])
+  const fade = useTransform(scrollY, [0, 500], [1, 0.3])
   const project = featuredProject()
 
   const item = (i) => ({
-    initial: reduce ? false : { opacity: 0, y: 28 },
+    initial: reduce ? false : { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.9, delay: 0.15 + i * 0.12, ease: [0.16, 1, 0.3, 1] },
+    transition: { duration: 0.8, delay: 0.1 + i * 0.1, ease: [0.16, 1, 0.3, 1] },
   })
 
   return (
-    <section id="top" className="relative isolate overflow-hidden pt-28 sm:pt-36 lg:pt-40">
+    <section id="top" className="relative isolate overflow-hidden pt-32 sm:pt-40">
       <Backdrop />
 
       <motion.div style={{ y, opacity: fade }} className="container-x relative">
-        <div className="grid items-end gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-7">
-            <motion.p {...item(0)} className="eyebrow mb-6">{hero.eyebrow}</motion.p>
+        <div className="grid items-center gap-14 lg:grid-cols-12">
+          <div className="lg:col-span-6">
+            <motion.p {...item(0)} className="eyebrow mb-6 flex items-center gap-3">
+              <span className="inline-block h-2 w-2 bg-accent" />
+              {hero.eyebrow}
+            </motion.p>
             <motion.h1
               {...item(1)}
-              className="font-display text-[2.4rem] font-semibold leading-[1.04] tracking-tight text-balance sm:text-5xl lg:text-[3.6rem] xl:text-[4.2rem]"
+              className="font-display text-5xl font-semibold leading-[0.98] tracking-tight text-balance sm:text-6xl lg:text-7xl"
             >
-              <span className="text-gradient">{hero.headline}</span>
+              {hero.headline}
             </motion.h1>
-            <motion.p {...item(2)} className="mt-7 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
+            <motion.p {...item(2)} className="mt-7 max-w-lg text-base leading-relaxed text-muted sm:text-lg">
               {hero.intro}
             </motion.p>
 
-            <motion.div {...item(3)} className="mt-9 flex flex-wrap items-center gap-3">
-              <a
-                href={hero.primaryButton.href}
-                className="group inline-flex items-center gap-2 rounded-full bg-text px-5 py-2.5 text-sm font-medium text-ink transition hover:bg-white"
-              >
+            <motion.div {...item(3)} className="mt-9 flex flex-wrap items-center gap-4">
+              <a href={hero.primaryButton.href} className="px-btn px-btn-primary">
                 {hero.primaryButton.label}
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition group-hover:translate-y-0.5"><path d="M12 5v14M5 12l7 7 7-7" /></svg>
               </a>
-              <a
-                href={hero.secondaryButton.href}
-                className="inline-flex items-center gap-2 rounded-full border border-line px-5 py-2.5 text-sm text-text transition hover:border-white/25 hover:bg-white/5"
-              >
+              <a href={hero.secondaryButton.href} className="px-btn px-btn-ghost">
                 {hero.secondaryButton.label}
               </a>
             </motion.div>
 
-            <motion.dl {...item(4)} className="mt-12 grid max-w-lg grid-cols-3 gap-4 border-t border-line pt-6">
+            <motion.dl {...item(4)} className="mt-12 grid max-w-md grid-cols-3 gap-4 border-t-2 border-white/10 pt-6">
               {hero.facts.map((f) => (
                 <div key={f.label}>
-                  <dt className="font-mono text-[10px] tracking-[0.2em] text-dim uppercase">{f.label}</dt>
-                  <dd className="mt-1 text-sm text-text sm:text-base">{f.value}</dd>
+                  <dt className="font-pixel text-[9px] tracking-[0.18em] text-dim uppercase">{f.label}</dt>
+                  <dd className="mt-1.5 text-sm text-text sm:text-base">{f.value}</dd>
                 </div>
               ))}
             </motion.dl>
           </div>
 
-          {/* Featured project teaser card */}
           {project && (
             <motion.a
               href="#featured"
-              initial={reduce ? false : { opacity: 0, y: 40, rotateX: 6 }}
-              animate={{ opacity: 1, y: 0, rotateX: 0 }}
-              transition={{ duration: 1.1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="group relative lg:col-span-5"
-              style={{ perspective: 1200 }}
+              initial={reduce ? false : { opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
+              className="group block lg:col-span-6"
             >
-              <div className="media-frame transition duration-700 group-hover:-translate-y-1 group-hover:shadow-[var(--shadow-glow)]">
-                <img src={project.cover} alt={project.coverAlt ?? project.title} className="aspect-video object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/20 to-transparent" />
-                <div className="absolute inset-x-0 bottom-0 p-5">
-                  <p className="eyebrow mb-2">Featured · {project.status}</p>
-                  <p className="font-display text-xl font-semibold tracking-tight">{project.title}</p>
-                  <p className="mt-1 line-clamp-2 text-sm text-muted">{project.tagline}</p>
+              <PixelWindow label={project.title} badge={project.status} className="transition-transform duration-300 group-hover:-translate-x-0.5 group-hover:-translate-y-0.5">
+                <img src={project.cover} alt={project.coverAlt ?? project.title} className={`aspect-video object-cover ${project.pixelArt ? 'pixelated' : ''}`} />
+                <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 bg-gradient-to-t from-ink via-ink/60 to-transparent p-5">
+                  <div>
+                    <p className="eyebrow mb-1.5">Featured</p>
+                    <p className="font-display text-2xl font-semibold leading-none tracking-tight">{project.title}</p>
+                  </div>
+                  <span className="px-btn px-btn-primary !px-3 !py-2 opacity-0 transition group-hover:opacity-100">Press start</span>
                 </div>
-              </div>
-              <span className="absolute -right-3 -top-3 hidden rounded-full border border-line bg-ink-2 px-3 py-1 font-mono text-[10px] tracking-widest text-muted uppercase sm:block">
-                Case study
-              </span>
+              </PixelWindow>
             </motion.a>
           )}
         </div>
       </motion.div>
 
-      <div className="container-x mt-20 sm:mt-28">
+      <div className="container-x mt-24 sm:mt-32">
         <div className="hairline" />
       </div>
     </section>
   )
 }
 
-/** Cinematic lighting behind the hero: beams, a horizon glow and a faint grid. */
+/** Night sky: pixel stars, a dithered horizon glow and a faint grid. */
 function Backdrop() {
   return (
-    <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+    <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+      {STARS.map(([x, yy, d, delay], i) => (
+        <span key={i} className="star" style={{ left: `${x}%`, top: `${yy}%`, '--d': `${d}s`, '--delay': `${delay}s`, opacity: 0.5 }} />
+      ))}
       <div
-        className="absolute inset-0"
+        className="absolute inset-x-0 bottom-0 h-[55%]"
         style={{
-          backgroundImage:
-            'radial-gradient(900px 500px at 70% 0%, rgba(124,196,255,0.16), transparent 60%), radial-gradient(700px 420px at 10% 20%, rgba(198,163,255,0.12), transparent 65%)',
+          background: 'linear-gradient(180deg, transparent, rgba(255,209,102,0.07))',
         }}
       />
-      <motion.div
-        className="absolute -top-40 left-1/2 h-[560px] w-[1200px] -translate-x-1/2 rotate-[-8deg] opacity-40 blur-3xl"
-        style={{ background: 'linear-gradient(90deg, transparent, rgba(124,196,255,0.25), rgba(198,163,255,0.18), transparent)' }}
-        animate={{ x: ['-52%', '-48%', '-52%'] }}
-        transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
+      <div
+        className="dither absolute inset-x-0 bottom-0 h-[40%] opacity-[0.05]"
+        style={{
+          maskImage: 'linear-gradient(180deg, transparent, black 70%)',
+          WebkitMaskImage: 'linear-gradient(180deg, transparent, black 70%)',
+        }}
       />
       <div
-        className="absolute inset-0 opacity-[0.35]"
+        className="absolute inset-0 opacity-[0.28]"
         style={{
           backgroundImage:
-            'linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)',
-          backgroundSize: '72px 72px',
-          maskImage: 'radial-gradient(ellipse 70% 60% at 50% 20%, black, transparent)',
-          WebkitMaskImage: 'radial-gradient(ellipse 70% 60% at 50% 20%, black, transparent)',
+            'linear-gradient(rgba(255,255,255,0.05) 2px, transparent 2px), linear-gradient(90deg, rgba(255,255,255,0.05) 2px, transparent 2px)',
+          backgroundSize: '64px 64px',
+          maskImage: 'radial-gradient(ellipse 70% 60% at 50% 30%, black, transparent)',
+          WebkitMaskImage: 'radial-gradient(ellipse 70% 60% at 50% 30%, black, transparent)',
         }}
       />
     </div>
