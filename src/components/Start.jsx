@@ -1,88 +1,75 @@
-import { motion, useReducedMotion } from 'framer-motion'
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { PROFILE } from '../content/profile.js'
 import PixelSprite from './PixelSprite.jsx'
-import WaveArt from './WaveArt.jsx'
 
 /**
- * The opening screen: a pale, quiet sky over a dramatic pixel-art sea
- * drawn in the spirit of Japanese woodblock prints. The wordmark sits in
- * the sky; the great wave rises beneath it.
+ * The opening screen: Alecson's own pixel-art Great Wave, cut into layers
+ * and set in motion. The sky runs the full height; the artwork sits at
+ * the bottom, leaving the top of the screen free for a title.
+ *
+ *   layers, back to front:  sun · clouds · Fuji (+ far sea) · far wave · the great wave
+ *   motion:  the sun breathes, the clouds drift, the waves sway and heave,
+ *            and every layer slides at its own rate as you scroll (parallax)
+ *
+ * Positions are the pixel boxes each layer was cut from, as fractions of
+ * the original 1672 × 941 artwork, so they line back up exactly.
  */
-
-// flat, stylised cloud bands: [top %, left %, width px, height px, opacity]
-const BANDS = [[14, -2, 420, 10, 0.55], [17, 6, 260, 6, 0.4], [26, 58, 520, 10, 0.5], [29, 70, 300, 6, 0.35], [38, 22, 360, 8, 0.4], [41, 30, 180, 5, 0.3]]
-
-/** Stepped mountain silhouette on the far horizon. */
-const ridge = (heights, max) => {
-  const step = 100 / heights.length
-  let d = `M0 ${max} `
-  heights.forEach((h, i) => { d += `L${(i * step).toFixed(2)} ${max - h} L${((i + 1) * step).toFixed(2)} ${max - h} ` })
-  return d + `L100 ${max} Z`
+const ART = { W: 1672, H: 941 }
+const LAYERS = {
+  sun: { x: 1335, y: 94, w: 174, h: 175 },
+  clouds: { x: 0, y: 65, w: 1672, h: 494 },
+  fuji: { x: 0, y: 211, w: 1267, h: 465 },
+  far: { x: 903, y: 439, w: 769, h: 381 },
+  wave: { x: 0, y: 48, w: 1672, h: 893 },
 }
-const PEAK = ridge([0, 1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 1, 0], 12)
+const box = (l) => ({ left: `${(l.x / ART.W) * 100}%`, top: `${(l.y / ART.H) * 100}%`, width: `${(l.w / ART.W) * 100}%` })
 
 export default function Start() {
   const { start } = PROFILE
   const reduce = useReducedMotion()
+  const { scrollY } = useScroll()
+  // parallax: far things barely move, the great wave rises fastest
+  const ySun = useTransform(scrollY, [0, 900], [0, reduce ? 0 : 60])
+  const yClouds = useTransform(scrollY, [0, 900], [0, reduce ? 0 : 90])
+  const yFuji = useTransform(scrollY, [0, 900], [0, reduce ? 0 : 120])
+  const yFar = useTransform(scrollY, [0, 900], [0, reduce ? 0 : 40])
+  const yWave = useTransform(scrollY, [0, 900], [0, reduce ? 0 : -120])
+  const anim = reduce ? 'none' : undefined
+
   return (
     <section
       id="start"
       className="relative isolate flex min-h-[100svh] flex-col overflow-hidden"
-      style={{ background: 'linear-gradient(180deg, #d9cfb3 0%, #e4d9bf 34%, #ece3cd 52%, #cfd3cf 56%)' }}
+      style={{ background: 'linear-gradient(180deg, #2894e9 0%, #2f9bec 28%, #44b0f3 50%, #5bc2f6 68%, #4fb9f2 100%)' }}
     >
-      {/* ---- sky: a pale sun, cloud bands, a far peak, birds ---- */}
-      <div aria-hidden className="pointer-events-none absolute inset-0">
-
-        {BANDS.map(([top, left, w, h, o], i) => (
-          <span key={i} className={`absolute ${i > 3 ? 'hidden sm:block' : ''}`} style={{ top: `${top}%`, left: `${left}%`, width: `min(${w}px, 60vw)`, height: h, opacity: o, background: '#f3efe3', boxShadow: `${h}px ${h}px 0 -${h / 2}px rgba(243,239,227,0.5)` }} />
-        ))}
-        <svg className="absolute bottom-[42%] right-[14%] h-9 w-[22%] sm:h-14 sm:w-[16%]" viewBox="0 0 100 12" preserveAspectRatio="none" shapeRendering="crispEdges">
-          <path d={PEAK} fill="#3b4f66" />
-          <path d="M41.6 3 L50 3 L58.4 3 L58.4 4 L54 4 L54 5 L50 5 L50 4 L46 4 L46 5 L41.6 5 Z" fill="#f0ece2" />
-        </svg>
-        <Flock top={24} dur={110} delay={-30} reduce={reduce} />
-        <Flock top={33} dur={140} delay={-90} small reduce={reduce} />
+      {/* ---- the top of the screen is yours: nothing here but sky ---- */}
+      <div className="container-x relative z-10 flex flex-1 flex-col pt-24 sm:pt-28">
+        <div id="start-title" className="min-h-[34svh] sm:min-h-[36svh]" />
       </div>
 
-      {/* ---- the sea ---- */}
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 top-[46%]">
-        <WaveArt className="sway-x absolute inset-0 h-full w-full" style={{ animation: reduce ? 'none' : undefined }} />
-      </div>
+      {/* ---- the artwork, in layers ---- */}
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 z-0">
+        <div className="relative mx-auto w-[175vw] max-w-none -translate-x-[18%] sm:w-full sm:translate-x-0" style={{ aspectRatio: `${ART.W} / ${ART.H}`, marginBottom: 'min(0px, calc(62svh - 100vw * 0.5628))' }}>
+          <Flock top={16} dur={120} delay={-40} reduce={reduce} />
+          <Flock top={27} dur={150} delay={-100} small reduce={reduce} />
 
-      {/* ---- the wordmark ---- */}
-      <div className="container-x relative flex flex-1 flex-col items-center justify-start pt-[15vh] sm:pt-[13vh]">
-        <motion.img
-          src={start.wordmark}
-          alt={start.wordmarkAlt}
-          width="2000"
-          height="647"
-          fetchPriority="high"
-          initial={reduce ? false : { opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-          className="h-auto w-full max-w-[860px] select-none"
-          style={{ filter: 'drop-shadow(0 16px 30px rgba(20,40,80,0.35))' }}
-          draggable="false"
-        />
-        {start.tagline && (
-          <motion.p
-            initial={reduce ? false : { opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="on-light mt-6 max-w-xl text-center text-base text-ink-2 sm:text-lg"
-          >
-            {start.tagline}
-          </motion.p>
-        )}
+          <motion.img src="/media/start/sun.webp" alt="" width={LAYERS.sun.w} height={LAYERS.sun.h} className="sun-breathe pixelated absolute" style={{ ...box(LAYERS.sun), y: ySun, animation: anim }} />
+          <motion.img src="/media/start/clouds.webp" alt="" width={LAYERS.clouds.w} height={LAYERS.clouds.h} className="cloud-drift pixelated absolute" style={{ ...box(LAYERS.clouds), y: yClouds, animation: anim }} />
+          <motion.img src="/media/start/fuji.webp" alt="" width={LAYERS.fuji.w} height={LAYERS.fuji.h} className="pixelated absolute" style={{ ...box(LAYERS.fuji), y: yFuji }} />
+          <motion.img src="/media/start/wave-far.webp" alt="" width={LAYERS.far.w} height={LAYERS.far.h} className="wave-far-sway pixelated absolute" style={{ ...box(LAYERS.far), y: yFar, animation: anim, transformOrigin: '50% 100%' }} />
+          <motion.img src="/media/start/wave.webp" alt="The Great Wave, in pixel art" width={LAYERS.wave.w} height={LAYERS.wave.h} className="wave-sway pixelated absolute" style={{ ...box(LAYERS.wave), y: yWave, animation: anim, transformOrigin: '30% 100%' }} fetchPriority="high" />
+        </div>
+        {/* the surface darkens into the water below */}
+        <div className="absolute inset-x-0 bottom-0 h-[12svh]" style={{ background: 'linear-gradient(180deg, rgba(22,58,102,0) 0%, rgba(22,58,102,0.85) 100%)' }} />
       </div>
 
       {/* ---- scroll hint ---- */}
       <a
         href="#about"
-        className="absolute bottom-7 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 font-pixel text-[12px] tracking-[0.1em] text-[#eef0ea] uppercase drop-shadow-[0_1px_0_rgba(5,15,40,0.6)]"
+        className="absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 font-pixel text-[12px] tracking-[0.1em] text-[#eef0ea] uppercase drop-shadow-[0_1px_0_rgba(5,15,40,0.7)]"
       >
         {start.hint}
-        <span className="bob inline-block" style={{ '--bob': '2.2s', animation: reduce ? 'none' : undefined }}>▼</span>
+        <span className="bob inline-block" style={{ '--bob': '2.2s', animation: anim }}>▼</span>
       </a>
     </section>
   )
