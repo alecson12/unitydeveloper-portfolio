@@ -322,6 +322,8 @@ body {
 }
 .heave-main { animation: heave-main 11s ease-in-out infinite; }
 @keyframes heave-front { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(0.7%, -1%); } }
+@keyframes tree-sway { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(0.6deg); } }
+.tree-sway { animation: tree-sway 9s ease-in-out infinite; animation-delay: -2s; }
 .heave-front { animation: heave-front 8s ease-in-out infinite; animation-delay: -3s; }
 
 /* The sea breathing: a slow sideways sway for the wave art */
@@ -369,7 +371,7 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cloud, .drift-back, .swim, .bob, .bob-slow, .bob-xs, .drift-y, .sway, .sway-x, .drift-high, .drift-low, .sun-glow, .heave-far, .heave-main, .heave-front, .flap, .sparkle, .wave, .ray, .mote, .glowmote, .surface-line, .cursor-blink::after { animation: none !important; }
+  .cloud, .drift-back, .swim, .bob, .bob-slow, .bob-xs, .drift-y, .sway, .sway-x, .drift-high, .drift-low, .sun-glow, .heave-far, .heave-main, .heave-front, .tree-sway, .flap, .sparkle, .wave, .ray, .mote, .glowmote, .surface-line, .cursor-blink::after { animation: none !important; }
 }
 
 :focus-visible {

@@ -55,6 +55,9 @@ export default function Start() {
   // parallax rates: fraction of the scroll distance each layer slides down
   const rate = (k) => useTransform(scrollY, (v) => (reduce ? 0 : Math.min(v, 1200) * k))
   const ySun = rate(0.03), yHigh = rate(0.05), yLow = rate(0.08), yFar = rate(0.07), yMain = rate(0.11), yFront = rate(0.16)
+  // the tree is nearest of all, so it slides most — and the other way, rising as the scene sinks
+  const yTree = useTransform(scrollY, (v) => (reduce ? 0 : -Math.min(v, 1200) * 0.1))
+  const tree = start.tree?.src ? start.tree : null
   const anim = reduce ? 'none' : undefined
 
   // Size the stage from the viewport: landscape → full width; portrait → 58% of the height, crest and Fuji centred.
@@ -106,6 +109,22 @@ export default function Start() {
         {/* the surface darkens into the water below */}
         <div className="absolute inset-x-0 bottom-0 h-[10svh]" style={{ background: 'linear-gradient(180deg, rgba(22,58,102,0) 0%, rgba(22,58,102,0.85) 100%)' }} />
       </div>
+
+      {/* ---- foreground tree: nearest layer, in front of the waves, behind the title ---- */}
+      {tree && (
+        <motion.div
+          aria-hidden
+          className={`pointer-events-none absolute bottom-0 z-[5] ${tree.side === 'right' ? 'right-0' : 'left-0'}`}
+          style={{ width: `${tree.width * 100}%`, minWidth: 160, maxWidth: 560, y: yTree }}
+        >
+          <img
+            src={tree.src}
+            alt={tree.alt ?? ''}
+            className="tree-sway pixelated block h-auto w-full"
+            style={{ animation: anim, transformOrigin: tree.side === 'right' ? '100% 100%' : '0% 100%' }}
+          />
+        </motion.div>
+      )}
 
       <a href="#about" className="absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 font-pixel text-[12px] tracking-[0.1em] text-[#eef0ea] uppercase drop-shadow-[0_1px_0_rgba(5,15,40,0.7)]">
         {start.hint}

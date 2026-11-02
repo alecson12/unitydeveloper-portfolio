@@ -26,6 +26,11 @@ export const PROFILE = {
     tagline: '',
     // The scroll hint at the bottom of the screen.
     hint: 'Dive in',
+    // Foreground tree (transparent PNG/WebP) in front of the waves. Put it in
+    // public/media/start/ and set the path; leave '' for none.
+    //   side   'left' | 'right'   which edge it grows from
+    //   width  its width as a fraction of the screen width (0.2 = 20%)
+    tree: { src: '', side: 'left', width: 0.26, alt: '' },
   },
 
   /* ---------- ABOUT ME — INTRODUCTION (the first screen under water) ---------- */
