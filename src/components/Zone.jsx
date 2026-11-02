@@ -25,6 +25,7 @@ const gradient = (stops) => `linear-gradient(180deg, ${stops.map((c, i) => `${c}
 export default function Zone({ depth = 'shallow', children, className = '', life = true }) {
   return (
     <div className={`relative overflow-x-clip ${className}`} style={{ background: gradient(WATER[depth]) }}>
+      <div aria-hidden className="seigaiha pointer-events-none absolute inset-0 z-0" style={{ opacity: depth === 'shallow' ? 0.07 : depth === 'mid' ? 0.055 : 0.035 }} />
       {depth === 'shallow' && (
         <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 z-0 h-48" style={{ background: 'linear-gradient(180deg, rgba(214,220,226,0.28), rgba(214,220,226,0.08) 35%, rgba(214,220,226,0) 100%)' }}>
           <div className="surface-line absolute inset-x-0 top-0 opacity-60" />

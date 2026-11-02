@@ -89,6 +89,39 @@ export const SPRITES = {
     ],
   ),
 
+  whale: sprite(
+    { k: '#0b1a36', b: '#122a4e', h: '#1b3b66' },
+    [
+      '..............kkkkkkkkkkkkkkkkkkkkk.............',
+      '..........kkkkbbbbhhhhhhhhhhhbbbbbbkkkk.........',
+      '.......kkkbbbbhhhhhhhhhhhhhhhhbbbbbbbbbkkk......',
+      '.....kkbbbbbhhhhhhhhhhhhhhhhhhbbbbbbbbbbbbkkk...',
+      '...kkbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbkk.',
+      '..kbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbkkk',
+      '.kbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbkkkkk',
+      '.kkbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbkkk.kkk',
+      '..kkkbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbkkkk....kk',
+      '....kkkkbbbbbbbbbbbbbkkkkkkkkkkkkkkkkkkk........',
+      '.......kkkkkkkkkkkkkk...........................',
+      '..........kk..kk................................',
+    ],
+  ),
+  shark: sprite(
+    { k: '#0d1c3a', b: '#17305a', h: '#22436f' },
+    [
+      '..................kk..........',
+      '.................kkhk.........',
+      '........kkkkkkkkkkhhkkk.......',
+      '....kkkkbbbbhhhhhhhhhbbkkkk..k',
+      '..kkbbbbbbbbbbhhhhhhbbbbbbkkkk',
+      '.kbbbbbbbbbbbbbbbbbbbbbbbbbkkk',
+      '..kkbbbbbbbbbbbbbbbbbbbbbbkkkk',
+      '....kkkbbbkkkbbbbbbbbbbkkk...k',
+      '.......kkk..kkkkkkkkkkk.......',
+      '............kk................',
+    ],
+  ),
+
   /* ---------- plants ---------- */
   kelp: sprite(
     { w: '#153f3a', W: '#1f5a52' },

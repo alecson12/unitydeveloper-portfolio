@@ -19,7 +19,7 @@ const ridge = (heights, max) => {
   heights.forEach((h, i) => { d += `L${(i * step).toFixed(2)} ${max - h} L${((i + 1) * step).toFixed(2)} ${max - h} ` })
   return d + `L100 ${max} Z`
 }
-const PEAK = ridge([0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 0, 0], 12)
+const PEAK = ridge([0, 1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 1, 0], 12)
 
 export default function Start() {
   const { start } = PROFILE
@@ -28,29 +28,29 @@ export default function Start() {
     <section
       id="start"
       className="relative isolate flex min-h-[100svh] flex-col overflow-hidden"
-      style={{ background: 'linear-gradient(180deg, #8ea5b8 0%, #b4c3cc 30%, #d6d4c6 52%, #e1dccb 56%)' }}
+      style={{ background: 'linear-gradient(180deg, #d9cfb3 0%, #e4d9bf 34%, #ece3cd 52%, #cfd3cf 56%)' }}
     >
       {/* ---- sky: a pale sun, cloud bands, a far peak, birds ---- */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
-        <span className="absolute right-[14%] top-[22%] h-20 w-20 rounded-full sm:h-28 sm:w-28" style={{ background: 'radial-gradient(circle, rgba(240,232,210,0.9) 0 40%, rgba(240,232,210,0) 72%)' }} />
+
         {BANDS.map(([top, left, w, h, o], i) => (
-          <span key={i} className={`absolute ${i > 3 ? 'hidden sm:block' : ''}`} style={{ top: `${top}%`, left: `${left}%`, width: `min(${w}px, 60vw)`, height: h, opacity: o, background: '#eef0ea', boxShadow: `${h}px ${h}px 0 -${h / 2}px rgba(238,240,234,0.5)` }} />
+          <span key={i} className={`absolute ${i > 3 ? 'hidden sm:block' : ''}`} style={{ top: `${top}%`, left: `${left}%`, width: `min(${w}px, 60vw)`, height: h, opacity: o, background: '#f3efe3', boxShadow: `${h}px ${h}px 0 -${h / 2}px rgba(243,239,227,0.5)` }} />
         ))}
-        <svg className="absolute bottom-[44%] left-[8%] h-10 w-[30%] sm:h-16 sm:w-[22%]" viewBox="0 0 100 12" preserveAspectRatio="none" shapeRendering="crispEdges">
-          <path d={PEAK} fill="#7d93a8" opacity="0.7" />
-          <path d="M45.8 2 L50 2 L54.2 2 L54.2 4 L50 4.5 L45.8 4 Z" fill="#e6e8e4" opacity="0.8" />
+        <svg className="absolute bottom-[42%] right-[14%] h-9 w-[22%] sm:h-14 sm:w-[16%]" viewBox="0 0 100 12" preserveAspectRatio="none" shapeRendering="crispEdges">
+          <path d={PEAK} fill="#3b4f66" />
+          <path d="M41.6 3 L50 3 L58.4 3 L58.4 4 L54 4 L54 5 L50 5 L50 4 L46 4 L46 5 L41.6 5 Z" fill="#f0ece2" />
         </svg>
         <Flock top={24} dur={110} delay={-30} reduce={reduce} />
         <Flock top={33} dur={140} delay={-90} small reduce={reduce} />
       </div>
 
       {/* ---- the sea ---- */}
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 top-[56%]">
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 top-[46%]">
         <WaveArt className="sway-x absolute inset-0 h-full w-full" style={{ animation: reduce ? 'none' : undefined }} />
       </div>
 
       {/* ---- the wordmark ---- */}
-      <div className="container-x relative flex flex-1 flex-col items-center justify-start pt-[17vh] sm:pt-[15vh]">
+      <div className="container-x relative flex flex-1 flex-col items-center justify-start pt-[15vh] sm:pt-[13vh]">
         <motion.img
           src={start.wordmark}
           alt={start.wordmarkAlt}
@@ -60,7 +60,7 @@ export default function Start() {
           initial={reduce ? false : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-          className="h-auto w-full max-w-[920px] select-none"
+          className="h-auto w-full max-w-[860px] select-none"
           style={{ filter: 'drop-shadow(0 16px 30px rgba(20,40,80,0.35))' }}
           draggable="false"
         />
