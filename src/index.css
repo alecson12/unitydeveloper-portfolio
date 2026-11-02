@@ -45,7 +45,7 @@ html {
   min-height: 100%;
   scroll-behavior: smooth;
   scroll-padding-top: 96px;
-  background: #2894e9; /* overscroll above the page: sky */
+  background: #1696fa; /* overscroll above the page: sky */
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -305,6 +305,25 @@ body {
   mask-image: linear-gradient(180deg, rgba(0,0,0,0.9), rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.9));
 }
 
+/* The Start artwork in motion. All transform/opacity only; amplitudes are
+   fractions of each layer's own box, kept well inside the spare margins. */
+@keyframes drift-high { 0%, 100% { transform: translateX(-0.9%); } 50% { transform: translateX(0.9%); } }
+.drift-high { animation: drift-high 90s ease-in-out infinite; }
+@keyframes drift-low { 0%, 100% { transform: translateX(1.4%); } 50% { transform: translateX(-1.4%); } }
+.drift-low { animation: drift-low 70s ease-in-out infinite; animation-delay: -20s; }
+@keyframes sun-glow { 0%, 100% { opacity: 0.35; } 50% { opacity: 0.6; } }
+.sun-glow { background: radial-gradient(circle, rgba(255,214,120,0.55) 0 30%, rgba(255,214,120,0) 70%); animation: sun-glow 8s ease-in-out infinite; }
+@keyframes heave-far { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(0.3%, 0.9%); } }
+.heave-far { animation: heave-far 13s ease-in-out infinite; animation-delay: -5s; }
+@keyframes heave-main {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  40%      { transform: translate(-0.35%, 0.6%) rotate(-0.2deg); }
+  70%      { transform: translate(0.3%, -0.4%) rotate(0.15deg); }
+}
+.heave-main { animation: heave-main 11s ease-in-out infinite; }
+@keyframes heave-front { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(0.7%, -1%); } }
+.heave-front { animation: heave-front 8s ease-in-out infinite; animation-delay: -3s; }
+
 /* The sea breathing: a slow sideways sway for the wave art */
 @keyframes sway-x {
   0%, 100% { transform: translateX(0) scale(1.02); }
@@ -350,7 +369,7 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cloud, .drift-back, .swim, .bob, .bob-slow, .bob-xs, .drift-y, .sway, .sway-x, .flap, .sparkle, .wave, .ray, .mote, .glowmote, .surface-line, .cursor-blink::after { animation: none !important; }
+  .cloud, .drift-back, .swim, .bob, .bob-slow, .bob-xs, .drift-y, .sway, .sway-x, .drift-high, .drift-low, .sun-glow, .heave-far, .heave-main, .heave-front, .flap, .sparkle, .wave, .ray, .mote, .glowmote, .surface-line, .cursor-blink::after { animation: none !important; }
 }
 
 :focus-visible {
