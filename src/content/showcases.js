@@ -1,15 +1,16 @@
 /**
  * =====================================================================
- *  GAMEPLAY PROGRAMMING & TECHNICAL SHOWCASE
+ *  GAMEPLAY PROGRAMMING WRITE-UPS
  * =====================================================================
- *  Short write-ups of systems you built. Both lists start EMPTY on
- *  purpose — the site shows an honest "nothing published yet" island
- *  until you add real work. Never list something you did not build.
+ *  Short write-ups of gameplay systems and mechanics you built. They
+ *  appear under "Projects · more". The list starts EMPTY on purpose —
+ *  never list something you did not build.
  *
- *  Copy the TEMPLATE below into GAMEPLAY or TECHNICAL. Media files go in
- *  public/media/showcases/<id>/ with readable names.
+ *  (Tools you built for your own workflow go in about.js → toolkit.)
  *
- *  const TEMPLATE = {
+ *  Media files go in  public/media/showcases/<id>/
+ *
+ *  {
  *    id: 'enemy-ai',                       // lowercase, dashes
  *    title: 'Enemy AI state machine',
  *    summary: 'One or two sentences on what it is and why it mattered.',
@@ -25,8 +26,4 @@
  *  }
  * ===================================================================== */
 
-/** Gameplay systems, mechanics and interactions. */
 export const GAMEPLAY = []
-
-/** Technical solutions: custom systems, reusable components, debugging, optimisation. */
-export const TECHNICAL = []

@@ -8,8 +8,8 @@ import { projectHref } from '../lib/router.js'
 
 /**
  * The flagship case-study header: a wide dark panel with the lead
- * recording taking most of the width, the story and facts beside it,
- * and an index of the UI groups underneath.
+ * recording taking most of the width, the project's logo and story
+ * beside it, and an index of the UI groups underneath.
  */
 export default function FeaturedProject({ project, full = false }) {
   const counts = countMedia(project)
@@ -54,14 +54,21 @@ export default function FeaturedProject({ project, full = false }) {
             </div>
           </div>
 
-          {/* the story — first on phones, beside the recording on desktop */}
+          {/* logo + the story — first on phones, beside the recording on desktop */}
           <div className="order-first flex flex-col lg:order-none lg:col-span-5 xl:col-span-4">
-            <div className="flex flex-wrap gap-2">
+            {project.logo ? (
+              <div className="px-card relative overflow-hidden px-6 py-7 sm:px-8" style={{ background: 'radial-gradient(ellipse at 50% 60%, rgba(255,209,102,0.16), rgba(255,255,255,0.04) 70%)' }}>
+                <img src={project.logo} alt={`${project.title} logo`} width="1672" height="941" className="mx-auto w-full max-w-[360px]" />
+              </div>
+            ) : (
+              <h3 className="font-display text-4xl font-semibold leading-none tracking-tight sm:text-5xl">{project.title}</h3>
+            )}
+            <div className="mt-6 flex flex-wrap gap-2">
               {chips.map((c) => <span key={c} className="px-chip">{c}</span>)}
             </div>
-            <h3 className="mt-6 font-display text-4xl font-semibold leading-none tracking-tight sm:text-5xl">{project.title}</h3>
-            {project.tagline && <p className="mt-4 text-lg text-ink-2">{project.tagline}</p>}
-            {project.intro && <p className="mt-6 leading-relaxed">{project.intro}</p>}
+            {project.logo && <h3 className="sr-only">{project.title}</h3>}
+            {project.tagline && <p className="mt-5 font-display text-2xl font-semibold leading-tight tracking-tight sm:text-3xl">{project.tagline}</p>}
+            {project.intro && <p className="mt-5 leading-relaxed">{project.intro}</p>}
             <div className="mt-4 space-y-3 text-ink-2">
               {(project.overview ?? []).map((p, i) => <p key={i}>{p}</p>)}
             </div>

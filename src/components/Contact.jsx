@@ -1,6 +1,7 @@
 import Reveal from './Reveal.jsx'
 import PixelIcon from './PixelIcon.jsx'
 import Island from './Island.jsx'
+import Txt from './Txt.jsx'
 import { PROFILE } from '../content/profile.js'
 import { shouldShow, isPlaceholder } from '../lib/content.js'
 
@@ -16,6 +17,7 @@ export default function Contact() {
         <div className="relative grid grid-cols-1 gap-10 lg:grid-cols-12">
           <div className="lg:col-span-6">
             <p className="max-w-md text-lg leading-relaxed text-ink-2">{contact.text}</p>
+            <Txt as="p" value={contact.availability} className="mt-4 px-chip normal-case tracking-normal font-sans text-sm" />
             {contact.cv && (
               <a href={contact.cv} className="px-btn px-btn-primary mt-8">Download CV</a>
             )}

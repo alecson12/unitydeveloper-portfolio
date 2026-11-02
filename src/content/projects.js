@@ -84,6 +84,8 @@ export const PROJECTS = [
     tech: ['Unity', 'C#'],
 
     // Shown on cards and in the hero. A still from the HUD recording.
+    // Official logo (transparent). Shown in the project header instead of a text title.
+    logo: `${R}/logo.webp`,
     cover: `${R}/hud/hud-overview/in-game-hud-recording-poster.jpg`,
     coverAlt: 'The in-game HUD of Rivalis Academia Nexus',
     // The lead recording at the top of the case study.
@@ -539,6 +541,7 @@ export const PROJECTS = [
     period: '2026',
     status: 'Prototype',
     tech: ['Unity', 'C#'],
+    logo: null, // optional: '/media/your-next-project/logo.png'
     cover: '/media/your-next-project/cover.png',
     coverAlt: 'Cover image',
     lead: null,

@@ -38,6 +38,16 @@ export const countMedia = (project) => {
   }
 }
 
+/** Counts across every visible project (for the About highlights). */
+export const totals = () =>
+  visibleProjects().reduce(
+    (t, p) => {
+      const c = countMedia(p)
+      return { projects: t.projects + 1, features: t.features + c.features, videos: t.videos + c.videos, images: t.images + c.images }
+    },
+    { projects: 0, features: 0, videos: 0, images: 0 },
+  )
+
 /** Aspect ratio of a media item (width / height), 16:9 when unknown. */
 export const aspectOf = (item) => (item?.width && item?.height ? item.width / item.height : 16 / 9)
 
@@ -46,3 +56,14 @@ export const isPlaceholder = (s) => typeof s === 'string' && /^\s*\[.*\]\s*$/.te
 
 /** Should this text be rendered? Placeholders only show in local preview. */
 export const shouldShow = (s) => Boolean(s) && (!isPlaceholder(s) || import.meta.env.DEV)
+
+/** Items with  confirmed: false  only show in local preview. */
+export const isDraft = (item) => item?.confirmed === false
+export const shouldShowItem = (item) => Boolean(item) && (!isDraft(item) || import.meta.env.DEV)
+
+/** Resolve 'auto:<key>' highlight values from the content. */
+export const resolveAuto = (value) => {
+  if (typeof value !== 'string' || !value.startsWith('auto:')) return value
+  const t = totals()
+  return String(t[value.slice(5)] ?? '')
+}

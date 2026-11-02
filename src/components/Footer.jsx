@@ -14,7 +14,7 @@ export default function Footer() {
       </svg>
       <div className="bg-deep py-10 text-cloud/70">
         <div className="container-x flex flex-col items-start justify-between gap-3 text-sm sm:flex-row sm:items-center">
-          <p>© {YEAR} {PROFILE.name}. {PROFILE.footer.note}</p>
+          <p>© {YEAR} {PROFILE.shortName ?? PROFILE.name}. {PROFILE.footer.note}</p>
           <a href="#top" className="font-pixel text-[9px] tracking-[0.18em] uppercase transition hover:text-cloud">▲ Back to the sky</a>
         </div>
       </div>

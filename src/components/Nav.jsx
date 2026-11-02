@@ -76,7 +76,7 @@ export default function Nav({ mode = 'home' }) {
           <a href="#" onClick={goTop} className="group flex items-center gap-3" aria-label="Home">
             <Mark />
             <span className="flex flex-col leading-tight">
-              <span className="font-display text-lg font-semibold tracking-tight">{PROFILE.name}</span>
+              <span className="font-display text-lg font-semibold tracking-tight">{PROFILE.shortName ?? PROFILE.name}</span>
               <span className="font-pixel text-[8px] tracking-[0.18em] text-ink-2 uppercase">{PROFILE.title}</span>
             </span>
           </a>

@@ -1,10 +1,11 @@
 /**
  * =====================================================================
- *  YOUR PROFILE — name, hero text, about me, skills, contact
+ *  YOUR PROFILE — name, opening introduction, skills, contact
  * =====================================================================
- *  This is the ONE file to edit for everything that is about YOU.
+ *  This is the ONE file to edit for the short facts about YOU.
+ *  The long About Me content (background, what you do, toolkit,
+ *  highlights, statement) lives in  src/content/about.js
  *  Projects live in  src/content/projects.js
- *  Gameplay / technical write-ups live in  src/content/showcases.js
  *
  *  Anything wrapped in [square brackets] is a placeholder. It shows with
  *  a dashed outline in local preview and is HIDDEN on the published site,
@@ -12,65 +13,50 @@
  * ===================================================================== */
 
 export const PROFILE = {
-  name: 'Alecson Gantica',
-  title: 'Unity Game Developer',
+  name: 'Alecson Marwin B. Gantica',
+  shortName: 'Alecson Gantica', // used in the navigation and footer
+  title: 'Unity Developer',
 
-  /* ---------- HERO (the first screen) ---------- */
+  /* ---------- OPENING INTRODUCTION (the first screen) ---------- */
   hero: {
     // Small line above the big headline
-    eyebrow: 'Unity Game Developer · Game UI & Systems',
+    eyebrow: 'Unity Developer · Game UI & Systems',
     // The big headline. Keep it short.
-    headline: 'Game worlds, built screen by screen.',
+    headline: 'I build the screens players live in.',
     // One or two sentences under the headline.
     intro:
-      'I build the interfaces players live in — menus, HUDs, inventories, chat and trading — in Unity and C#. Most recently: the complete in-game UI of Rivalis Academia Nexus, a mobile MMORPG.',
-    primaryButton: { label: 'Explore projects', href: '#featured' },
-    secondaryButton: { label: 'Technical work', href: '#technical' },
+      'Unity developer from the Philippines. I turn game design into working interfaces and systems in C# — most recently the complete in-game UI of Rivalis Academia Nexus, a mobile MMORPG: login to HUD, inventory to trading, chat to settings.',
+    primaryButton: { label: 'See my projects', href: '#projects' },
+    secondaryButton: { label: 'Get in touch', href: '#contact' },
     // Short facts shown under the buttons. Keep each one to a few words.
     facts: [
       { label: 'Engine', value: 'Unity' },
       { label: 'Language', value: 'C#' },
-      { label: 'Focus', value: 'Game UI & systems' },
+      { label: 'Based in', value: 'Bulacan, Philippines' },
     ],
+    // Your photo. Put files in  public/media/profile/
+    photo: '/media/profile/alecson-unity-developer.jpg',
+    photoAlt: 'Alecson Marwin B. Gantica, Unity developer',
   },
 
-  /* ---------- ABOUT ME ---------- */
-  about: {
-    // Each string becomes one paragraph. Add or remove as you like.
-    paragraphs: [
-      'I am a Unity game developer who cares most about the part of a game players actually touch. My most complete work so far is the interface of Rivalis Academia Nexus, a mobile MMORPG: twenty-one screens covering everything from login and character creation to trading, quests and a HUD players can rearrange themselves.',
-      '[Placeholder — how you got into game development, how you work with designers and artists, and what you are looking for next.]',
-    ],
-    // Optional portrait. Drop a file into  public/media/profile/  and set
-    // the path here, e.g. '/media/profile/portrait.jpg'. Leave as null to
-    // show a pixel-art island instead of a photo.
-    portrait: null,
-    portraitAlt: 'Portrait of Alecson Gantica',
-    // Short "at a glance" list beside the text.
-    highlights: [
-      { label: 'Based in', value: '[City, Country]' },
-      { label: 'Open to', value: '[Full-time / Contract / Remote]' },
-      { label: 'Also', value: 'Graphic designer & Krump choreographer' },
-    ],
-  },
-
-  /* ---------- SKILLS & TECHNOLOGIES ---------- */
+  /* ---------- SKILLS & EXPERTISE (the skill groups) ---------- */
   // Groups of skills. Add a group by copying one block.
   // Only list what you have actually used.
   skills: [
     { group: 'Engine & Language', items: ['Unity', 'C#'] },
-    { group: 'Game UI', items: ['HUD & menus', 'Inventory & shop systems', 'Chat & social UI', 'Touch controls', '[Add the Unity UI tools you used]'] },
-    { group: 'Design', items: ['Photoshop', '[e.g. Figma]'] },
-    { group: 'Workflow', items: ['Git', '[e.g. Trello]'] },
+    { group: 'Game UI', items: ['HUD & menus', 'Inventory & shop screens', 'Chat & social UI', 'Touch controls', 'Player-customisable layouts'] },
+    { group: 'Design', items: ['Photoshop', 'Graphic design', '[e.g. Figma]'] },
+    { group: 'Workflow', items: ['Git', '[e.g. Trello, Jira]'] },
   ],
 
   /* ---------- CONTACT ---------- */
   contact: {
-    text: 'Looking for a Unity developer for game UI or gameplay systems? I would love to hear about the project.',
+    text: 'Looking for a Unity developer for game UI, gameplay systems or a full game build? Tell me about the project.',
+    availability: '[Placeholder — e.g. Open to full-time, contract and remote work]',
     // Replace the placeholder values. Remove any line you do not want shown.
     // Placeholder links are hidden on the published site until replaced.
     links: [
-      { kind: 'email', label: '[your@email.com]', href: 'mailto:[your@email.com]' },
+      { kind: 'email', label: 'alecsongantica12@gmail.com', href: 'mailto:alecsongantica12@gmail.com' },
       { kind: 'github', label: '[github.com/your-username]', href: 'https://github.com/[your-username]' },
       { kind: 'linkedin', label: '[linkedin.com/in/your-name]', href: 'https://www.linkedin.com/in/[your-name]' },
     ],

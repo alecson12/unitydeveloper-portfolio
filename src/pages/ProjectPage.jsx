@@ -32,7 +32,7 @@ export default function ProjectPage({ id }) {
     <>
       <section className="container-x pt-32 sm:pt-40">
         <Reveal>
-          <a href="#featured" className="font-pixel text-[10px] tracking-[0.16em] text-ink-2 uppercase transition hover:text-ink">◀ All work</a>
+          <a href="#projects" className="font-pixel text-[10px] tracking-[0.16em] text-ink-2 uppercase transition hover:text-ink">◀ All work</a>
           <p className="eyebrow mb-4 mt-10 flex items-center gap-3"><span className="inline-block h-2 w-2 bg-purple" />Case study</p>
           <h1 className="font-display text-5xl font-semibold leading-none tracking-tight sm:text-6xl lg:text-7xl">{project.title}</h1>
         </Reveal>

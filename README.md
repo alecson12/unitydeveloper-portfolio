@@ -1,11 +1,12 @@
-# Unity Game Developer Portfolio — Alecson Gantica
+# Unity Developer Portfolio — Alecson Marwin B. Gantica
 
-A standalone portfolio in a **Clouds + Pixel Art** world: a sky that runs from
-blue to pink as you scroll, drifting pixel clouds, floating islands, and white
-"cloud panels" with pixel borders that hold the real work — the screenshots and
-screen recordings of the UI built for **Rivalis Academia Nexus**.
+A standalone portfolio in a **Clouds + Pixel Art** world: a bright sky with
+floating islands outside, deep-navy panels for the work inside. It opens with
+**About Me** (photo, background, what I do, toolkit, highlights), then the
+**Projects** — Rivalis Academia Nexus shown with the real screenshots and
+screen recordings — then **Skills & expertise** and **Contact**.
 
-**All words, images and videos live in four content files.** The rest of the
+**All words, images and videos live in five content files.** The rest of the
 site builds itself from them.
 
 Stack: Vite · React · Tailwind CSS v4 · Framer Motion.
@@ -30,7 +31,9 @@ UnityPortfolio/
 │
 ├── public/
 │   └── media/                        ← everything the site shows
+│       ├── profile/                  ← your photo(s)
 │       └── rivalis-academia-nexus/   ← one folder per project (= project id)
+│           ├── logo.webp             ← the project's official logo (transparent)
 │           ├── entry/                ← one folder per CATEGORY (= category id)
 │           │   ├── main-menu/        ← one folder per FEATURE (= feature id)
 │           │   │   ├── main-menu-recording.mp4
@@ -43,10 +46,11 @@ UnityPortfolio/
 │
 ├── src/
 │   ├── content/                      ← THE ONLY FILES YOU NEED TO EDIT
-│   │   ├── projects.js               ← projects → categories → features → media
-│   │   ├── profile.js                ← your name, hero text, about me, skills, contact
-│   │   ├── showcases.js              ← gameplay programming + technical write-ups
-│   │   └── sections.js               ← homepage section headings and nav labels
+│   │   ├── profile.js                ← name, title, photo, opening intro, skill groups, contact
+│   │   ├── about.js                  ← background, timeline, what I do, tools, toolkit, highlights, statement
+│   │   ├── projects.js               ← projects → categories → features → media (+ logo)
+│   │   ├── showcases.js              ← gameplay programming write-ups (under Projects · more)
+│   │   └── sections.js               ← section headings, intros and nav labels
 │   │
 │   ├── components/                   ← building blocks (no content inside)
 │   │   ├── Hero.jsx                  the opening sky scene
@@ -145,30 +149,48 @@ Copy the **TEMPLATE** block at the bottom of `projects.js`, give it a unique
 "Other Unity projects" section lists every visible project except the featured
 one; each project also gets its own page at `#/project/<id>`.
 
-## Gameplay programming & technical showcase
+## The About Me page
 
-`src/content/showcases.js` holds two lists, `GAMEPLAY` and `TECHNICAL`. Both
-start empty on purpose and the site shows an honest "under construction" island
-until you add real work. The template at the top of the file shows the shape;
-media for these go in `public/media/showcases/<id>/`.
+Everything about you is in two files:
 
-## Where to edit about / skills / contact
-
-All in `src/content/profile.js`:
-
-| What | Key |
+| What | File → key |
 | --- | --- |
-| Name chip, headline, intro, the two buttons, the three quick facts | `hero` |
-| About-me paragraphs, portrait, "at a glance" facts | `about` |
-| Skill groups and the chips inside them | `skills` |
-| Email / GitHub / LinkedIn links, CV download | `contact` |
-| Footer line | `footer` |
+| Full name, short name, title, opening headline and intro, photo, the three quick facts | `profile.js` → `name`, `shortName`, `title`, `hero` |
+| Background paragraphs, timeline, strengths | `about.js` → `background` |
+| What I do (service cards) | `about.js` → `services` — each has `confirmed: true/false` |
+| Tools & technologies (tiles in Skills) | `about.js` → `tools` — each has `confirmed: true/false` |
+| My development toolkit (tools you built) | `about.js` → `toolkit` |
+| Professional highlights (big numbers) and notable contributions | `about.js` → `highlights`, `notable` |
+| Personal developer statement | `about.js` → `statement` |
+| Skill groups | `profile.js` → `skills` |
+| Contact text, availability, links, CV | `profile.js` → `contact` |
 
-To add a portrait: put the image in `public/media/profile/` and set
-`about.portrait = '/media/profile/portrait.jpg'`. Until then the panel shows a
-small pixel sky scene.
+**Confirmed vs. unconfirmed.** Services and tools marked `confirmed: false`
+appear only in local preview, outlined and labelled "To confirm". Flip one to
+`true` once it is real and it goes live. The published site never claims a
+skill you have not confirmed.
 
-Section headings, intros and nav labels live in `src/content/sections.js`.
+**Toolkit.** While `toolkit` is empty, local preview shows three sample cards
+marked "Sample · preview only" so you can judge the layout; the published site
+shows an honest "under construction" island. Copy the template in the file's
+comment to add a real entry; media goes in `public/media/toolkit/<id>/`.
+
+**Highlights.** A value of `'auto:features'` or `'auto:videos'` is counted
+from `projects.js`; values in `[brackets]` stay hidden until filled.
+
+**Photo.** Replace `public/media/profile/alecson-unity-developer.jpg` (4:5
+works best) and, if you rename it, update `hero.photo` in `profile.js`.
+
+## Gameplay programming write-ups
+
+`src/content/showcases.js` holds `GAMEPLAY`, shown under "Projects · more".
+It starts empty on purpose and the section shows an "under construction"
+island until you add real work. Media goes in `public/media/showcases/<id>/`.
+
+## Section headings and navigation
+
+Headings, intros and nav labels live in `src/content/sections.js`. A section
+with a `nav` label appears in the menu (About Me · Projects · Skills · Contact).
 
 ---
 
