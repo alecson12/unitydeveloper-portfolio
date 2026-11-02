@@ -11,7 +11,7 @@ export default function About() {
     <Reveal>
       <div className="px-card grid grid-cols-1 gap-10 p-5 sm:p-8 lg:grid-cols-12 lg:gap-14 lg:p-10">
         <div className="lg:col-span-5">
-          <PixelWindow label="Player" badge={name} stage="cloud" className="max-w-sm">
+          <PixelWindow label="Player" badge={name} stage="sky" className="max-w-sm">
             <div className="aspect-[4/5]">
               {about.portrait ? (
                 <img src={about.portrait} alt={about.portraitAlt ?? name} className="h-full w-full object-cover" />

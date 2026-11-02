@@ -71,7 +71,7 @@ export default function Nav({ mode = 'home' }) {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
-      <div className={`transition-colors duration-300 ${scrolled || menu ? 'border-b-2 border-ink/15 bg-cloud/85 backdrop-blur-md' : 'bg-transparent'}`}>
+      <div className={`transition-colors duration-300 ${scrolled || menu ? 'on-dark border-b-2 border-white/10 bg-deep/85 backdrop-blur-md' : 'bg-transparent'}`}>
         <div className="container-x flex h-[72px] items-center justify-between gap-4">
           <a href="#" onClick={goTop} className="group flex items-center gap-3" aria-label="Home">
             <Mark />

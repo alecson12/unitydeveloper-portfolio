@@ -2,22 +2,23 @@
 
 /* =====================================================================
    CLOUDS + PIXEL ART  —  design tokens
-   Sky blue → soft cyan → lavender → gentle pink, with deep blue for
-   text, borders and the dark panels that hold screenshots.
+   A bright pixel-art sky world outside; deep-navy, glass-like panels for
+   the work itself. Text tokens flip automatically inside dark surfaces
+   (see .px-card / .px-window / .on-dark below).
    ===================================================================== */
 @theme {
   --font-display: "Pixelify Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-pixel: "Silkscreen", "Pixelify Sans", ui-monospace, monospace;
 
-  --color-ink: #1b2a66;        /* deep blue: text, borders */
+  --color-ink: #1b2a66;        /* text + borders on the sky */
   --color-ink-2: #3a4a8f;      /* softer text */
   --color-dim: #6c77ad;        /* labels */
   --color-line: rgba(27, 42, 102, 0.14);
 
-  --color-cloud: #ffffff;      /* panels */
-  --color-cloud-2: #f3f6ff;    /* title bars, chips */
-  --color-cloud-3: #e6ecff;    /* hover */
+  --color-cloud: #ffffff;
+  --color-cloud-2: #f3f6ff;
+  --color-cloud-3: #e6ecff;
 
   --color-sky: #6ec1ff;
   --color-sky-deep: #3d7fe3;
@@ -27,8 +28,9 @@
   --color-pink: #ffb6d8;
   --color-mint: #9fe3a6;
 
-  --color-deep: #0f1b4d;       /* dark stage behind screenshots */
+  --color-deep: #0f1b4d;       /* panels */
   --color-deep-2: #1a2a6c;
+  --color-night: #070b22;      /* stage behind screenshots */
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -46,16 +48,16 @@ body {
   @apply text-ink font-sans antialiased;
   /* The sky: high and blue at the top, pink horizon at the bottom of the page. */
   background-color: #a9dcff;
-  background-image: linear-gradient(180deg, #74bfff 0%, #a4d9ff 20%, #c3d9ff 45%, #d6cbff 72%, #ffd4e9 100%);
+  background-image: linear-gradient(180deg, #6fbcff 0%, #9fd6ff 18%, #bfd8ff 42%, #d3c8ff 70%, #ffd0e6 100%);
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
-::selection { background: rgba(109, 76, 255, 0.25); color: var(--color-ink); }
+::selection { background: rgba(109, 76, 255, 0.3); }
 * { scrollbar-width: thin; scrollbar-color: rgba(27,42,102,0.35) transparent; }
 
 /* ---------- Utilities ---------- */
 @utility container-x {
-  @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12;
+  @apply mx-auto w-full max-w-[1480px] px-5 sm:px-8 lg:px-12 xl:px-16;
 }
 
 @utility eyebrow {
@@ -70,12 +72,26 @@ body {
 
 /* Placeholder text (in [brackets]) — only ever visible in local preview */
 @utility placeholder-text {
-  outline: 1px dashed rgba(109, 76, 255, 0.6);
+  outline: 1px dashed rgba(185, 168, 255, 0.7);
   outline-offset: 2px;
   color: var(--color-dim);
 }
 
 @layer components {
+  /* ---------- Dark-surface token flip ----------
+     Inside a panel the text tokens become light, so every component can
+     use text-ink / text-ink-2 / text-dim / border-line in both worlds. */
+  .px-card,
+  .px-window,
+  .on-dark {
+    --color-ink: #eef1ff;
+    --color-ink-2: #c3caef;
+    --color-dim: #8f98cc;
+    --color-line: rgba(255, 255, 255, 0.12);
+    --color-purple: #b9a8ff;
+    color: var(--color-ink);
+  }
+
   /* ---------- Pixel borders ----------
      Drawn with box-shadows so the corners stay notched like a sprite.
      --px-c = colour, --px-w = thickness. */
@@ -91,30 +107,59 @@ body {
   .px-border-soft { --px-c: rgba(27,42,102,0.22); }
   .px-border-purple { --px-c: var(--color-purple); }
 
-  /* A floating cloud panel: white, pixel border, hard shadow.
-     .px-window is the same frame, used around screenshots and video. */
-  .px-card,
-  .px-window {
-    @apply relative bg-cloud text-ink;
-    --px-c: var(--color-ink);
+  /* ---------- Panel: deep navy glass with a pixel border ---------- */
+  .px-card {
+    @apply relative;
+    --px-c: rgba(255, 255, 255, 0.22);
     --px-w: 2px;
     --px-s: 6px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.05), transparent 30%),
+      linear-gradient(180deg, rgba(23, 37, 102, 0.93), rgba(12, 20, 62, 0.95));
     box-shadow:
       0 calc(-1 * var(--px-w)) 0 var(--px-c),
       0 var(--px-w) 0 var(--px-c),
       calc(-1 * var(--px-w)) 0 0 var(--px-c),
       var(--px-w) 0 0 var(--px-c),
-      var(--px-s) var(--px-s) 0 rgba(27, 42, 102, 0.22);
+      var(--px-s) var(--px-s) 0 rgba(10, 16, 50, 0.35),
+      0 32px 60px -28px rgba(10, 16, 50, 0.6);
   }
-  .px-card-deep { @apply bg-deep text-cloud; }
+  /* a panel inside a panel: a lighter inset surface */
+  .px-card .px-card {
+    background: rgba(255, 255, 255, 0.05);
+    --px-c: rgba(255, 255, 255, 0.16);
+    --px-s: 3px;
+    box-shadow:
+      0 calc(-1 * var(--px-w)) 0 var(--px-c),
+      0 var(--px-w) 0 var(--px-c),
+      calc(-1 * var(--px-w)) 0 0 var(--px-c),
+      var(--px-w) 0 0 var(--px-c),
+      var(--px-s) var(--px-s) 0 rgba(10, 16, 50, 0.3);
+  }
   .px-card-lift { @apply transition-transform duration-200; }
   .px-card-lift:hover { transform: translate(-2px, -2px); --px-s: 8px; }
+  .px-card .px-card-lift:hover { --px-s: 5px; }
 
-  /* Media inside a window fills its width */
+  /* ---------- Window: the frame around a screenshot or video ----------
+     Lighter border and a near-black stage so media always stands out. */
+  .px-window {
+    @apply relative;
+    --px-c: rgba(255, 255, 255, 0.45);
+    --px-w: 2px;
+    --px-s: 6px;
+    background: var(--color-night);
+    box-shadow:
+      0 calc(-1 * var(--px-w)) 0 var(--px-c),
+      0 var(--px-w) 0 var(--px-c),
+      calc(-1 * var(--px-w)) 0 0 var(--px-c),
+      var(--px-w) 0 0 var(--px-c),
+      var(--px-s) var(--px-s) 0 rgba(5, 8, 30, 0.45);
+  }
   .px-window img,
   .px-window video { @apply block h-auto w-full; }
+  .px-window-bar { background: rgba(255, 255, 255, 0.06); border-bottom: 2px solid rgba(255, 255, 255, 0.14); }
 
-  /* Pixel button */
+  /* ---------- Buttons ---------- */
   .px-btn {
     @apply relative inline-flex items-center gap-2 font-pixel text-[11px] tracking-[0.12em] uppercase transition-transform duration-150 select-none;
     --px-w: 2px;
@@ -123,7 +168,7 @@ body {
       0 var(--px-w) 0 var(--px-c),
       calc(-1 * var(--px-w)) 0 0 var(--px-c),
       var(--px-w) 0 0 var(--px-c),
-      4px 4px 0 rgba(27, 42, 102, 0.28);
+      4px 4px 0 rgba(10, 16, 50, 0.3);
   }
   .px-btn:hover { transform: translate(-1px, -1px); }
   .px-btn:active {
@@ -134,17 +179,19 @@ body {
       calc(-1 * var(--px-w)) 0 0 var(--px-c),
       var(--px-w) 0 0 var(--px-c);
   }
-  .px-btn-primary { --px-c: var(--color-ink); @apply bg-ink text-cloud px-5 py-3; }
-  .px-btn-ghost { --px-c: var(--color-ink); @apply bg-cloud text-ink px-5 py-3; }
-  .px-btn-pink { --px-c: var(--color-ink); @apply bg-pink text-ink px-5 py-3; }
+  .px-btn-primary { --px-c: #6d4cff; background: linear-gradient(180deg, #7d5eff, #5f3fe8); color: #fff; @apply px-5 py-3; }
+  .px-btn-ghost { --px-c: var(--color-ink); background: rgba(255,255,255,0.06); color: var(--color-ink); @apply px-5 py-3; }
+  .px-btn-pink { --px-c: #1b2a66; background: var(--color-pink); color: #1b2a66; @apply px-5 py-3; }
   /* Size modifiers — declared after the colours so they win */
   .px-btn-sm { @apply px-3 py-2; }
   .px-btn-icon { @apply p-3; }
 
-  /* Small chip (category tabs, tech tags) */
+  /* ---------- Chip ---------- */
   .px-chip {
-    @apply inline-flex items-center gap-2 bg-cloud px-3 py-1.5 font-pixel text-[9px] tracking-[0.14em] uppercase text-ink-2;
-    --px-c: rgba(27,42,102,0.28);
+    @apply inline-flex items-center gap-2 px-3 py-1.5 font-pixel text-[9px] tracking-[0.14em] uppercase;
+    color: var(--color-ink-2);
+    background: rgba(255, 255, 255, 0.75);
+    --px-c: rgba(27, 42, 102, 0.28);
     --px-w: 2px;
     box-shadow:
       0 calc(-1 * var(--px-w)) 0 var(--px-c),
@@ -152,7 +199,12 @@ body {
       calc(-1 * var(--px-w)) 0 0 var(--px-c),
       var(--px-w) 0 0 var(--px-c);
   }
-  .px-chip-active { --px-c: var(--color-purple); @apply bg-purple text-cloud; }
+  .px-card .px-chip,
+  .px-window .px-chip,
+  .on-dark .px-chip { background: rgba(255, 255, 255, 0.07); --px-c: rgba(255, 255, 255, 0.2); }
+  .px-chip-active,
+  .px-card .px-chip-active,
+  .on-dark .px-chip-active { background: #6d4cff; color: #fff; --px-c: #8a70ff; }
 }
 
 /* ---------- Atmosphere ---------- */
@@ -168,6 +220,18 @@ body {
   animation-delay: var(--delay, 0s);
   will-change: transform;
 }
+/* Things that cross the sky right-to-left (birds, airship) */
+@keyframes drift-back {
+  from { transform: translate3d(110vw, 0, 0); }
+  to   { transform: translate3d(-30vw, 0, 0); }
+}
+.drift-back {
+  position: absolute;
+  left: 0;
+  animation: drift-back var(--dur, 200s) linear infinite;
+  animation-delay: var(--delay, 0s);
+  will-change: transform;
+}
 
 /* Gentle floating for islands and panels */
 @keyframes bob {
@@ -176,6 +240,11 @@ body {
 }
 .bob { animation: bob var(--bob, 6s) ease-in-out infinite; animation-delay: var(--delay, 0s); }
 .bob-slow { animation: bob 9s ease-in-out infinite; }
+.bob-xs { animation: bob 7s ease-in-out infinite; --bob: 7s; }
+
+/* Wing flap for birds: two frames */
+@keyframes flap { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(-1); } }
+.flap { animation: flap 0.6s steps(1) infinite; transform-origin: center; }
 
 /* Pixel sparkles */
 @keyframes sparkle {
@@ -189,6 +258,22 @@ body {
   background: #fff;
   box-shadow: 0 0 0 1px rgba(255,255,255,0.35);
   animation: sparkle var(--d, 3s) steps(2) infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+/* Slow-rising light motes */
+@keyframes mote {
+  0%   { transform: translateY(0); opacity: 0; }
+  15%  { opacity: 0.8; }
+  85%  { opacity: 0.6; }
+  100% { transform: translateY(-40vh); opacity: 0; }
+}
+.mote {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: #fff;
+  animation: mote var(--d, 14s) linear infinite;
   animation-delay: var(--delay, 0s);
 }
 
@@ -212,7 +297,7 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cloud, .bob, .bob-slow, .sparkle, .cursor-blink::after { animation: none !important; }
+  .cloud, .drift-back, .bob, .bob-slow, .bob-xs, .flap, .sparkle, .mote, .cursor-blink::after { animation: none !important; }
 }
 
 :focus-visible {

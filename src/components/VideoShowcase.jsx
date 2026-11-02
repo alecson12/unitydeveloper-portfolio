@@ -46,12 +46,12 @@ export default function VideoShowcase({ item, label, badge = 'Recording', pixela
               )}
               <span className="absolute inset-0 bg-deep/25 transition group-hover:bg-deep/10" />
               <span className="absolute inset-0 flex flex-col items-center justify-center gap-3">
-                <span className="px-btn px-btn-ghost px-btn-icon group-hover:-translate-x-0.5 group-hover:-translate-y-0.5">
+                <span className="px-btn px-btn-ghost px-btn-icon bg-black/50 text-white group-hover:-translate-x-0.5 group-hover:-translate-y-0.5">
                   <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" shapeRendering="crispEdges" aria-hidden>
                     <path d="M4 2h2v12H4zM6 4h2v8H6zM8 5h2v6H8zM10 6h2v4h-2zM12 7h2v2h-2z" />
                   </svg>
                 </span>
-                <span className="px-chip bg-cloud/95">{ready ? 'Press play' : failed ? 'Video unavailable' : 'Recording coming soon'}</span>
+                <span className="px-chip bg-black/60 text-white">{ready ? 'Press play' : failed ? 'Video unavailable' : 'Recording coming soon'}</span>
               </span>
             </button>
           )}

@@ -3,7 +3,7 @@ import { PROFILE } from '../content/profile.js'
 import { featuredProject } from '../lib/content.js'
 import PixelWindow from './PixelWindow.jsx'
 import PixelCloud from './PixelCloud.jsx'
-import Island from './Island.jsx'
+import WorldIsland from './WorldIsland.jsx'
 
 const SPARKLES = [
   [8, 12, 3.2, 0], [18, 30, 2.6, 0.7], [27, 8, 4.1, 1.3], [36, 22, 2.9, 0.2], [47, 6, 3.6, 1.9],
@@ -39,27 +39,33 @@ export default function Hero() {
   })
 
   return (
-    <section id="top" className="relative isolate flex min-h-[92vh] flex-col justify-center overflow-hidden pb-28 pt-32 sm:pb-36 sm:pt-40">
+    <section id="top" className="relative isolate flex min-h-[94vh] flex-col justify-center overflow-hidden pb-32 pt-32 sm:pb-40 sm:pt-40">
       <Backdrop yFar={yFar} yNear={yNear} />
 
       <motion.div style={{ opacity: fade }} className="container-x relative">
-        <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-12">
-          <div className="lg:col-span-6">
+        <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-12 lg:gap-10">
+          <div className="relative lg:col-span-6 xl:col-span-6">
+            {/* a soft haze so the text stays readable over the islands behind it */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -inset-x-12 -inset-y-16 -z-10 sm:-inset-x-20 sm:-inset-y-20"
+              style={{ background: 'radial-gradient(ellipse at 42% 50%, rgba(178,224,255,0.92) 0%, rgba(178,224,255,0.7) 40%, rgba(178,224,255,0) 72%)' }}
+            />
             <motion.p {...item(0)} className="flex flex-wrap items-center gap-3">
-              <span className="px-chip bg-cloud">{name}</span>
+              <span className="px-chip">{name}</span>
               <span className="eyebrow">{hero.eyebrow}</span>
             </motion.p>
             <motion.h1
               {...item(1)}
-              className="mt-6 font-display text-5xl font-semibold leading-[0.98] tracking-tight text-balance sm:text-6xl lg:text-7xl"
+              className="mt-7 font-display text-[2.9rem] font-semibold leading-[0.96] tracking-tight text-balance sm:text-6xl lg:text-7xl xl:text-[5.6rem]"
             >
               {hero.headline}
             </motion.h1>
-            <motion.p {...item(2)} className="mt-7 max-w-lg text-base leading-relaxed text-ink-2 sm:text-lg">
+            <motion.p {...item(2)} className="mt-8 max-w-xl text-base leading-relaxed text-ink-2 sm:text-lg xl:text-xl">
               {hero.intro}
             </motion.p>
 
-            <motion.div {...item(3)} className="mt-9 flex flex-wrap items-center gap-4">
+            <motion.div {...item(3)} className="mt-10 flex flex-wrap items-center gap-4">
               <a href={hero.primaryButton.href} className="px-btn px-btn-primary">{hero.primaryButton.label}</a>
               <a href={hero.secondaryButton.href} className="px-btn px-btn-ghost">{hero.secondaryButton.label}</a>
             </motion.div>
@@ -79,14 +85,20 @@ export default function Hero() {
               initial={reduce ? false : { opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
-              className="relative lg:col-span-6"
+              className="relative pb-24 sm:pb-32 lg:col-span-6"
             >
+              {/* the home island the window floats above */}
+              <WorldIsland
+                w={70} seed={3} trees={6} tower house waterfall
+                className="bob absolute -bottom-6 left-1/2 w-[112%] max-w-none -translate-x-1/2 sm:-bottom-10"
+                style={{ '--delay': '-2s', filter: 'drop-shadow(10px 12px 0 rgba(27,42,102,0.2))' }}
+              />
               <PixelCloud variant={1} className="absolute -left-10 top-6 w-24 opacity-90 sm:-left-16 sm:w-32" />
-              <PixelCloud variant={0} className="absolute -right-6 -bottom-2 w-28 opacity-90 sm:-right-12 sm:w-40" />
+              <PixelCloud variant={0} className="absolute -right-6 top-[46%] w-28 opacity-90 sm:-right-12 sm:w-40" />
               <a href="#featured" className="group relative block bob-slow">
                 <PixelWindow label={project.title} badge={project.status} className="transition-transform duration-200 group-hover:-translate-x-0.5 group-hover:-translate-y-0.5">
                   <img src={project.cover} alt={project.coverAlt ?? project.title} className={`object-cover ${project.pixelArt ? 'pixelated' : ''}`} style={{ aspectRatio: '1920 / 864' }} />
-                  <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 bg-gradient-to-t from-deep via-deep/50 to-transparent p-5 text-cloud">
+                  <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 bg-gradient-to-t from-night via-night/60 to-transparent p-5 text-white">
                     <div>
                       <p className="font-pixel text-[9px] tracking-[0.18em] text-pink uppercase">Flagship project</p>
                       <p className="mt-1 font-display text-2xl font-semibold leading-none tracking-tight">{project.title}</p>
@@ -95,7 +107,6 @@ export default function Hero() {
                   </div>
                 </PixelWindow>
               </a>
-              <Island decor={['house', 'tree', 'person']} className="bob absolute -bottom-16 left-6 w-36 sm:-bottom-20 sm:w-44" style={{ '--delay': '-2s', filter: 'drop-shadow(6px 8px 0 rgba(27,42,102,0.18))' }} />
             </motion.div>
           )}
         </div>
@@ -115,10 +126,10 @@ function Backdrop({ yFar, yNear }) {
       {SPARKLES.map(([x, y, d, delay], i) => (
         <span key={i} className="sparkle" style={{ left: `${x}%`, top: `${y}%`, '--d': `${d}s`, '--delay': `${delay}s` }} />
       ))}
-      <motion.svg style={{ y: yFar }} className="absolute inset-x-0 bottom-0 h-44 w-full sm:h-64" viewBox="0 0 100 30" preserveAspectRatio="none" shapeRendering="crispEdges">
+      <motion.svg style={{ y: yFar }} className="absolute inset-x-0 bottom-0 h-48 w-full sm:h-72" viewBox="0 0 100 30" preserveAspectRatio="none" shapeRendering="crispEdges">
         <path d={FAR} fill="#cbbcff" opacity="0.55" />
       </motion.svg>
-      <motion.svg style={{ y: yNear }} className="absolute inset-x-0 bottom-0 h-32 w-full sm:h-48" viewBox="0 0 100 24" preserveAspectRatio="none" shapeRendering="crispEdges">
+      <motion.svg style={{ y: yNear }} className="absolute inset-x-0 bottom-0 h-36 w-full sm:h-52" viewBox="0 0 100 24" preserveAspectRatio="none" shapeRendering="crispEdges">
         <path d={NEAR} fill="#a99cff" opacity="0.5" />
       </motion.svg>
       <PixelCloud variant={2} className="absolute -bottom-3 -left-10 w-[42vw] min-w-[280px]" />

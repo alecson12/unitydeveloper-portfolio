@@ -174,13 +174,20 @@ Section headings, intros and nav labels live in `src/content/sections.js`.
 
 ## The look
 
-Everything visual is driven by the tokens at the top of `src/index.css`:
-sky `#74bfff` → lavender → pink `#ffd4e9` for the page, deep blue `#1b2a66`
-for text and pixel borders, purple `#6d4cff` for active states, and the dark
-stage `#0f1b4d` behind screenshots. Headings use **Pixelify Sans**, small
-labels **Silkscreen**, body text **Inter** (all from Google Fonts in
-`index.html`). Clouds, islands and icons are tiny SVGs drawn from pixel grids
-in `src/components/` — no image files, so they stay crisp at any size.
+Everything visual is driven by the tokens at the top of `src/index.css`.
+Outside: a bright pixel-art sky world — the page gradient runs from sky
+`#74bfff` through lavender to pink `#ffd4e9`, with drifting clouds, birds,
+an airship and floating islands on three parallax layers (`Sky.jsx`). Inside:
+deep-navy glass panels (`.px-card`) with pixel borders, and near-black
+"windows" (`.px-window`) that make every screenshot and video stand out.
+Text tokens flip to light automatically inside a panel, so components use the
+same classes in both worlds.
+
+Islands are generated from a seed by `src/components/WorldIsland.jsx` (grass,
+soil, rock, optional trees, tower, house, waterfall) — change `seed` or the
+flags to get a different island. Headings use **Pixelify Sans**, small labels
+**Silkscreen**, body text **Inter** (Google Fonts, loaded in `index.html`).
+All decoration is inline SVG; no image files, so it stays crisp at any size.
 
 ## About the original captures
 

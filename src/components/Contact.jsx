@@ -30,9 +30,9 @@ export default function Contact() {
                   href={l.href}
                   target={l.href.startsWith('http') ? '_blank' : undefined}
                   rel="noreferrer"
-                  className={`px-card px-card-lift group flex items-center gap-4 bg-cloud-2 px-4 py-3.5 ${isPlaceholder(l.label) ? 'placeholder-text' : ''}`}
+                  className={`px-card px-card-lift group flex items-center gap-4 px-4 py-3.5 ${isPlaceholder(l.label) ? 'placeholder-text' : ''}`}
                 >
-                  <span className="grid h-9 w-9 shrink-0 place-items-center bg-cloud px-border"><PixelIcon name={ICON[l.kind] ?? 'star'} size={18} /></span>
+                  <span className="grid h-9 w-9 shrink-0 place-items-center bg-white/10 px-border"><PixelIcon name={ICON[l.kind] ?? 'star'} size={18} /></span>
                   <span className="font-pixel w-16 shrink-0 text-[9px] tracking-[0.18em] text-purple uppercase">{l.kind}</span>
                   <span className="min-w-0 flex-1 truncate">{l.label}</span>
                   <span className="font-pixel text-[10px] text-dim transition group-hover:text-purple">▶</span>

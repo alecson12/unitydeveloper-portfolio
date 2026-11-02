@@ -59,11 +59,11 @@ export default function UIShowcase({ project }) {
 function CategoryBar({ cats, active }) {
   return (
     <div className="sticky top-[76px] z-30">
-      <nav aria-label="UI categories" className="px-card -mx-1 overflow-x-auto bg-cloud/92 px-3 py-2.5 backdrop-blur-md">
+      <nav aria-label="UI categories" className="px-card -mx-1 overflow-x-auto px-3 py-2.5 backdrop-blur-md">
         <ul className="flex min-w-max gap-2">
           {cats.map((c) => (
             <li key={c.id}>
-              <a href={`#cat-${c.id}`} className={`px-chip whitespace-nowrap ${active === c.id ? 'px-chip-active' : 'hover:bg-cloud-3'}`}>
+              <a href={`#cat-${c.id}`} className={`px-chip whitespace-nowrap transition-colors ${active === c.id ? 'px-chip-active' : 'hover:bg-white/15'}`}>
                 <PixelIcon name={c.icon} size={12} accent={active === c.id ? '#ffb6d8' : undefined} />
                 {c.name}
               </a>
@@ -84,7 +84,7 @@ function CategoryHeader({ category: c, index }) {
       <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
         <div className="flex items-start gap-4 sm:gap-5">
           <span className="px-card grid h-14 w-14 shrink-0 place-items-center sm:h-16 sm:w-16">
-            <PixelIcon name={c.icon} size={30} />
+            <PixelIcon name={c.icon} size={30} accent="#ffb6d8" />
           </span>
           <div>
             <p className="eyebrow">Category {String(index + 1).padStart(2, '0')}</p>
