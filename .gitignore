@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Original source captures (2.4 GB HEVC phone recordings). The site uses the web copies in public/media/.
+Rivalis_VidsAndPics/

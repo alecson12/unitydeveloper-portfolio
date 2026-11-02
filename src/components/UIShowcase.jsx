@@ -1,107 +1,101 @@
-import MediaGallery from './MediaGallery.jsx'
-import PixelWindow from './PixelWindow.jsx'
+import { useEffect, useMemo, useState } from 'react'
+import FeatureBlock from './FeatureBlock.jsx'
+import PixelIcon from './PixelIcon.jsx'
 import Reveal from './Reveal.jsx'
-import ComingSoon from './ComingSoon.jsx'
-import { projectHref } from '../lib/router.js'
+import EmptyIsland from './EmptyIsland.jsx'
+import { featuresOf } from '../lib/content.js'
 
 /**
- * A project shown as a list of UI screens. Each screen: name, purpose and
- * what it does on the left (sticky on desktop), its screenshots on the right.
- * Used on the homepage (featured slot) and on the project page (`full`).
+ * A project's UI, organised as categories → features. A sticky bar of
+ * category chips follows the reader and highlights the category on screen.
  */
-export default function UIShowcase({ project, full = false }) {
-  const screens = project.screens ?? []
+export default function UIShowcase({ project }) {
+  const cats = useMemo(() => (project.categories ?? []).filter((c) => c.features?.length), [project])
+  const features = useMemo(() => featuresOf(project), [project])
+  const [active, setActive] = useState(cats[0]?.id ?? '')
 
-  return (
-    <article>
-      {/* Project header */}
-      <Reveal className="grid gap-10 lg:grid-cols-12 lg:gap-14">
-        <div className="lg:col-span-7">
-          <PixelWindow label={project.title} badge={project.status}>
-            <img src={project.cover} alt={project.coverAlt ?? project.title} className={`aspect-video object-cover ${project.pixelArt ? 'pixelated' : ''}`} />
-          </PixelWindow>
-        </div>
-        <div className="flex flex-col justify-center lg:col-span-5">
-          <h3 className="font-display text-3xl font-semibold leading-none tracking-tight sm:text-4xl">{project.title}</h3>
-          <p className="mt-4 text-lg text-text/90">{project.tagline}</p>
-          <div className="mt-5 space-y-3 text-muted">
-            {(project.summary ?? []).map((p, i) => <p key={i}>{p}</p>)}
-          </div>
-          <dl className="mt-8 grid grid-cols-3 gap-4 border-t-2 border-white/10 pt-6 text-sm">
-            <Meta label="Role" value={project.role} />
-            <Meta label="Period" value={project.period} />
-            <Meta label="Tech" value={project.tech?.join(' · ')} />
-          </dl>
-          {!full && (
-            <a href={projectHref(project.id)} className="px-btn px-btn-ghost mt-8 self-start">
-              Open full page
-              <Arrow />
-            </a>
-          )}
-        </div>
-      </Reveal>
+  useEffect(() => {
+    const els = cats.map((c) => document.getElementById(`cat-${c.id}`)).filter(Boolean)
+    if (!els.length) return
+    const io = new IntersectionObserver(
+      (entries) => {
+        const hit = entries.filter((e) => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0]
+        if (hit) setActive(hit.target.id.replace('cat-', ''))
+      },
+      { rootMargin: '-30% 0px -60% 0px', threshold: [0, 0.1] },
+    )
+    els.forEach((el) => io.observe(el))
+    return () => io.disconnect()
+  }, [cats])
 
-      {/* Screens */}
-      {screens.length === 0 ? (
-        <div className="mt-16"><ComingSoon message="UI screens are being captured." /></div>
-      ) : (
-        <ol className="mt-20 space-y-24 sm:mt-28 sm:space-y-32">
-          {screens.map((s, i) => (
-            <li key={s.id} id={`${project.id}-${s.id}`} className="grid gap-8 lg:grid-cols-12 lg:gap-14">
-              <Reveal className="lg:col-span-4">
-                <div className="lg:sticky lg:top-28">
-                  <p className="eyebrow flex items-center gap-3">
-                    <span className="inline-block h-2 w-2 bg-accent" />
-                    Screen {String(i + 1).padStart(2, '0')} / {String(screens.length).padStart(2, '0')}
-                  </p>
-                  <h4 className="mt-4 font-display text-3xl font-semibold leading-none tracking-tight sm:text-4xl">{s.name}</h4>
-                  {s.purpose && <p className="mt-4 text-muted">{s.purpose}</p>}
-                  {s.functions?.length > 0 && (
-                    <>
-                      <p className="mt-8 font-pixel text-[10px] tracking-[0.18em] text-dim uppercase">What it does</p>
-                      <ul className="mt-3 space-y-2.5">
-                        {s.functions.map((f, j) => (
-                          <li key={j} className="flex gap-3 text-sm leading-relaxed text-text/90">
-                            <span className="mt-[7px] h-1.5 w-1.5 shrink-0 bg-accent-2" />
-                            {f}
-                          </li>
-                        ))}
-                      </ul>
-                    </>
-                  )}
-                </div>
-              </Reveal>
-              <div className="lg:col-span-8">
-                <MediaGallery
-                  items={s.media ?? []}
-                  label={s.name}
-                  pixelated={project.pixelArt}
-                  layout="stack"
-                  emptyMessage={`${s.name} captures are coming soon.`}
-                />
-              </div>
-            </li>
-          ))}
-        </ol>
-      )}
-    </article>
-  )
-}
+  if (!cats.length) return <EmptyIsland message="UI captures are being prepared." />
 
-function Meta({ label, value }) {
-  if (!value) return null
   return (
     <div>
-      <dt className="font-pixel text-[9px] tracking-[0.18em] text-dim uppercase">{label}</dt>
-      <dd className="mt-1.5 text-text/90">{value}</dd>
+      <CategoryBar cats={cats} active={active} />
+
+      <div className="mt-12 space-y-20 sm:mt-16 sm:space-y-28">
+        {cats.map((c, ci) => (
+          <section key={c.id} id={`cat-${c.id}`} className="scroll-mt-40">
+            <CategoryHeader category={c} index={ci} />
+            <div className="mt-8 space-y-8 sm:mt-10 sm:space-y-10">
+              {c.features.map((f) => (
+                <FeatureBlock
+                  key={f.id}
+                  feature={f}
+                  index={features.findIndex((x) => x.id === f.id && x.category.id === c.id)}
+                  total={features.length}
+                  project={project}
+                />
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
     </div>
   )
 }
 
-function Arrow() {
+function CategoryBar({ cats, active }) {
   return (
-    <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" shapeRendering="crispEdges" aria-hidden>
-      <path d="M2 5h6V3h2v2h0v2H8v2H6V7H2z" />
-    </svg>
+    <div className="sticky top-[76px] z-30">
+      <nav aria-label="UI categories" className="px-card -mx-1 overflow-x-auto bg-cloud/92 px-3 py-2.5 backdrop-blur-md">
+        <ul className="flex min-w-max gap-2">
+          {cats.map((c) => (
+            <li key={c.id}>
+              <a href={`#cat-${c.id}`} className={`px-chip whitespace-nowrap ${active === c.id ? 'px-chip-active' : 'hover:bg-cloud-3'}`}>
+                <PixelIcon name={c.icon} size={12} accent={active === c.id ? '#ffb6d8' : undefined} />
+                {c.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  )
+}
+
+function CategoryHeader({ category: c, index }) {
+  const media = (c.features ?? []).flatMap((f) => f.media ?? [])
+  const videos = media.filter((m) => m.type === 'video').length
+  const images = media.length - videos
+  return (
+    <Reveal>
+      <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+        <div className="flex items-start gap-4 sm:gap-5">
+          <span className="px-card grid h-14 w-14 shrink-0 place-items-center sm:h-16 sm:w-16">
+            <PixelIcon name={c.icon} size={30} />
+          </span>
+          <div>
+            <p className="eyebrow">Category {String(index + 1).padStart(2, '0')}</p>
+            <h3 className="mt-2 font-display text-4xl font-semibold leading-none tracking-tight sm:text-5xl">{c.name}</h3>
+            {c.blurb && <p className="mt-3 max-w-xl text-ink-2">{c.blurb}</p>}
+          </div>
+        </div>
+        <p className="shrink-0 font-pixel text-[9px] tracking-[0.16em] text-ink-2 uppercase">
+          {c.features.length} {c.features.length === 1 ? 'feature' : 'features'} · {videos} {videos === 1 ? 'recording' : 'recordings'} · {images} {images === 1 ? 'screenshot' : 'screenshots'}
+        </p>
+      </div>
+    </Reveal>
   )
 }

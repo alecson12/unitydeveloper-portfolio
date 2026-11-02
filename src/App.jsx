@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import Sky from './components/Sky.jsx'
 import Nav from './components/Nav.jsx'
 import Footer from './components/Footer.jsx'
 import Home from './pages/Home.jsx'
@@ -13,12 +14,14 @@ export default function App() {
     if (route.name !== 'home') return
     const id = window.location.hash.replace('#', '')
     if (!id) return
-    const t = setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60)
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const t = setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: reduce ? 'instant' : 'smooth', block: 'start' }), 60)
     return () => clearTimeout(t)
   }, [route])
 
   return (
-    <div className="scanlines relative min-h-screen">
+    <div className="relative min-h-screen">
+      <Sky />
       <Nav mode={route.name} />
       <main>
         {route.name === 'project' ? <ProjectPage id={route.id} /> : <Home />}

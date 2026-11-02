@@ -3,10 +3,10 @@ import Reveal from './Reveal.jsx'
 /** Eyebrow + heading + optional intro used at the top of every section. */
 export default function SectionHeading({ eyebrow, heading, intro }) {
   return (
-    <Reveal className="mb-12 sm:mb-16">
+    <Reveal className="mb-10 sm:mb-14">
       {eyebrow && (
         <p className="eyebrow mb-4 flex items-center gap-3">
-          <span className="inline-block h-2 w-2 bg-accent" />
+          <span className="inline-block h-2 w-2 bg-purple" />
           {eyebrow}
         </p>
       )}
@@ -14,7 +14,7 @@ export default function SectionHeading({ eyebrow, heading, intro }) {
         <h2 className="font-display text-4xl font-semibold leading-none tracking-tight text-balance sm:text-5xl lg:text-6xl">
           {heading}
         </h2>
-        {intro && <p className="max-w-sm text-balance text-muted sm:text-right">{intro}</p>}
+        {intro && <p className="max-w-md text-balance text-ink-2 sm:text-right">{intro}</p>}
       </div>
     </Reveal>
   )
