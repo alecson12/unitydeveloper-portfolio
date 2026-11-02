@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import Lightbox from './Lightbox.jsx'
 import VideoShowcase from './VideoShowcase.jsx'
 import PixelWindow from './PixelWindow.jsx'
-import EmptyIsland from './EmptyIsland.jsx'
+import EmptyState from './EmptyState.jsx'
 
 /**
  * Lays out the media of one feature:
@@ -14,7 +14,7 @@ import EmptyIsland from './EmptyIsland.jsx'
  */
 export default function MediaGallery({ items = [], label, pixelated = false, emptyMessage = 'Media coming soon.' }) {
   const [open, setOpen] = useState(null)
-  if (!items.length) return <EmptyIsland message={emptyMessage} compact />
+  if (!items.length) return <EmptyState message={emptyMessage} compact />
 
   const indexed = items.map((it, i) => ({ it, i }))
   const videos = indexed.filter(({ it }) => it.type === 'video')

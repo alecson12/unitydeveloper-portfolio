@@ -1,10 +1,10 @@
 # Unity Developer Portfolio — Alecson Marwin B. Gantica
 
-A standalone portfolio in a **Clouds + Pixel Art** world: a bright sky with
-floating islands outside, deep-navy panels for the work inside. It opens with
-**About Me** (photo, background, what I do, toolkit, highlights), then the
-**Projects** — Rivalis Academia Nexus shown with the real screenshots and
-screen recordings — then **Skills & expertise** and **Contact**.
+A standalone portfolio built as a **dive**: an underwater pixel-art world that
+gets deeper as you scroll. **Start** is the ocean surface with the wordmark;
+**About Me** is the shallows (photo, background, what I do, highlights);
+**Skills** is the reef; **Projects** is the deep — Rivalis Academia Nexus shown
+with the real screenshots and screen recordings; **Contact** is the floor.
 
 **All words, images and videos live in five content files.** The rest of the
 site builds itself from them.
@@ -46,25 +46,28 @@ UnityPortfolio/
 │
 ├── src/
 │   ├── content/                      ← THE ONLY FILES YOU NEED TO EDIT
-│   │   ├── profile.js                ← name, title, photo, opening intro, skill groups, contact
-│   │   ├── about.js                  ← background, timeline, what I do, tools, toolkit, highlights, statement
+│   │   ├── profile.js                ← name, title, wordmark, photo, intro, skill groups, contact
+│   │   ├── about.js                  ← background, timeline, what I do, tools, highlights, statement
 │   │   ├── projects.js               ← projects → categories → features → media (+ logo)
 │   │   ├── showcases.js              ← gameplay programming write-ups (under Projects · more)
-│   │   └── sections.js               ← section headings, intros and nav labels
+│   │   └── sections.js               ← section order, zones, depth labels, headings, nav labels
 │   │
 │   ├── components/                   ← building blocks (no content inside)
-│   │   ├── Hero.jsx                  the opening sky scene
+│   │   ├── Start.jsx                 the opening screen: surface, sun, waves, wordmark
+│   │   ├── Ocean.jsx                 fixed layer: sun rays, bubbles, deep vignette, glow — driven by scroll depth
+│   │   ├── Zone.jsx / SeaLife.jsx    a stretch of water at one depth + the creatures that live there
+│   │   ├── sprites.js / PixelSprite.jsx   every fish, plant and ruin as text pixel art
 │   │   ├── FeaturedProject.jsx       the flagship case-study header
 │   │   ├── UIShowcase.jsx            categories → FeatureBlock.jsx, with the sticky category bar
 │   │   ├── MediaGallery.jsx          recordings + screenshots of one feature
 │   │   ├── VideoShowcase.jsx         poster + play button → real <video>
 │   │   ├── Lightbox.jsx              full-screen viewer (click an image, ← → Esc)
 │   │   ├── PixelWindow.jsx           the pixel "game window" frame around media
-│   │   ├── Sky.jsx / PixelCloud.jsx / Island.jsx / CloudDivider.jsx / PixelIcon.jsx
-│   │   └── About.jsx / Skills.jsx / Contact.jsx / ShowcaseList.jsx / …
+│   │   ├── PixelCloud.jsx / PixelIcon.jsx
+│   │   └── AboutMe.jsx / Skills.jsx / Contact.jsx / ShowcaseList.jsx / …
 │   ├── pages/   Home.jsx · ProjectPage.jsx (#/project/<id>)
 │   ├── lib/     helpers (content readers, hash router)
-│   └── index.css                     colours, fonts, pixel borders, clouds
+│   └── index.css                     colours, fonts, panels, water animations
 │
 └── .claude/launch.json               lets Claude preview the site on port 5174
 ```
@@ -155,11 +158,11 @@ Everything about you is in two files:
 
 | What | File → key |
 | --- | --- |
-| Full name, short name, title, opening headline and intro, photo, the three quick facts | `profile.js` → `name`, `shortName`, `title`, `hero` |
+| Wordmark on the Start screen, scroll hint | `profile.js` → `start` |
+| Full name, short name, title, headline and intro, photo, quick facts | `profile.js` → `name`, `shortName`, `title`, `intro` |
 | Background paragraphs, timeline, strengths | `about.js` → `background` |
 | What I do (service cards) | `about.js` → `services` — each has `confirmed: true/false` |
 | Tools & technologies (tiles in Skills) | `about.js` → `tools` — each has `confirmed: true/false` |
-| My development toolkit (tools you built) | `about.js` → `toolkit` |
 | Professional highlights (big numbers) and notable contributions | `about.js` → `highlights`, `notable` |
 | Personal developer statement | `about.js` → `statement` |
 | Skill groups | `profile.js` → `skills` |
@@ -170,46 +173,59 @@ appear only in local preview, outlined and labelled "To confirm". Flip one to
 `true` once it is real and it goes live. The published site never claims a
 skill you have not confirmed.
 
-**Toolkit.** While `toolkit` is empty, local preview shows three sample cards
-marked "Sample · preview only" so you can judge the layout; the published site
-shows an honest "under construction" island. Copy the template in the file's
-comment to add a real entry; media goes in `public/media/toolkit/<id>/`.
-
 **Highlights.** A value of `'auto:features'` or `'auto:videos'` is counted
 from `projects.js`; values in `[brackets]` stay hidden until filled.
 
-**Photo.** Replace `public/media/profile/alecson-unity-developer.jpg` (4:5
-works best) and, if you rename it, update `hero.photo` in `profile.js`.
+**Photo.** The About Me photo is a cut-out with a transparent background,
+`public/media/profile/alecson-unity-developer-cutout.webp`, so you stand in the
+water. Replace it (keep the transparency) and, if you rename it, update
+`intro.photo` in `profile.js`. The wordmark is `wordmark.webp` in the same
+folder (`start.wordmark`).
 
 ## Gameplay programming write-ups
 
 `src/content/showcases.js` holds `GAMEPLAY`, shown under "Projects · more".
-It starts empty on purpose and the section shows an "under construction"
-island until you add real work. Media goes in `public/media/showcases/<id>/`.
+It starts empty on purpose and the section shows an empty chest until you add
+real work. Media goes in `public/media/showcases/<id>/`.
 
 ## Section headings and navigation
 
-Headings, intros and nav labels live in `src/content/sections.js`. A section
-with a `nav` label appears in the menu (About Me · Projects · Skills · Contact).
+Order, headings, intros, depth labels and nav labels live in
+`src/content/sections.js`. A section with a `nav` label appears in the menu
+(Start · About Me · Skills · Projects; Contact is the button). `zone` says
+which water a section sits in — sections that share a zone share one
+continuous stretch of water in `Home.jsx`.
 
 ---
 
 ## The look
 
 Everything visual is driven by the tokens at the top of `src/index.css`.
-Outside: a bright pixel-art sky world — the page gradient runs from sky
-`#74bfff` through lavender to pink `#ffd4e9`, with drifting clouds, birds,
-an airship and floating islands on three parallax layers (`Sky.jsx`). Inside:
-deep-navy glass panels (`.px-card`) with pixel borders, and near-black
-"windows" (`.px-window`) that make every screenshot and video stand out.
-Text tokens flip to light automatically inside a panel, so components use the
-same classes in both worlds.
 
-Islands are generated from a seed by `src/components/WorldIsland.jsx` (grass,
-soil, rock, optional trees, tower, house, waterfall) — change `seed` or the
-flags to get a different island. Headings use **Pixelify Sans**, small labels
-**Silkscreen**, body text **Inter** (Google Fonts, loaded in `index.html`).
-All decoration is inline SVG; no image files, so it stays crisp at any size.
+**The water.** The page is four stretches of water (`Zone.jsx`): shallow
+(About Me), mid (Skills), deep (Projects) and abyss (Contact). Each zone's
+gradient ends on the colour the next one starts with, so the dive is
+continuous. `Ocean.jsx` sits on a fixed layer and reads a **depth** value
+(0 at the top of the page → 4 at the bottom, measured from where the sections
+are) to fade sun rays in and out, start the bubbles once you are under, darken
+the edges in the deep and light the bioluminescent motes. `Start.jsx` is the
+surface: sky, sun, clouds, islands on the horizon, waves and glints.
+
+**The creatures.** Every fish, jellyfish, squid, anglerfish, plant and ruin is
+text pixel art in `src/components/sprites.js`, drawn by `PixelSprite.jsx`.
+`SeaLife.jsx` lists which live at which depth (`BANDS`), where they sit and
+how they move (swim across, float, sway). Items marked `sm: true` are hidden
+on phones. Add a creature with one line; draw a new one with a few rows of
+characters. Everything respects `prefers-reduced-motion`.
+
+**Inside.** Deep-navy panels (`.px-card`) with a quiet border and soft
+shadow, and near-black "windows" (`.px-window`) that make every screenshot
+and video stand out. Text is light everywhere under water; `.on-light` flips
+it dark for the navigation while it sits on the sky.
+
+**Type.** Headings use **Jersey 20**, labels **DotGothic16** (both pixel
+fonts chosen for readability), body text **Inter** (Google Fonts, loaded in
+`index.html`).
 
 ## About the original captures
 

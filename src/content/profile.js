@@ -1,6 +1,6 @@
 /**
  * =====================================================================
- *  YOUR PROFILE — name, opening introduction, skills, contact
+ *  YOUR PROFILE — name, start screen, introduction, skills, contact
  * =====================================================================
  *  This is the ONE file to edit for the short facts about YOU.
  *  The long About Me content (background, what you do, toolkit,
@@ -17,11 +17,22 @@ export const PROFILE = {
   shortName: 'Alecson Gantica', // used in the navigation and footer
   title: 'Unity Developer',
 
-  /* ---------- OPENING INTRODUCTION (the first screen) ---------- */
-  hero: {
-    // Small line above the big headline
+  /* ---------- START (the first screen, above the water) ---------- */
+  start: {
+    // Your wordmark PNG/WebP with a transparent background. Put it in  public/media/profile/
+    wordmark: '/media/profile/wordmark.webp',
+    wordmarkAlt: 'Unity Developer — Alecson Gantica',
+    // Optional one-liner under the wordmark. Leave '' for none.
+    tagline: '',
+    // The scroll hint at the bottom of the screen.
+    hint: 'Dive in',
+  },
+
+  /* ---------- ABOUT ME — INTRODUCTION (the first screen under water) ---------- */
+  intro: {
+    // Small line above the headline
     eyebrow: 'Unity Developer · Game UI & Systems',
-    // The big headline. Keep it short.
+    // The headline. Keep it short.
     headline: 'I build the screens players live in.',
     // One or two sentences under the headline.
     intro:
@@ -34,7 +45,7 @@ export const PROFILE = {
       { label: 'Studio', value: 'VIIBYTE' },
       { label: 'Based in', value: 'Bulacan, Philippines' },
     ],
-    // Your photo, cut out on a transparent background, so you stand on the island.
+    // Your photo, cut out on a transparent background, so you stand in the water.
     // Put files in  public/media/profile/
     photo: '/media/profile/alecson-unity-developer-cutout.webp',
     photoAlt: 'Alecson Marwin B. Gantica, Unity developer',

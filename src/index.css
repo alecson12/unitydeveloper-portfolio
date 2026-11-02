@@ -1,37 +1,42 @@
 @import "tailwindcss";
 
 /* =====================================================================
-   CLOUDS + PIXEL ART  —  design tokens
-   A bright pixel-art sky world outside; deep-navy, glass-like panels for
-   the work itself. Text tokens flip automatically inside dark surfaces
-   (see .px-card / .px-window / .on-dark below).
+   UNDERWATER PIXEL WORLD  —  design tokens
+   The page is a dive: bright surface at the top, near-black abyss at the
+   bottom. Text is light everywhere under water; the `.on-light` class
+   flips it dark for the few things that sit on the sky (the nav at the
+   very top). Panels are dark navy with a quiet border.
    ===================================================================== */
 @theme {
-  --font-display: "Pixelify Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Jersey 20", "Pixelify Sans", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-pixel: "Silkscreen", "Pixelify Sans", ui-monospace, monospace;
+  --font-pixel: "DotGothic16", "Silkscreen", ui-monospace, monospace;
 
-  --color-ink: #1b2a66;        /* text + borders on the sky */
-  --color-ink-2: #3a4a8f;      /* softer text */
-  --color-dim: #6c77ad;        /* labels */
-  --color-line: rgba(27, 42, 102, 0.14);
+  --color-ink: #eef3ff;        /* text on water and in panels */
+  --color-ink-2: #c3d2f2;      /* softer text */
+  --color-dim: #8fa3d4;        /* labels */
+  --color-line: rgba(255, 255, 255, 0.12);
 
   --color-cloud: #ffffff;
   --color-cloud-2: #f3f6ff;
   --color-cloud-3: #e6ecff;
 
   --color-sky: #6ec1ff;
-  --color-sky-deep: #3d7fe3;
-  --color-cyan: #a9e9ff;
+  --color-sky-deep: #1d8fe4;
+  --color-cyan: #7ee8ff;
   --color-lavender: #cbbcff;
-  --color-purple: #6d4cff;     /* accent: links, active states */
+  --color-purple: #b9a8ff;     /* accent: links, active states */
+  --color-accent: #6d4cff;     /* buttons */
   --color-pink: #ffb6d8;
   --color-mint: #9fe3a6;
+  --color-glow: #7cf7ff;       /* bioluminescence */
 
-  --color-deep: #0f1b4d;       /* panels */
-  --color-deep-2: #1a2a6c;
-  --color-night: #070b22;      /* stage behind screenshots */
+  --color-deep: #0b1740;       /* panels */
+  --color-deep-2: #142256;
+  --color-night: #050a1f;      /* stage behind screenshots */
+  --color-abyss: #02081c;
 
+  --radius-panel: 12px;
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -40,20 +45,17 @@ html {
   min-height: 100%;
   scroll-behavior: smooth;
   scroll-padding-top: 96px;
+  background: #4fb3f5; /* overscroll above the page: sky */
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }
 body {
   @apply text-ink font-sans antialiased;
-  /* The sky: high and blue at the top, pink horizon at the bottom of the page. */
-  background-color: #a9dcff;
-  background-image: linear-gradient(180deg, #6fbcff 0%, #9fd6ff 18%, #bfd8ff 42%, #d3c8ff 70%, #ffd0e6 100%);
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background: var(--color-abyss); /* overscroll below the page: the abyss */
 }
-::selection { background: rgba(109, 76, 255, 0.3); }
-* { scrollbar-width: thin; scrollbar-color: rgba(27,42,102,0.35) transparent; }
+::selection { background: rgba(124, 247, 255, 0.3); }
+* { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.3) transparent; }
 
 /* ---------- Utilities ---------- */
 @utility container-x {
@@ -61,7 +63,7 @@ body {
 }
 
 @utility eyebrow {
-  @apply font-pixel text-[10px] tracking-[0.18em] uppercase text-purple;
+  @apply font-pixel text-[12px] tracking-[0.08em] uppercase text-purple;
 }
 
 /* Crisp pixel art when scaled */
@@ -78,137 +80,95 @@ body {
 }
 
 @layer components {
-  /* ---------- Dark-surface token flip ----------
-     Inside a panel the text tokens become light, so every component can
-     use text-ink / text-ink-2 / text-dim / border-line in both worlds. */
-  .px-card,
-  .px-window,
-  .on-dark {
-    --color-ink: #eef1ff;
-    --color-ink-2: #c3caef;
-    --color-dim: #8f98cc;
-    --color-line: rgba(255, 255, 255, 0.12);
-    --color-purple: #b9a8ff;
+  /* ---------- Light-surface token flip ----------
+     For the few things that sit on the bright sky at the very top. */
+  .on-light {
+    --color-ink: #10224d;
+    --color-ink-2: #2a3f7a;
+    --color-dim: #4e62a3;
+    --color-line: rgba(16, 34, 77, 0.16);
+    --color-purple: #4b2fd6;
     color: var(--color-ink);
   }
 
-  /* ---------- Pixel borders ----------
-     Drawn with box-shadows so the corners stay notched like a sprite.
-     --px-c = colour, --px-w = thickness. */
+  /* ---------- Thin pixel-style border (icon squares, nav mark) ---------- */
   .px-border {
-    --px-c: var(--color-ink);
-    --px-w: 2px;
-    box-shadow:
-      0 calc(-1 * var(--px-w)) 0 var(--px-c),
-      0 var(--px-w) 0 var(--px-c),
-      calc(-1 * var(--px-w)) 0 0 var(--px-c),
-      var(--px-w) 0 0 var(--px-c);
+    --px-c: rgba(255, 255, 255, 0.22);
+    border: 2px solid var(--px-c);
+    border-radius: 6px;
   }
-  .px-border-soft { --px-c: rgba(27,42,102,0.22); }
+  .px-border-soft { --px-c: rgba(255,255,255,0.14); }
   .px-border-purple { --px-c: var(--color-purple); }
 
-  /* ---------- Panel: deep navy glass with a pixel border ---------- */
+  /* ---------- Panel: deep navy, quiet border, soft shadow ---------- */
   .px-card {
     @apply relative;
-    --px-c: rgba(255, 255, 255, 0.22);
-    --px-w: 2px;
-    --px-s: 6px;
+    border-radius: var(--radius-panel);
+    border: 1px solid rgba(255, 255, 255, 0.11);
     background:
-      linear-gradient(180deg, rgba(255,255,255,0.05), transparent 30%),
-      linear-gradient(180deg, rgba(23, 37, 102, 0.93), rgba(12, 20, 62, 0.95));
+      linear-gradient(180deg, rgba(255,255,255,0.045), transparent 28%),
+      linear-gradient(180deg, rgba(14, 26, 70, 0.94), rgba(7, 14, 44, 0.96));
     box-shadow:
-      0 calc(-1 * var(--px-w)) 0 var(--px-c),
-      0 var(--px-w) 0 var(--px-c),
-      calc(-1 * var(--px-w)) 0 0 var(--px-c),
-      var(--px-w) 0 0 var(--px-c),
-      var(--px-s) var(--px-s) 0 rgba(10, 16, 50, 0.35),
-      0 32px 60px -28px rgba(10, 16, 50, 0.6);
+      0 1px 0 rgba(255,255,255,0.06) inset,
+      0 24px 50px -24px rgba(1, 6, 24, 0.75),
+      0 2px 6px rgba(1, 6, 24, 0.3);
   }
   /* a panel inside a panel: a lighter inset surface */
   .px-card .px-card {
-    background: rgba(255, 255, 255, 0.05);
-    --px-c: rgba(255, 255, 255, 0.16);
-    --px-s: 3px;
-    box-shadow:
-      0 calc(-1 * var(--px-w)) 0 var(--px-c),
-      0 var(--px-w) 0 var(--px-c),
-      calc(-1 * var(--px-w)) 0 0 var(--px-c),
-      var(--px-w) 0 0 var(--px-c),
-      var(--px-s) var(--px-s) 0 rgba(10, 16, 50, 0.3);
+    background: rgba(255, 255, 255, 0.045);
+    border-color: rgba(255, 255, 255, 0.09);
+    border-radius: 10px;
+    box-shadow: none;
   }
-  .px-card-lift { @apply transition-transform duration-200; }
-  .px-card-lift:hover { transform: translate(-2px, -2px); --px-s: 8px; }
-  .px-card .px-card-lift:hover { --px-s: 5px; }
+  .px-card-lift { @apply transition-[transform,border-color,background-color] duration-200; }
+  .px-card-lift:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.22); }
 
-  /* ---------- Window: the frame around a screenshot or video ----------
-     Lighter border and a near-black stage so media always stands out. */
+  /* ---------- Window: the frame around a screenshot or video ---------- */
   .px-window {
-    @apply relative;
-    --px-c: rgba(255, 255, 255, 0.45);
-    --px-w: 2px;
-    --px-s: 6px;
+    @apply relative overflow-hidden;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
     background: var(--color-night);
-    box-shadow:
-      0 calc(-1 * var(--px-w)) 0 var(--px-c),
-      0 var(--px-w) 0 var(--px-c),
-      calc(-1 * var(--px-w)) 0 0 var(--px-c),
-      var(--px-w) 0 0 var(--px-c),
-      var(--px-s) var(--px-s) 0 rgba(5, 8, 30, 0.45);
+    box-shadow: 0 20px 40px -20px rgba(1, 6, 24, 0.8), 0 0 0 1px rgba(0,0,0,0.3);
   }
   .px-window img,
   .px-window video { @apply block h-auto w-full; }
-  .px-window-bar { background: rgba(255, 255, 255, 0.06); border-bottom: 2px solid rgba(255, 255, 255, 0.14); }
+  .px-window-bar { background: rgba(255, 255, 255, 0.06); border-bottom: 1px solid rgba(255, 255, 255, 0.12); }
 
   /* ---------- Buttons ---------- */
   .px-btn {
-    @apply relative inline-flex items-center gap-2 font-pixel text-[11px] tracking-[0.12em] uppercase transition-transform duration-150 select-none;
-    --px-w: 2px;
-    box-shadow:
-      0 calc(-1 * var(--px-w)) 0 var(--px-c),
-      0 var(--px-w) 0 var(--px-c),
-      calc(-1 * var(--px-w)) 0 0 var(--px-c),
-      var(--px-w) 0 0 var(--px-c),
-      4px 4px 0 rgba(10, 16, 50, 0.3);
+    @apply relative inline-flex items-center gap-2 font-pixel text-[13px] tracking-[0.06em] uppercase transition duration-150 select-none;
+    border-radius: 8px;
+    border: 1px solid var(--px-c, rgba(255,255,255,0.2));
+    box-shadow: 0 8px 20px -10px rgba(1, 6, 24, 0.7);
   }
-  .px-btn:hover { transform: translate(-1px, -1px); }
-  .px-btn:active {
-    transform: translate(2px, 2px);
-    box-shadow:
-      0 calc(-1 * var(--px-w)) 0 var(--px-c),
-      0 var(--px-w) 0 var(--px-c),
-      calc(-1 * var(--px-w)) 0 0 var(--px-c),
-      var(--px-w) 0 0 var(--px-c);
-  }
-  .px-btn-primary { --px-c: #6d4cff; background: linear-gradient(180deg, #7d5eff, #5f3fe8); color: #fff; @apply px-5 py-3; }
-  .px-btn-ghost { --px-c: var(--color-ink); background: rgba(255,255,255,0.06); color: var(--color-ink); @apply px-5 py-3; }
-  .px-btn-pink { --px-c: #1b2a66; background: var(--color-pink); color: #1b2a66; @apply px-5 py-3; }
+  .px-btn:hover { transform: translateY(-1px); filter: brightness(1.08); }
+  .px-btn:active { transform: translateY(1px); box-shadow: none; }
+  .px-btn-primary { --px-c: #8a70ff; background: linear-gradient(180deg, #7d5eff, #5a3ae0); color: #fff; @apply px-5 py-3; }
+  .px-btn-ghost { --px-c: rgba(255,255,255,0.28); background: rgba(255,255,255,0.07); color: var(--color-ink); backdrop-filter: blur(6px); @apply px-5 py-3; }
+  .on-light .px-btn-ghost { --px-c: rgba(16,34,77,0.35); background: rgba(255,255,255,0.45); }
+  .px-btn-pink { --px-c: #ffc9e3; background: var(--color-pink); color: #1b2a66; @apply px-5 py-3; }
   /* Size modifiers — declared after the colours so they win */
-  .px-btn-sm { @apply px-3 py-2; }
+  .px-btn-sm { @apply px-3 py-2 text-[12px]; }
   .px-btn-icon { @apply p-3; }
 
   /* ---------- Chip ---------- */
   .px-chip {
-    @apply inline-flex items-center gap-2 px-3 py-1.5 font-pixel text-[9px] tracking-[0.14em] uppercase;
+    @apply inline-flex items-center gap-2 px-3 py-1.5 font-pixel text-[12px] tracking-[0.06em] uppercase;
+    border-radius: 6px;
     color: var(--color-ink-2);
-    background: rgba(255, 255, 255, 0.75);
-    --px-c: rgba(27, 42, 102, 0.28);
-    --px-w: 2px;
-    box-shadow:
-      0 calc(-1 * var(--px-w)) 0 var(--px-c),
-      0 var(--px-w) 0 var(--px-c),
-      calc(-1 * var(--px-w)) 0 0 var(--px-c),
-      var(--px-w) 0 0 var(--px-c);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.16);
   }
-  .px-card .px-chip,
-  .px-window .px-chip,
-  .on-dark .px-chip { background: rgba(255, 255, 255, 0.07); --px-c: rgba(255, 255, 255, 0.2); }
-  .px-chip-active,
-  .px-card .px-chip-active,
-  .on-dark .px-chip-active { background: #6d4cff; color: #fff; --px-c: #8a70ff; }
+  .on-light .px-chip { background: rgba(255,255,255,0.6); border-color: rgba(16,34,77,0.2); }
+  .px-chip-active { background: #6d4cff; color: #fff; border-color: #8a70ff; }
 }
 
-/* ---------- Atmosphere ---------- */
-/* Drifting clouds (fixed sky layer). --dur = seconds across the screen. */
+/* =====================================================================
+   THE WATER — animations. All transform/opacity only.
+   ===================================================================== */
+
+/* Clouds drifting left-to-right (surface) */
 @keyframes drift {
   from { transform: translate3d(-40vw, 0, 0); }
   to   { transform: translate3d(110vw, 0, 0); }
@@ -220,7 +180,7 @@ body {
   animation-delay: var(--delay, 0s);
   will-change: transform;
 }
-/* Things that cross the sky right-to-left (birds, airship) */
+/* Birds crossing right-to-left */
 @keyframes drift-back {
   from { transform: translate3d(110vw, 0, 0); }
   to   { transform: translate3d(-30vw, 0, 0); }
@@ -233,22 +193,51 @@ body {
   will-change: transform;
 }
 
-/* Gentle floating for islands and panels */
+/* Creatures swimming across the screen */
+@keyframes swim-l {
+  from { transform: translate3d(110vw, 0, 0); }
+  to   { transform: translate3d(-30vw, 0, 0); }
+}
+@keyframes swim-r {
+  from { transform: translate3d(-30vw, 0, 0); }
+  to   { transform: translate3d(110vw, 0, 0); }
+}
+.swim { position: absolute; left: 0; animation-duration: var(--dur, 80s); animation-timing-function: linear; animation-iteration-count: infinite; animation-delay: var(--delay, 0s); will-change: transform; }
+.swim-l { animation-name: swim-l; }
+.swim-r { animation-name: swim-r; }
+
+/* Gentle floating */
 @keyframes bob {
   0%, 100% { transform: translateY(0); }
   50%      { transform: translateY(-8px); }
 }
 .bob { animation: bob var(--bob, 6s) ease-in-out infinite; animation-delay: var(--delay, 0s); }
 .bob-slow { animation: bob 9s ease-in-out infinite; }
-.bob-xs { animation: bob 7s ease-in-out infinite; --bob: 7s; }
+.bob-xs { animation: bob 7s ease-in-out infinite; }
+
+/* Jellyfish: drifting slowly up and down with a little sideways pulse */
+@keyframes drift-y {
+  0%   { transform: translate(0, 0); }
+  30%  { transform: translate(6px, -22px); }
+  60%  { transform: translate(-4px, -34px); }
+  100% { transform: translate(0, 0); }
+}
+.drift-y { animation: drift-y 14s ease-in-out infinite; animation-delay: var(--delay, 0s); }
+
+/* Plants swaying with the current */
+@keyframes sway {
+  0%, 100% { transform: skewX(-4deg); }
+  50%      { transform: skewX(4deg); }
+}
+.sway { animation: sway 5s ease-in-out infinite; animation-delay: var(--delay, 0s); transform-origin: bottom center; }
 
 /* Wing flap for birds: two frames */
 @keyframes flap { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(-1); } }
 .flap { animation: flap 0.6s steps(1) infinite; transform-origin: center; }
 
-/* Pixel sparkles */
+/* Sun glints on the water */
 @keyframes sparkle {
-  0%, 100% { opacity: 0.15; }
+  0%, 100% { opacity: 0.1; }
   50%      { opacity: 1; }
 }
 .sparkle {
@@ -256,31 +245,82 @@ body {
   width: 3px;
   height: 3px;
   background: #fff;
-  box-shadow: 0 0 0 1px rgba(255,255,255,0.35);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.35), 0 0 6px 1px rgba(255,255,255,0.6);
   animation: sparkle var(--d, 3s) steps(2) infinite;
   animation-delay: var(--delay, 0s);
 }
 
-/* Slow-rising light motes */
-@keyframes mote {
-  0%   { transform: translateY(0); opacity: 0; }
-  15%  { opacity: 0.8; }
-  85%  { opacity: 0.6; }
-  100% { transform: translateY(-40vh); opacity: 0; }
+/* Surface waves: a pixel foam tile scrolling sideways */
+@keyframes wave-x { from { background-position-x: 0; } to { background-position-x: var(--tile, 48px); } }
+.wave {
+  height: 12px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 4' width='16' height='4' shape-rendering='crispEdges'><rect x='4' y='0' width='4' height='1' fill='white'/><rect x='2' y='1' width='8' height='1' fill='white'/><rect x='0' y='2' width='2' height='1' fill='white'/><rect x='10' y='2' width='6' height='1' fill='white'/></svg>");
+  background-repeat: repeat-x;
+  animation: wave-x var(--speed, 9s) linear infinite;
+  opacity: 0.75;
+  will-change: background-position;
 }
-.mote {
+.wave-1 { --tile: 64px; background-size: 64px 16px; height: 16px; --speed: 11s; }
+.wave-2 { --tile: 48px; background-size: 48px 12px; height: 12px; --speed: 8s; opacity: 0.55; animation-direction: reverse; }
+.wave-3 { --tile: 32px; background-size: 32px 8px; height: 8px; --speed: 6s; opacity: 0.4; }
+
+/* Sun rays under the surface (fixed layer) */
+@keyframes ray-shimmer {
+  0%, 100% { opacity: 0.55; }
+  50%      { opacity: 1; }
+}
+.ray {
   position: absolute;
-  width: 2px;
-  height: 2px;
-  background: #fff;
-  animation: mote var(--d, 14s) linear infinite;
+  top: -10%;
+  height: 120%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.32) 0%, rgba(255,255,255,0.12) 35%, rgba(255,255,255,0) 72%);
+  transform-origin: top center;
+  mask-image: linear-gradient(90deg, transparent, #000 35%, #000 65%, transparent);
+  animation: ray-shimmer 7s ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+  mix-blend-mode: screen;
+}
+
+/* Bubbles rising (fixed layer) */
+@keyframes rise {
+  0%   { transform: translate(0, 0); opacity: 0; }
+  10%  { opacity: 0.7; }
+  50%  { transform: translate(8px, -55vh); }
+  90%  { opacity: 0.5; }
+  100% { transform: translate(-6px, -110vh); opacity: 0; }
+}
+.bubble {
+  position: absolute;
+  bottom: -20px;
+  border: 2px solid rgba(255,255,255,0.55);
+  box-shadow: inset 1px 1px 0 rgba(255,255,255,0.35);
+  animation: rise var(--d, 18s) linear infinite;
+  animation-delay: var(--delay, 0s);
+  will-change: transform, opacity;
+}
+
+/* Bioluminescent motes (fixed layer, deep only) */
+@keyframes glow {
+  0%, 100% { opacity: 0.1; transform: translateY(0); }
+  50%      { opacity: 1; transform: translateY(-10px); }
+}
+.glowmote {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  animation: glow var(--d, 7s) ease-in-out infinite;
   animation-delay: var(--delay, 0s);
 }
 
-/* Ordered-dither texture (checkerboard) */
-.dither {
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='4' height='4' shape-rendering='crispEdges'><rect width='2' height='2' fill='white'/><rect x='2' y='2' width='2' height='2' fill='white'/></svg>");
-  background-size: 4px 4px;
+/* The surface seen from below: a bright, moving line at the top of the water */
+@keyframes surface-x { from { background-position-x: 0; } to { background-position-x: 96px; } }
+.surface-line {
+  height: 10px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 3' width='24' height='3' shape-rendering='crispEdges'><rect x='0' y='0' width='6' height='1' fill='white'/><rect x='4' y='1' width='10' height='1' fill='white'/><rect x='12' y='0' width='6' height='1' fill='white'/><rect x='16' y='2' width='8' height='1' fill='white'/></svg>");
+  background-size: 96px 12px;
+  background-repeat: repeat-x;
+  animation: surface-x 10s linear infinite;
+  opacity: 0.8;
 }
 
 /* Blinking block cursor */
@@ -297,10 +337,10 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cloud, .drift-back, .bob, .bob-slow, .bob-xs, .flap, .sparkle, .mote, .cursor-blink::after { animation: none !important; }
+  .cloud, .drift-back, .swim, .bob, .bob-slow, .bob-xs, .drift-y, .sway, .flap, .sparkle, .wave, .ray, .bubble, .glowmote, .surface-line, .cursor-blink::after { animation: none !important; }
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-purple);
+  outline: 2px solid var(--color-glow);
   outline-offset: 3px;
 }

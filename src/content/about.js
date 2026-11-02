@@ -1,6 +1,6 @@
 /**
  * =====================================================================
- *  ABOUT ME — background, what you do, toolkit, highlights, statement
+ *  ABOUT ME — background, what you do, tools, highlights, statement
  * =====================================================================
  *  Everything on the About Me part of the site comes from this file.
  *  Short facts (name, title, photo, contact) live in profile.js.
@@ -61,36 +61,17 @@ export const ABOUT = {
     { name: 'Trello', kind: 'Workflow', confirmed: true },
   ],
 
-  /* ---------- MY DEVELOPMENT TOOLKIT ----------
-   *  Tools, editor extensions, reusable systems and utilities you built
-   *  yourself. Starts empty on purpose: local preview shows marked sample
-   *  cards; the published site shows an "under construction" island.
-   *  Media files go in  public/media/toolkit/<id>/
-   *
-   *  {
-   *    id: 'ui-state-machine',
-   *    name: 'UI State Machine',
-   *    kind: 'Reusable system',            // or: Editor extension · Utility · Automation
-   *    summary: 'One sentence: what it does.',
-   *    bullets: ['Short line', 'Short line'],
-   *    tech: ['Unity', 'C#'],
-   *    media: [{ type: 'image', src: '/media/toolkit/ui-state-machine/inspector.png', width: 1920, height: 1080, caption: '…', alt: '…' }],
-   *    link: { label: 'Source', href: 'https://github.com/...' },   // optional
-   *  }
-   */
-  toolkit: [],
-
   /* ---------- PROFESSIONAL HIGHLIGHTS ---------- */
   // Big numbers. 'auto' values are counted from projects.js; [brackets] stay hidden.
   highlights: [
     { label: 'Interfaces shipped', value: 'auto:features', note: '' },
     { label: 'Recordings on this site', value: 'auto:videos', note: '' },
     { label: 'Years in Unity', value: '5', note: 'since 2021' },
-    { label: 'Players on Rivalis', value: '100', note: 'almost · live now' },
+    { label: 'Players on Rivalis', value: '100K', note: 'almost · live now' },
   ],
   // One line each. Only real ones.
   notable: [
-    'Rivalis Academia Nexus is live, with almost 100 players and counting.',
+    'Rivalis Academia Nexus is live, with almost 100,000 players and counting.',
     'Player-facing HUD layout editor: scale, opacity, undo/redo, presets.',
   ],
 

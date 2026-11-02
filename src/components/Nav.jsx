@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { PROFILE } from '../content/profile.js'
 import { SECTIONS } from '../content/sections.js'
-import PixelCloud from './PixelCloud.jsx'
+import PixelSprite from './PixelSprite.jsx'
 
 /**
  * Sticky top navigation. On the homepage it highlights the section that is
@@ -14,6 +14,8 @@ export default function Nav({ mode = 'home' }) {
   const [menu, setMenu] = useState(false)
   const sections = SECTIONS.filter((s) => s.nav)
   const links = sections.filter((s) => s.id !== 'contact')
+  // At the very top the nav sits on the bright sky, so its text goes dark.
+  const onSky = mode === 'home' && !scrolled && !menu
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -71,13 +73,13 @@ export default function Nav({ mode = 'home' }) {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
-      <div className={`transition-colors duration-300 ${scrolled || menu ? 'on-dark border-b-2 border-white/10 bg-deep/85 backdrop-blur-md' : 'bg-transparent'}`}>
+      <div className={`transition-colors duration-300 ${scrolled || menu ? 'border-b border-white/10 bg-deep/85 backdrop-blur-md' : 'bg-transparent'} ${onSky ? 'on-light' : ''}`}>
         <div className="container-x flex h-[72px] items-center justify-between gap-4">
           <a href="#" onClick={goTop} className="group flex items-center gap-3" aria-label="Home">
             <Mark />
             <span className="flex flex-col leading-tight">
-              <span className="font-display text-lg font-semibold tracking-tight">{PROFILE.shortName ?? PROFILE.name}</span>
-              <span className="font-pixel text-[8px] tracking-[0.18em] text-ink-2 uppercase">{PROFILE.title}</span>
+              <span className="font-display text-lg tracking-tight">{PROFILE.shortName ?? PROFILE.name}</span>
+              <span className="font-pixel text-[12px] tracking-[0.08em] text-ink-2 uppercase">{PROFILE.title}</span>
             </span>
           </a>
 
@@ -88,7 +90,7 @@ export default function Nav({ mode = 'home' }) {
                   key={s.id}
                   href={`#${s.id}`}
                   onClick={(e) => go(e, s.id)}
-                  className={`relative py-2 font-pixel text-[10px] tracking-[0.14em] uppercase transition ${active === s.id ? 'text-ink' : 'text-ink-2 hover:text-ink'}`}
+                  className={`relative py-2 font-pixel text-[12px] tracking-[0.08em] uppercase transition ${active === s.id ? 'text-ink' : 'text-ink-2 hover:text-ink'}`}
                 >
                   {s.nav}
                   {active === s.id && (
@@ -98,7 +100,7 @@ export default function Nav({ mode = 'home' }) {
               ))}
             </nav>
           ) : (
-            <a href="#" onClick={goTop} className="hidden items-center gap-2 font-pixel text-[10px] tracking-[0.16em] text-ink-2 uppercase transition hover:text-ink lg:flex">
+            <a href="#" onClick={goTop} className="hidden items-center gap-2 font-pixel text-[12px] tracking-[0.08em] text-ink-2 uppercase transition hover:text-ink lg:flex">
               ◀ Back
             </a>
           )}
@@ -138,14 +140,14 @@ export default function Nav({ mode = 'home' }) {
             >
               <div className="container-x grid grid-cols-1 gap-1 pb-6 pt-2">
                 {mode !== 'home' && (
-                  <a href="#" onClick={goTop} className="px-3 py-3 font-pixel text-[11px] tracking-[0.16em] text-ink-2 uppercase hover:text-ink">◀ Back</a>
+                  <a href="#" onClick={goTop} className="px-3 py-3 font-pixel text-[13px] tracking-[0.08em] text-ink-2 uppercase hover:text-ink">◀ Back</a>
                 )}
                 {sections.map((s) => (
                   <a
                     key={s.id}
                     href={`#${s.id}`}
                     onClick={(e) => go(e, s.id)}
-                    className={`flex items-center gap-3 px-3 py-3 font-pixel text-[11px] tracking-[0.16em] uppercase transition ${active === s.id ? 'text-purple' : 'text-ink-2 hover:text-ink'}`}
+                    className={`flex items-center gap-3 px-3 py-3 font-pixel text-[13px] tracking-[0.08em] uppercase transition ${active === s.id ? 'text-purple' : 'text-ink-2 hover:text-ink'}`}
                   >
                     <span className={`h-2 w-2 ${active === s.id ? 'bg-purple' : 'bg-ink/20'}`} />
                     {s.nav}
@@ -160,11 +162,11 @@ export default function Nav({ mode = 'home' }) {
   )
 }
 
-/** Logo mark: a small pixel cloud in a window. */
+/** Logo mark: a small pixel fish in a square of water. */
 function Mark() {
   return (
-    <span className="px-border grid h-10 w-10 place-items-center bg-sky transition group-hover:bg-cyan">
-      <PixelCloud variant={1} className="w-6" shade="#dfe6ff" />
+    <span className="px-border grid h-10 w-10 place-items-center bg-sky-deep transition group-hover:bg-sky" style={{ '--px-c': 'rgba(255,255,255,0.35)' }}>
+      <PixelSprite name="fish" className="w-6" />
     </span>
   )
 }

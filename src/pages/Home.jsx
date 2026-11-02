@@ -1,14 +1,13 @@
-import Hero from '../components/Hero.jsx'
+import Start from '../components/Start.jsx'
+import Zone from '../components/Zone.jsx'
 import Section from '../components/Section.jsx'
-import CloudDivider from '../components/CloudDivider.jsx'
-import { Background, Services, Highlights } from '../components/AboutMe.jsx'
-import Toolkit from '../components/Toolkit.jsx'
+import { Intro, Background, Services, Highlights } from '../components/AboutMe.jsx'
+import Skills from '../components/Skills.jsx'
 import FeaturedProject from '../components/FeaturedProject.jsx'
 import UIShowcase from '../components/UIShowcase.jsx'
 import ShowcaseList from '../components/ShowcaseList.jsx'
 import ProjectCard from '../components/ProjectCard.jsx'
-import EmptyIsland from '../components/EmptyIsland.jsx'
-import Skills from '../components/Skills.jsx'
+import EmptyState from '../components/EmptyState.jsx'
 import Contact from '../components/Contact.jsx'
 import { SECTIONS } from '../content/sections.js'
 import { GAMEPLAY } from '../content/showcases.js'
@@ -17,10 +16,14 @@ import { featuredProject, otherProjects } from '../lib/content.js'
 const meta = (id) => SECTIONS.find((s) => s.id === id) ?? { id }
 
 /**
- * Page order:  About Me (hero → background → what I do → highlights → toolkit)
- *              Projects (flagship → UI showcase → more)
- *              Skills & expertise
- *              Contact
+ * The dive, top to bottom:
+ *   Start      — above the surface: the wordmark
+ *   About Me   — shallow water: introduction, background, what I do
+ *   Skills     — mid water: tools and skills
+ *   Projects   — deep water: the flagship case study, feature by feature
+ *   Contact    — the floor
+ * Sections that share a depth sit in one <Zone>, so the water colour runs
+ * continuously and the creatures of that depth swim behind them.
  */
 export default function Home() {
   const featured = featuredProject()
@@ -28,61 +31,61 @@ export default function Home() {
 
   return (
     <>
-      {/* ---------------- ABOUT ME ---------------- */}
-      <Hero />
+      <Start />
 
-      <Section id="profile" meta={meta('profile')}>
-        <Background />
-      </Section>
+      {/* ---------------- ABOUT ME · shallow water ---------------- */}
+      <Zone depth="shallow">
+        <Section id="about" meta={meta('about')}>
+          <Intro />
+        </Section>
+        <Section id="profile" meta={meta('profile')} tight>
+          <Background />
+        </Section>
+        <Section id="services" meta={meta('services')} tight>
+          <Services />
+          <div className="mt-6"><Highlights /></div>
+        </Section>
+      </Zone>
 
-      <Section id="services" meta={meta('services')} tight>
-        <Services />
-        <div className="mt-6"><Highlights /></div>
-      </Section>
+      {/* ---------------- SKILLS · mid water ---------------- */}
+      <Zone depth="mid">
+        <Section id="skills" meta={meta('skills')}>
+          <Skills />
+        </Section>
+      </Zone>
 
-      <Section id="toolkit" meta={meta('toolkit')} tight>
-        <Toolkit empty={meta('toolkit').empty} />
-      </Section>
+      {/* ---------------- PROJECTS · deep water ---------------- */}
+      <Zone depth="deep">
+        <Section id="projects" meta={{ ...meta('projects'), heading: featured?.title ?? meta('projects').heading }}>
+          {featured ? <FeaturedProject project={featured} /> : <EmptyState message="The flagship project is being prepared." />}
+        </Section>
 
-      <CloudDivider decor={['tree', 'person']} />
+        <Section id="ui-showcase" meta={meta('ui-showcase')}>
+          {featured ? <UIShowcase project={featured} /> : <EmptyState message="UI captures are being prepared." />}
+        </Section>
 
-      {/* ---------------- PROJECTS ---------------- */}
-      <Section id="projects" meta={{ ...meta('projects'), heading: featured?.title ?? meta('projects').heading }}>
-        {featured ? <FeaturedProject project={featured} /> : <EmptyIsland message="The flagship project is being prepared." />}
-      </Section>
+        <Section id="more-projects" meta={meta('more-projects')} tight>
+          {others.length > 0 || GAMEPLAY.length > 0 ? (
+            <div className="space-y-8">
+              {others.length > 0 && (
+                <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                  {others.map((p, i) => <ProjectCard key={p.id} project={p} index={i} />)}
+                </div>
+              )}
+              {GAMEPLAY.length > 0 && <ShowcaseList entries={GAMEPLAY} icon="controller" />}
+            </div>
+          ) : (
+            <EmptyState message={meta('more-projects').empty} />
+          )}
+        </Section>
+      </Zone>
 
-      <Section id="ui-showcase" meta={meta('ui-showcase')}>
-        {featured ? <UIShowcase project={featured} /> : <EmptyIsland message="UI captures are being prepared." />}
-      </Section>
-
-      <Section id="more-projects" meta={meta('more-projects')} tight>
-        {others.length > 0 || GAMEPLAY.length > 0 ? (
-          <div className="space-y-8">
-            {others.length > 0 && (
-              <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                {others.map((p, i) => <ProjectCard key={p.id} project={p} index={i} />)}
-              </div>
-            )}
-            {GAMEPLAY.length > 0 && <ShowcaseList entries={GAMEPLAY} icon="controller" />}
-          </div>
-        ) : (
-          <EmptyIsland message={meta('more-projects').empty} />
-        )}
-      </Section>
-
-      <CloudDivider decor={['house']} />
-
-      {/* ---------------- SKILLS ---------------- */}
-      <Section id="skills" meta={meta('skills')}>
-        <Skills />
-      </Section>
-
-      <CloudDivider decor={['flag', 'tree']} />
-
-      {/* ---------------- CONTACT ---------------- */}
-      <Section id="contact" meta={meta('contact')}>
-        <Contact />
-      </Section>
+      {/* ---------------- CONTACT · the floor ---------------- */}
+      <Zone depth="abyss">
+        <Section id="contact" meta={meta('contact')}>
+          <Contact />
+        </Section>
+      </Zone>
     </>
   )
 }

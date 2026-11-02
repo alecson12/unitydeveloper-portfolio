@@ -10,8 +10,8 @@ export default function PixelWindow({ label, badge, children, className = '', st
         <span className="h-2.5 w-2.5 bg-pink" />
         <span className="h-2.5 w-2.5 bg-sky" />
         <span className="h-2.5 w-2.5 bg-lavender" />
-        {label && <span className="ml-2 truncate font-pixel text-[9px] tracking-[0.14em] text-ink-2 uppercase">{label}</span>}
-        {badge && <span className="ml-auto shrink-0 whitespace-nowrap font-pixel text-[9px] tracking-[0.14em] text-dim uppercase">{badge}</span>}
+        {label && <span className="ml-2 truncate font-pixel text-[12px] tracking-[0.08em] text-ink-2 uppercase">{label}</span>}
+        {badge && <span className="ml-auto shrink-0 whitespace-nowrap font-pixel text-[12px] tracking-[0.08em] text-dim uppercase">{badge}</span>}
       </div>
       <div className={`relative ${stage === 'sky' ? 'bg-cyan' : 'bg-night'}`}>{children}</div>
     </div>

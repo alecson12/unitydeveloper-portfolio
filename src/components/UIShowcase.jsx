@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import FeatureBlock from './FeatureBlock.jsx'
 import PixelIcon from './PixelIcon.jsx'
 import Reveal from './Reveal.jsx'
-import EmptyIsland from './EmptyIsland.jsx'
+import EmptyState from './EmptyState.jsx'
 import { featuresOf } from '../lib/content.js'
 
 /**
@@ -28,7 +28,7 @@ export default function UIShowcase({ project }) {
     return () => io.disconnect()
   }, [cats])
 
-  if (!cats.length) return <EmptyIsland message="UI captures are being prepared." />
+  if (!cats.length) return <EmptyState message="UI captures are being prepared." />
 
   return (
     <div>
@@ -85,7 +85,7 @@ function CategoryHeader({ category: c, index }) {
           </span>
           <div>
             <p className="eyebrow">Category {String(index + 1).padStart(2, '0')}</p>
-            <h3 className="mt-2 font-display text-4xl font-semibold leading-none tracking-tight sm:text-5xl">{c.name}</h3>
+            <h3 className="mt-2 font-display text-4xl leading-none tracking-tight sm:text-5xl">{c.name}</h3>
             {c.blurb && <p className="mt-3 max-w-xl text-ink-2">{c.blurb}</p>}
           </div>
         </div>

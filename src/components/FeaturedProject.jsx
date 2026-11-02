@@ -40,7 +40,7 @@ export default function FeaturedProject({ project, full = false }) {
 
             {project.contribution?.length > 0 && (
               <div className="mt-8 border-l-4 border-pink pl-4">
-                <p className="font-pixel text-[9px] tracking-[0.18em] text-dim uppercase">My part</p>
+                <p className="font-pixel text-[12px] tracking-[0.08em] text-dim uppercase">My part</p>
                 <ul className="mt-2 space-y-1.5 text-sm leading-relaxed">
                   {project.contribution.map((c, i) => <Txt key={i} as="li" value={c} />)}
                 </ul>
@@ -60,13 +60,13 @@ export default function FeaturedProject({ project, full = false }) {
                 <img src={project.logo} alt={`${project.title} logo`} width="1672" height="941" className="mx-auto w-full max-w-[360px]" />
               </div>
             ) : (
-              <h3 className="font-display text-4xl font-semibold leading-none tracking-tight sm:text-5xl">{project.title}</h3>
+              <h3 className="font-display text-4xl leading-none tracking-tight sm:text-5xl">{project.title}</h3>
             )}
             <div className="mt-6 flex flex-wrap gap-2">
               {chips.map((c) => <span key={c} className="px-chip">{c}</span>)}
             </div>
             {project.logo && <h3 className="sr-only">{project.title}</h3>}
-            {project.tagline && <p className="mt-5 font-display text-2xl font-semibold leading-tight tracking-tight sm:text-3xl">{project.tagline}</p>}
+            {project.tagline && <p className="mt-5 font-display text-2xl leading-tight tracking-tight sm:text-3xl">{project.tagline}</p>}
             {project.intro && <p className="mt-5 leading-relaxed">{project.intro}</p>}
             <div className="mt-4 space-y-3 text-ink-2">
               {(project.overview ?? []).map((p, i) => <p key={i}>{p}</p>)}
@@ -76,13 +76,13 @@ export default function FeaturedProject({ project, full = false }) {
 
         {cats.length > 0 && (
           <div className="mt-10 border-t-2 border-line pt-8">
-            <p className="font-pixel text-[9px] tracking-[0.18em] text-dim uppercase">Jump to a group</p>
+            <p className="font-pixel text-[12px] tracking-[0.08em] text-dim uppercase">Jump to a group</p>
             <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4 xl:grid-cols-8">
               {cats.map((c) => (
                 <li key={c.id}>
                   <a href={`#cat-${c.id}`} className="px-card px-card-lift flex h-full items-center gap-3 px-3 py-3">
                     <PixelIcon name={c.icon} size={20} className="shrink-0" />
-                    <span className="font-pixel text-[9px] leading-snug tracking-[0.12em] uppercase">{c.name}</span>
+                    <span className="font-pixel text-[12px] leading-snug tracking-[0.08em] uppercase">{c.name}</span>
                   </a>
                 </li>
               ))}
@@ -98,7 +98,7 @@ function Fact({ label, value }) {
   if (value === undefined || value === null || value === '') return null
   return (
     <div>
-      <dt className="font-pixel text-[9px] tracking-[0.18em] text-dim uppercase">{label}</dt>
+      <dt className="font-pixel text-[12px] tracking-[0.08em] text-dim uppercase">{label}</dt>
       <Txt as="dd" value={String(value)} className="mt-1.5 text-sm" />
     </div>
   )

@@ -2,20 +2,22 @@ import { PROFILE } from '../content/profile.js'
 
 const YEAR = new Date().getFullYear()
 
-/** Ground level: a pixel grass band, then the footer on deep blue. */
+/** The sea floor: a dark sand band, then the footer in the abyss. */
 export default function Footer() {
   return (
-    <footer className="relative mt-16">
-      <svg aria-hidden className="block h-6 w-full sm:h-8" viewBox="0 0 100 6" preserveAspectRatio="none" shapeRendering="crispEdges">
-        <rect x="0" y="0" width="100" height="1.5" fill="#b9f2bb" />
-        <rect x="0" y="1.5" width="100" height="1.5" fill="#6fd083" />
-        <rect x="0" y="3" width="100" height="1.5" fill="#49a85f" />
-        <rect x="0" y="4.5" width="100" height="1.5" fill="#97694a" />
+    <footer className="relative z-10 bg-abyss">
+      <svg aria-hidden className="block h-5 w-full sm:h-7" viewBox="0 0 100 5" preserveAspectRatio="none" shapeRendering="crispEdges">
+        <rect x="0" y="0" width="100" height="1" fill="#1b2350" />
+        <rect x="0" y="1" width="100" height="1.5" fill="#141b40" />
+        <rect x="0" y="2.5" width="100" height="2.5" fill="#0d1230" />
+        <rect x="12" y="0" width="3" height="1" fill="#2a3468" />
+        <rect x="47" y="0" width="2" height="1" fill="#2a3468" />
+        <rect x="80" y="0" width="4" height="1" fill="#2a3468" />
       </svg>
-      <div className="bg-deep py-10 text-cloud/70">
+      <div className="py-10 text-ink-2">
         <div className="container-x flex flex-col items-start justify-between gap-3 text-sm sm:flex-row sm:items-center">
           <p>© {YEAR} {PROFILE.shortName ?? PROFILE.name}. {PROFILE.footer.note}</p>
-          <a href="#top" className="font-pixel text-[9px] tracking-[0.18em] uppercase transition hover:text-cloud">▲ Back to the sky</a>
+          <a href="#start" className="font-pixel text-[12px] tracking-[0.08em] uppercase transition hover:text-ink">▲ Back to the surface</a>
         </div>
       </div>
     </footer>

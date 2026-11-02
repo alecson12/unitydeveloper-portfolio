@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import FeaturedProject from '../components/FeaturedProject.jsx'
 import UIShowcase from '../components/UIShowcase.jsx'
 import ProjectCard from '../components/ProjectCard.jsx'
-import CloudDivider from '../components/CloudDivider.jsx'
+import Zone from '../components/Zone.jsx'
 import Reveal from '../components/Reveal.jsx'
 import { projectById, visibleProjects } from '../lib/content.js'
 import { PROFILE } from '../content/profile.js'
@@ -20,30 +20,30 @@ export default function ProjectPage({ id }) {
 
   if (!project || project.visible === false) {
     return (
-      <section className="container-x flex min-h-[70vh] flex-col items-start justify-center pt-24">
-        <p className="eyebrow mb-3">404</p>
-        <h1 className="font-display text-4xl font-semibold tracking-tight">That island is not on the map yet.</h1>
-        <a href="#" className="px-btn px-btn-ghost mt-8">◀ Back</a>
-      </section>
+      <Zone depth="deep">
+        <section className="container-x flex min-h-[70vh] flex-col items-start justify-center pt-24">
+          <p className="eyebrow mb-3">404</p>
+          <h1 className="font-display text-4xl tracking-tight">Nothing at this depth yet.</h1>
+          <a href="#" className="px-btn px-btn-ghost mt-8">◀ Back</a>
+        </section>
+      </Zone>
     )
   }
 
   return (
-    <>
+    <Zone depth="deep">
       <section className="container-x pt-32 sm:pt-40">
         <Reveal>
-          <a href="#projects" className="font-pixel text-[10px] tracking-[0.16em] text-ink-2 uppercase transition hover:text-ink">◀ All work</a>
+          <a href="#projects" className="font-pixel text-[12px] tracking-[0.08em] text-ink-2 uppercase transition hover:text-ink">◀ All work</a>
           <p className="eyebrow mb-4 mt-10 flex items-center gap-3"><span className="inline-block h-2 w-2 bg-purple" />Case study</p>
-          <h1 className="font-display text-5xl font-semibold leading-none tracking-tight sm:text-6xl lg:text-7xl">{project.title}</h1>
+          <h1 className="font-display text-5xl leading-none tracking-tight sm:text-6xl lg:text-7xl">{project.title}</h1>
         </Reveal>
         <div className="mt-12">
           <FeaturedProject project={project} full />
         </div>
       </section>
 
-      <CloudDivider decor={['tree', 'person']} />
-
-      <section id="ui-showcase" className="container-x scroll-mt-24 pb-24">
+      <section id="ui-showcase" className="container-x mt-16 scroll-mt-24 pb-24 sm:mt-24">
         <UIShowcase project={project} />
       </section>
 
@@ -55,6 +55,6 @@ export default function ProjectPage({ id }) {
           </div>
         </section>
       )}
-    </>
+    </Zone>
   )
 }

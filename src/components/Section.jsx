@@ -5,7 +5,7 @@ export default function Section({ id, meta, children, tight = false }) {
   return (
     <section id={id} className={`scroll-mt-24 ${tight ? 'py-14 sm:py-20' : 'py-20 sm:py-28'}`}>
       <div className="container-x">
-        {meta && <SectionHeading eyebrow={meta.eyebrow} heading={meta.heading} intro={meta.intro} />}
+        {meta && <SectionHeading eyebrow={meta.eyebrow} heading={meta.heading} intro={meta.intro} depth={meta.depth} />}
         {children}
       </div>
     </section>

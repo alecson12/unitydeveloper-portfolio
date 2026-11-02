@@ -54,7 +54,7 @@ export default function Lightbox({ items, index, pixelated = false, onClose, onC
           onClick={onClose}
         >
           <div className="flex items-center justify-between px-4 py-4 sm:px-6">
-            <span className="font-pixel text-[10px] tracking-[0.18em] text-cloud/70">
+            <span className="font-pixel text-[12px] tracking-[0.08em] text-cloud/70">
               {String(index + 1).padStart(2, '0')} / {String(count).padStart(2, '0')}
             </span>
             <button type="button" onClick={onClose} className="px-btn px-btn-ghost px-btn-sm" aria-label="Close viewer">

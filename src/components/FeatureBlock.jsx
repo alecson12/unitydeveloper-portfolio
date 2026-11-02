@@ -18,11 +18,11 @@ export default function FeatureBlock({ feature, index, total, project }) {
         <span className="inline-block h-2 w-2 bg-purple" />
         Feature {String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
       </p>
-      <h4 className="mt-3 font-display text-3xl font-semibold leading-none tracking-tight sm:text-4xl">{feature.name}</h4>
+      <h4 className="mt-3 font-display text-3xl leading-none tracking-tight sm:text-4xl">{feature.name}</h4>
       {feature.summary && <p className="mt-4 max-w-2xl leading-relaxed text-ink-2">{feature.summary}</p>}
       {feature.contribution && (
         <div className="mt-5 border-l-4 border-pink pl-4">
-          <p className="font-pixel text-[9px] tracking-[0.18em] text-dim uppercase">My part</p>
+          <p className="font-pixel text-[12px] tracking-[0.08em] text-dim uppercase">My part</p>
           <Txt as="p" value={feature.contribution} className="mt-1.5 text-sm leading-relaxed" />
         </div>
       )}
@@ -31,7 +31,7 @@ export default function FeatureBlock({ feature, index, total, project }) {
 
   const functions = feature.functions?.length > 0 && (
     <>
-      <p className="font-pixel text-[10px] tracking-[0.18em] text-dim uppercase">What it does</p>
+      <p className="font-pixel text-[12px] tracking-[0.08em] text-dim uppercase">What it does</p>
       <ul className="mt-3 grid grid-cols-1 gap-2">
         {feature.functions.map((f, j) => (
           <li key={j} className="flex gap-3 text-sm leading-relaxed">

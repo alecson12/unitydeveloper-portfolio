@@ -1,5 +1,5 @@
 import Reveal from './Reveal.jsx'
-import EmptyIsland from './EmptyIsland.jsx'
+import EmptyState from './EmptyState.jsx'
 import MediaGallery from './MediaGallery.jsx'
 import PixelIcon from './PixelIcon.jsx'
 
@@ -8,7 +8,7 @@ import PixelIcon from './PixelIcon.jsx'
  * Shows an honest empty island until there are entries.
  */
 export default function ShowcaseList({ entries = [], empty, icon = 'code' }) {
-  if (!entries.length) return <EmptyIsland message={empty} />
+  if (!entries.length) return <EmptyState message={empty} />
   return (
     <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
       {entries.map((e, i) => (
@@ -17,7 +17,7 @@ export default function ShowcaseList({ entries = [], empty, icon = 'code' }) {
             <div className="flex items-start gap-4">
               <span className="px-card grid h-12 w-12 shrink-0 place-items-center"><PixelIcon name={icon} size={22} /></span>
               <div className="min-w-0">
-                <h3 className="font-display text-2xl font-semibold leading-none tracking-tight sm:text-3xl">{e.title}</h3>
+                <h3 className="font-display text-2xl leading-none tracking-tight sm:text-3xl">{e.title}</h3>
                 {e.summary && <p className="mt-3 leading-relaxed text-ink-2">{e.summary}</p>}
               </div>
             </div>
