@@ -25,7 +25,7 @@ export const PROFILE = {
     headline: 'I build the screens players live in.',
     // One or two sentences under the headline.
     intro:
-      'Unity developer from the Philippines. I turn game design into working interfaces and systems in C# — most recently the complete in-game UI of Rivalis Academia Nexus, a mobile MMORPG: login to HUD, inventory to trading, chat to settings.',
+      'Unity developer from the Philippines. I built the complete in-game UI of Rivalis Academia Nexus, a mobile MMORPG.',
     primaryButton: { label: 'See my projects', href: '#projects' },
     secondaryButton: { label: 'Get in touch', href: '#contact' },
     // Short facts shown under the buttons. Keep each one to a few words.
@@ -44,14 +44,14 @@ export const PROFILE = {
   // Only list what you have actually used.
   skills: [
     { group: 'Engine & Language', items: ['Unity', 'C#'] },
-    { group: 'Game UI', items: ['HUD & menus', 'Inventory & shop screens', 'Chat & social UI', 'Touch controls', 'Player-customisable layouts'] },
+    { group: 'Game UI', items: ['HUD & menus', 'Inventory & shops', 'Chat & social', 'Touch controls'] },
     { group: 'Design', items: ['Photoshop', 'Graphic design', '[e.g. Figma]'] },
     { group: 'Workflow', items: ['Git', '[e.g. Trello, Jira]'] },
   ],
 
   /* ---------- CONTACT ---------- */
   contact: {
-    text: 'Looking for a Unity developer for game UI, gameplay systems or a full game build? Tell me about the project.',
+    text: 'Need a Unity developer for game UI or systems? Say hello.',
     availability: '[Placeholder — e.g. Open to full-time, contract and remote work]',
     // Replace the placeholder values. Remove any line you do not want shown.
     // Placeholder links are hidden on the published site until replaced.

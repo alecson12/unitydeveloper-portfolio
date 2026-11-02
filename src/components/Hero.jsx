@@ -106,7 +106,6 @@ export default function Hero() {
                   <div className="pointer-events-none absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(7,11,34,0) 55%, rgba(7,11,34,0.85) 100%), linear-gradient(90deg, rgba(7,11,34,0.35), transparent 25%, transparent 75%, rgba(7,11,34,0.35))' }} />
                   <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-5 text-white">
                     <div>
-                      <p className="font-pixel text-[9px] tracking-[0.18em] text-pink uppercase">Lv. Unity Developer</p>
                       <p className="mt-1 font-display text-2xl font-semibold leading-none tracking-tight">{PROFILE.shortName}</p>
                     </div>
                     <a href="#profile" className="px-btn px-btn-pink px-btn-sm">Profile</a>

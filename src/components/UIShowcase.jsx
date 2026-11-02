@@ -76,9 +76,6 @@ function CategoryBar({ cats, active }) {
 }
 
 function CategoryHeader({ category: c, index }) {
-  const media = (c.features ?? []).flatMap((f) => f.media ?? [])
-  const videos = media.filter((m) => m.type === 'video').length
-  const images = media.length - videos
   return (
     <Reveal>
       <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
@@ -92,9 +89,6 @@ function CategoryHeader({ category: c, index }) {
             {c.blurb && <p className="mt-3 max-w-xl text-ink-2">{c.blurb}</p>}
           </div>
         </div>
-        <p className="shrink-0 font-pixel text-[9px] tracking-[0.16em] text-ink-2 uppercase">
-          {c.features.length} {c.features.length === 1 ? 'feature' : 'features'} · {videos} {videos === 1 ? 'recording' : 'recordings'} · {images} {images === 1 ? 'screenshot' : 'screenshots'}
-        </p>
       </div>
     </Reveal>
   )

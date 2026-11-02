@@ -10,8 +10,6 @@ import Txt from './Txt.jsx'
 export default function FeatureBlock({ feature, index, total, project }) {
   const reduce = useReducedMotion()
   const media = feature.media ?? []
-  const videos = media.filter((m) => m.type === 'video').length
-  const images = media.length - videos
   const sideBySide = media.length === 1
 
   const text = (
@@ -45,12 +43,6 @@ export default function FeatureBlock({ feature, index, total, project }) {
     </>
   )
 
-  const count = (
-    <p className="mt-5 font-pixel text-[9px] tracking-[0.16em] text-dim uppercase">
-      {videos} {videos === 1 ? 'recording' : 'recordings'} · {images} {images === 1 ? 'screenshot' : 'screenshots'}
-    </p>
-  )
-
   return (
     <motion.article
       id={`feature-${feature.id}`}
@@ -66,7 +58,6 @@ export default function FeatureBlock({ feature, index, total, project }) {
             <div className="lg:sticky lg:top-40">
               {text}
               <div className="mt-8">{functions}</div>
-              {count}
             </div>
           </div>
           <div className="lg:col-span-8">
@@ -79,7 +70,6 @@ export default function FeatureBlock({ feature, index, total, project }) {
             <div className="lg:col-span-7">{text}</div>
             <div className="lg:col-span-5">
               {functions}
-              {count}
             </div>
           </header>
           <div className="mt-8 border-t-2 border-line pt-8">
