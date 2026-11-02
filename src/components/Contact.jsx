@@ -5,7 +5,7 @@ import Txt from './Txt.jsx'
 import { PROFILE } from '../content/profile.js'
 import { shouldShow, isPlaceholder } from '../lib/content.js'
 
-const ICON = { email: 'mail', github: 'code', linkedin: 'person' }
+const ICON = { email: 'mail', github: 'code', linkedin: 'person', facebook: 'chat' }
 
 export default function Contact() {
   const { contact } = PROFILE
@@ -35,7 +35,7 @@ export default function Contact() {
                   className={`px-card px-card-lift group flex items-center gap-4 px-4 py-3.5 ${isPlaceholder(l.label) ? 'placeholder-text' : ''}`}
                 >
                   <span className="grid h-9 w-9 shrink-0 place-items-center bg-white/10 px-border"><PixelIcon name={ICON[l.kind] ?? 'star'} size={18} /></span>
-                  <span className="font-pixel w-16 shrink-0 text-[9px] tracking-[0.18em] text-purple uppercase">{l.kind}</span>
+                  <span className="hidden w-20 shrink-0 font-pixel text-[9px] tracking-[0.18em] text-purple uppercase sm:block">{l.kind}</span>
                   <span className="min-w-0 flex-1 truncate">{l.label}</span>
                   <span className="font-pixel text-[10px] text-dim transition group-hover:text-purple">▶</span>
                 </a>

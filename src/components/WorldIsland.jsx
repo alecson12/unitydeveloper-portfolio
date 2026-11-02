@@ -21,7 +21,13 @@ function rng(seed) {
   return () => ((s = (Math.imul(s, 1664525) + 1013904223) >>> 0) / 4294967296)
 }
 
-export default function WorldIsland({ w = 48, seed = 1, trees = 4, tower = false, house = false, waterfall = false, rocks = 2, className = '', style }) {
+/**
+ * part: 'all' draws everything; 'props' only what stands on the grass
+ * (trees, buildings, rocks); 'body' only the island itself. Draw the two
+ * halves with the same seed to put something between them — a person
+ * standing on the island, in front of the house but behind the grass edge.
+ */
+export default function WorldIsland({ w = 48, seed = 1, trees = 4, tower = false, house = false, waterfall = false, rocks = 2, part = 'all', className = '', style }) {
   const r = rng(seed)
   const cells = []
   const put = (x, y, cw, ch, c) => cells.push([x, y, cw, ch, c])
@@ -132,7 +138,9 @@ export default function WorldIsland({ w = 48, seed = 1, trees = 4, tower = false
   const totalH = rows.length + 14 - minY
   return (
     <svg viewBox={`0 ${minY} ${w} ${totalH}`} className={className} style={style} shapeRendering="crispEdges" aria-hidden>
-      {cells.map(([x, y, cw, ch, c], i) => <rect key={i} x={x} y={y} width={cw} height={ch} fill={c} />)}
+      {cells
+        .filter(([, y]) => (part === 'all' ? true : part === 'props' ? y < 0 : y >= 0))
+        .map(([x, y, cw, ch, c], i) => <rect key={i} x={x} y={y} width={cw} height={ch} fill={c} />)}
     </svg>
   )
 }

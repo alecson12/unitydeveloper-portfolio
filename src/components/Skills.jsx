@@ -8,6 +8,9 @@ import { isDraft, shouldShowItem } from '../lib/content.js'
  * Skills & expertise: the tool stack as tiles (unconfirmed tools only in
  * local preview, marked), then the skill groups from profile.js.
  */
+/** Two-letter badge: initials when the name has them (GitHub → GH, Visual Studio → VS), else the first two letters. */
+const abbr = (name) => { const caps = name.replace(/[^A-Z#+]/g, ''); return (caps.length >= 2 ? caps : name.replace(/[^A-Za-z#+]/g, '')).slice(0, 2) }
+
 export default function Skills() {
   const tools = ABOUT.tools.filter(shouldShowItem)
   return (
@@ -20,7 +23,7 @@ export default function Skills() {
               {tools.map((t) => (
                 <li key={t.name} className={`px-card px-card-lift flex flex-col items-start gap-4 p-4 ${isDraft(t) ? 'placeholder-text' : ''}`}>
                   <span className="grid h-11 w-11 place-items-center bg-white/10 px-border font-display text-xl font-semibold" style={{ '--px-c': 'rgba(255,255,255,0.25)' }}>
-                    {t.name.replace(/[^A-Za-z#+]/g, '').slice(0, 2)}
+                    {abbr(t.name)}
                   </span>
                   <span>
                     <span className="block font-display text-lg font-semibold leading-none">{t.name}</span>

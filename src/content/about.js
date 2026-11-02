@@ -21,14 +21,13 @@ export const ABOUT = {
   background: {
     // One or two short paragraphs.
     paragraphs: [
-      'I built the full in-game interface of Rivalis Academia Nexus — 21 screens from login to settings, including a HUD players can rearrange themselves.',
-      '[Placeholder — one sentence on how you got into Unity, one on what you did before Rivalis.]',
+      'Unity Developer at VIIBYTE on Rivalis Academia Nexus since 2023. I implemented all 21 in-game interfaces, from login to settings, and designed some of them myself.',
+      'Developing games is my dream, so I taught myself Unity in college, starting with school projects.',
     ],
     // Newest first. Only real entries; the rest stay as placeholders.
     timeline: [
-      { period: '[2024 — Present]', title: 'UI Developer', place: 'Rivalis Academia Nexus', note: '21 in-game interfaces, Unity + C#.' },
-      { period: '[Year — Year]', title: '[Role]', place: '[Studio / team / client]', note: '[One line.]' },
-      { period: '[Year]', title: '[Where it started]', place: '[School / self-taught / jam]', note: '' },
+      { period: '2023 — Present', title: 'Unity Developer', place: 'VIIBYTE · Rivalis Academia Nexus', note: '21 in-game interfaces, Unity + C#. Implemented all, designed some.' },
+      { period: '2021', title: 'Started with Unity', place: 'Self-taught, in college', note: 'School projects.' },
     ],
     // Three short lines.
     strengths: [
@@ -44,23 +43,22 @@ export const ABOUT = {
     { id: 'unity', name: 'Unity Game Development', icon: 'controller', confirmed: true },
     { id: 'ui', name: 'Game UI / UX Implementation', icon: 'hud', confirmed: true },
     { id: 'csharp', name: 'C# Programming', icon: 'code', confirmed: true },
-    { id: 'systems', name: 'Game Systems', icon: 'gear', confirmed: false },
-    { id: 'gameplay', name: 'Gameplay Programming', icon: 'star', confirmed: false },
-    { id: 'multiplayer', name: 'Online Game Features', icon: 'party', confirmed: false },
-    { id: 'optimisation', name: 'Bug Fixing & Optimisation', icon: 'trophy', confirmed: false },
-    { id: 'technical', name: 'Technical Implementation', icon: 'map', confirmed: false },
+    { id: 'systems', name: 'Game Systems', icon: 'gear', confirmed: true },
+    { id: 'gameplay', name: 'Gameplay Programming', icon: 'star', confirmed: true },
+    { id: 'optimisation', name: 'Bug Fixing & Optimisation', icon: 'trophy', confirmed: true },
+    { id: 'ui-design', name: 'UI Design', icon: 'map', confirmed: true },
   ],
 
   /* ---------- TOOLS & TECHNOLOGIES ---------- */
   tools: [
     { name: 'Unity', kind: 'Engine', confirmed: true },
     { name: 'C#', kind: 'Language', confirmed: true },
-    { name: 'Photoshop', kind: 'Design', confirmed: true },
+    { name: 'Visual Studio', kind: 'IDE', confirmed: true },
     { name: 'Git', kind: 'Workflow', confirmed: true },
-    { name: 'Visual Studio', kind: 'IDE', confirmed: false },
-    { name: 'GitHub', kind: 'Workflow', confirmed: false },
-    { name: 'Blender', kind: '3D', confirmed: false },
-    { name: 'Figma', kind: 'Design', confirmed: false },
+    { name: 'GitHub', kind: 'Workflow', confirmed: true },
+    { name: 'Photoshop', kind: 'Design', confirmed: true },
+    { name: 'Illustrator', kind: 'Design', confirmed: true },
+    { name: 'Trello', kind: 'Workflow', confirmed: true },
   ],
 
   /* ---------- MY DEVELOPMENT TOOLKIT ----------
@@ -87,13 +85,13 @@ export const ABOUT = {
   highlights: [
     { label: 'Interfaces shipped', value: 'auto:features', note: '' },
     { label: 'Recordings on this site', value: 'auto:videos', note: '' },
-    { label: 'Years in Unity', value: '[0]', note: '' },
-    { label: 'Teams / clients', value: '[0]', note: '' },
+    { label: 'Years in Unity', value: '5', note: 'since 2021' },
+    { label: 'Players on Rivalis', value: '100', note: 'almost · live now' },
   ],
   // One line each. Only real ones.
   notable: [
+    'Rivalis Academia Nexus is live, with almost 100 players and counting.',
     'Player-facing HUD layout editor: scale, opacity, undo/redo, presets.',
-    '[Placeholder — one more thing you are proud of.]',
   ],
 
   /* ---------- PERSONAL DEVELOPER STATEMENT ---------- */

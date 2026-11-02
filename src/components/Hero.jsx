@@ -1,6 +1,5 @@
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { PROFILE } from '../content/profile.js'
-import PixelWindow from './PixelWindow.jsx'
 import PixelCloud from './PixelCloud.jsx'
 import WorldIsland from './WorldIsland.jsx'
 
@@ -41,7 +40,7 @@ export default function Hero() {
   })
 
   return (
-    <section id="about" className="relative isolate flex min-h-[94vh] scroll-mt-0 flex-col justify-center overflow-hidden pb-32 pt-32 sm:pb-40 sm:pt-40">
+    <section id="about" className="relative isolate flex min-h-[94vh] scroll-mt-0 flex-col justify-center overflow-hidden pb-24 pt-28 sm:pb-28 sm:pt-36">
       <Backdrop yFar={yFar} yNear={yNear} />
 
       <div className="container-x relative">
@@ -86,32 +85,35 @@ export default function Hero() {
             initial={reduce ? false : { opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
-            className="relative mx-auto w-full max-w-sm pb-24 sm:max-w-md sm:pb-32 lg:col-span-5 lg:max-w-none"
+            className="relative mx-auto w-full max-w-sm sm:max-w-md lg:col-span-5 lg:max-w-none"
           >
-            {/* the home island the portrait floats above */}
-            <WorldIsland
-              w={70} seed={3} trees={6} tower house waterfall
-              className="bob absolute -bottom-4 left-1/2 w-[128%] max-w-none -translate-x-1/2 sm:-bottom-8"
-              style={{ '--delay': '-2s', filter: 'drop-shadow(10px 12px 0 rgba(27,42,102,0.2))' }}
-            />
-            <PixelCloud variant={1} className="absolute -left-14 top-10 w-24 opacity-90 sm:-left-20 sm:w-32" />
-            <PixelCloud variant={0} className="absolute -right-10 top-[52%] w-28 opacity-90 sm:-right-16 sm:w-40" />
-            <div className="relative bob-slow mx-auto max-w-[420px]">
-              <PixelWindow label="Player" badge={title}>
-                <div className="relative" style={{ aspectRatio: '4 / 5' }}>
-                  {hero.photo && (
-                    <img src={hero.photo} alt={hero.photoAlt ?? name} width="1200" height="1500" className="absolute inset-0 h-full w-full object-cover" fetchPriority="high" />
-                  )}
-                  {/* fade the studio background into the window so the portrait sits in the world */}
-                  <div className="pointer-events-none absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(7,11,34,0) 55%, rgba(7,11,34,0.85) 100%), linear-gradient(90deg, rgba(7,11,34,0.35), transparent 25%, transparent 75%, rgba(7,11,34,0.35))' }} />
-                  <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-5 text-white">
-                    <div>
-                      <p className="mt-1 font-display text-2xl font-semibold leading-none tracking-tight">{PROFILE.shortName}</p>
-                    </div>
-                    <a href="#profile" className="px-btn px-btn-pink px-btn-sm">Profile</a>
-                  </div>
+            <PixelCloud variant={1} className="absolute -left-14 top-[30%] w-24 opacity-90 sm:-left-20 sm:w-32" />
+            <PixelCloud variant={0} className="absolute -right-10 top-[62%] w-28 opacity-90 sm:-right-16 sm:w-40" />
+
+            {/* the home island, with you standing on it: props behind you, the island body in front */}
+            <div className="bob relative mx-auto mt-[44%] w-[115%] max-w-[500px]" style={{ '--delay': '-2s', filter: 'drop-shadow(10px 12px 0 rgba(27,42,102,0.2))' }}>
+              <WorldIsland w={70} seed={3} trees={6} tower house waterfall part="props" className="absolute inset-0 w-full" />
+              {hero.photo && (
+                <img
+                  src={hero.photo}
+                  alt={hero.photoAlt ?? name}
+                  width="1000"
+                  height="1422"
+                  className="absolute bottom-[61.5%] left-1/2 z-10 w-[60%] -translate-x-1/2"
+                  style={{ filter: 'drop-shadow(0 0 0 transparent)' }}
+                  fetchPriority="high"
+                />
+              )}
+              <WorldIsland w={70} seed={3} trees={6} tower house waterfall part="body" className="relative z-20 w-full" />
+
+              {/* name plate */}
+              <div className="px-card absolute left-1/2 top-[62%] z-30 flex -translate-x-1/2 items-center gap-4 px-4 py-2.5 whitespace-nowrap">
+                <div>
+                  <p className="font-pixel text-[8px] tracking-[0.18em] text-dim uppercase">{title}</p>
+                  <p className="mt-1 font-display text-xl font-semibold leading-none tracking-tight sm:text-2xl">{PROFILE.shortName}</p>
                 </div>
-              </PixelWindow>
+                <a href="#profile" className="px-btn px-btn-pink px-btn-sm">Profile</a>
+              </div>
             </div>
           </motion.div>
         </div>

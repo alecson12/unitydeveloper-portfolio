@@ -72,8 +72,9 @@ export const PROJECTS = [
     tagline: 'The complete in-game UI of a mobile MMORPG.',
     platform: 'Mobile',
     genre: 'MMORPG',
-    role: 'UI Developer',
-    period: '[e.g. 2024 — Present]',
+    role: 'Unity Developer',
+    studio: 'VIIBYTE',
+    period: '2023 — Present',
     status: 'Live',
     tech: ['Unity', 'C#'],
 
@@ -90,7 +91,7 @@ export const PROJECTS = [
     // Your part. Keep it honest.
     contribution: [
       'All 21 in-game interfaces, in Unity and C#.',
-      '[Placeholder — which screens you also designed, and who you worked with.]',
+      'Designed some of the screens myself; implemented every one.',
     ],
 
     /* ------------------------------------------------------------

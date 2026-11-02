@@ -30,8 +30,9 @@ export default function FeaturedProject({ project, full = false }) {
               </PixelWindow>
             )}
 
-            <dl className="mt-8 grid grid-cols-2 gap-x-6 gap-y-5 border-t-2 border-line pt-6 sm:grid-cols-4">
+            <dl className="mt-8 grid grid-cols-2 gap-x-6 gap-y-5 border-t-2 border-line pt-6 sm:grid-cols-3 lg:grid-cols-5">
               <Fact label="Role" value={project.role} />
+              <Fact label="Studio" value={project.studio} />
               <Fact label="Platform" value={project.platform} />
               <Fact label="Engine" value={project.tech?.join(' · ')} />
               <Fact label="Interfaces" value={counts.features} />

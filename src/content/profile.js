@@ -25,17 +25,18 @@ export const PROFILE = {
     headline: 'I build the screens players live in.',
     // One or two sentences under the headline.
     intro:
-      'Unity developer from the Philippines. I built the complete in-game UI of Rivalis Academia Nexus, a mobile MMORPG.',
+      'Unity developer from the Philippines, making games since 2021. I built the complete in-game UI of Rivalis Academia Nexus, a mobile MMORPG by VIIBYTE.',
     primaryButton: { label: 'See my projects', href: '#projects' },
     secondaryButton: { label: 'Get in touch', href: '#contact' },
     // Short facts shown under the buttons. Keep each one to a few words.
     facts: [
-      { label: 'Engine', value: 'Unity' },
-      { label: 'Language', value: 'C#' },
+      { label: 'Unity since', value: '2021' },
+      { label: 'Studio', value: 'VIIBYTE' },
       { label: 'Based in', value: 'Bulacan, Philippines' },
     ],
-    // Your photo. Put files in  public/media/profile/
-    photo: '/media/profile/alecson-unity-developer.jpg',
+    // Your photo, cut out on a transparent background, so you stand on the island.
+    // Put files in  public/media/profile/
+    photo: '/media/profile/alecson-unity-developer-cutout.webp',
     photoAlt: 'Alecson Marwin B. Gantica, Unity developer',
   },
 
@@ -45,20 +46,20 @@ export const PROFILE = {
   skills: [
     { group: 'Engine & Language', items: ['Unity', 'C#'] },
     { group: 'Game UI', items: ['HUD & menus', 'Inventory & shops', 'Chat & social', 'Touch controls'] },
-    { group: 'Design', items: ['Photoshop', 'Graphic design', '[e.g. Figma]'] },
-    { group: 'Workflow', items: ['Git', '[e.g. Trello, Jira]'] },
+    { group: 'Design', items: ['UI design', 'Photoshop', 'Illustrator'] },
+    { group: 'Workflow', items: ['Git', 'GitHub', 'Visual Studio', 'Trello'] },
   ],
 
   /* ---------- CONTACT ---------- */
   contact: {
     text: 'Need a Unity developer for game UI or systems? Say hello.',
-    availability: '[Placeholder — e.g. Open to full-time, contract and remote work]',
+    availability: 'Open to contract and part-time work',
     // Replace the placeholder values. Remove any line you do not want shown.
     // Placeholder links are hidden on the published site until replaced.
     links: [
       { kind: 'email', label: 'alecsongantica12@gmail.com', href: 'mailto:alecsongantica12@gmail.com' },
-      { kind: 'github', label: '[github.com/your-username]', href: 'https://github.com/[your-username]' },
-      { kind: 'linkedin', label: '[linkedin.com/in/your-name]', href: 'https://www.linkedin.com/in/[your-name]' },
+      { kind: 'github', label: 'github.com/Almarga', href: 'https://github.com/Almarga' },
+      { kind: 'facebook', label: 'facebook.com/alecson.12', href: 'https://www.facebook.com/alecson.12' },
     ],
     // Optional downloadable CV. Put the file in  public/  and set e.g.
     // '/Alecson-Gantica-CV.pdf'. Leave null to hide the button.
