@@ -17,7 +17,7 @@ export const PROFILE = {
   shortName: 'Alecson Gantica', // used in the navigation and footer
   title: 'Unity Developer',
 
-  /* ---------- START (the first screen, above the water) ---------- */
+  /* ---------- START (the first screen) ---------- */
   start: {
     // Your wordmark PNG/WebP with a transparent background. Put it in  public/media/profile/
     wordmark: '/media/profile/wordmark.webp',
@@ -25,10 +25,10 @@ export const PROFILE = {
     // Optional one-liner under the wordmark. Leave '' for none.
     tagline: '',
     // The scroll hint at the bottom of the screen.
-    hint: 'Dive in',
+    hint: 'Scroll',
   },
 
-  /* ---------- ABOUT ME — INTRODUCTION (the first screen under water) ---------- */
+  /* ---------- ABOUT ME — INTRODUCTION ---------- */
   intro: {
     // Small line above the headline
     eyebrow: 'Unity Developer · Game UI & Systems',
@@ -45,7 +45,7 @@ export const PROFILE = {
       { label: 'Studio', value: 'VIIBYTE' },
       { label: 'Based in', value: 'Bulacan, Philippines' },
     ],
-    // Your photo, cut out on a transparent background, so you stand in the water.
+    // Your photo, cut out on a transparent background.
     // Put files in  public/media/profile/
     photo: '/media/profile/alecson-unity-developer-cutout.webp',
     photoAlt: 'Alecson Marwin B. Gantica, Unity developer',
@@ -64,6 +64,7 @@ export const PROFILE = {
   /* ---------- CONTACT ---------- */
   contact: {
     text: 'Need a Unity developer for game UI or systems? Say hello.',
+    cta: 'Let’s talk',
     availability: 'Open to contract and part-time work',
     // Replace the placeholder values. Remove any line you do not want shown.
     // Placeholder links are hidden on the published site until replaced.

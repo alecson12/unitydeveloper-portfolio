@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import Ocean from './components/Ocean.jsx'
 import Nav from './components/Nav.jsx'
 import Footer from './components/Footer.jsx'
 import Home from './pages/Home.jsx'
@@ -21,11 +20,8 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen">
-      <Ocean mode={route.name} />
       <Nav mode={route.name} />
-      <main className="relative z-10">
-        {route.name === 'project' ? <ProjectPage id={route.id} /> : <Home />}
-      </main>
+      <main>{route.name === 'project' ? <ProjectPage id={route.id} /> : <Home />}</main>
       <Footer />
     </div>
   )

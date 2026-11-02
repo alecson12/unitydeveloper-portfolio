@@ -46,7 +46,7 @@ export default function Lightbox({ items, index, pixelated = false, onClose, onC
           role="dialog"
           aria-modal="true"
           aria-label="Media viewer"
-          className="fixed inset-0 z-[100] flex flex-col bg-deep/95 text-cloud"
+          className="fixed inset-0 z-[100] flex flex-col bg-bg/95 text-ink"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -54,10 +54,10 @@ export default function Lightbox({ items, index, pixelated = false, onClose, onC
           onClick={onClose}
         >
           <div className="flex items-center justify-between px-4 py-4 sm:px-6">
-            <span className="font-pixel text-[12px] tracking-[0.08em] text-cloud/70">
+            <span className="label">
               {String(index + 1).padStart(2, '0')} / {String(count).padStart(2, '0')}
             </span>
-            <button type="button" onClick={onClose} className="px-btn px-btn-ghost px-btn-sm" aria-label="Close viewer">
+            <button type="button" onClick={onClose} className="btn btn-ghost btn-sm" aria-label="Close viewer">
               Close
             </button>
           </div>
@@ -86,7 +86,7 @@ export default function Lightbox({ items, index, pixelated = false, onClose, onC
 
           <div className="px-4 pb-6 pt-4 text-center sm:px-6" onClick={(e) => e.stopPropagation()}>
             {items[index].caption && (
-              <p className="mx-auto max-w-2xl text-balance text-sm text-cloud/80 sm:text-base">{items[index].caption}</p>
+              <p className="mx-auto max-w-2xl text-balance text-sm text-ink-2 sm:text-base">{items[index].caption}</p>
             )}
             {count > 1 && (
               <div className="mt-4 flex justify-center gap-2">
@@ -96,7 +96,7 @@ export default function Lightbox({ items, index, pixelated = false, onClose, onC
                     type="button"
                     aria-label={`Go to item ${i + 1}`}
                     onClick={() => onChange(i)}
-                    className={`h-2 transition-all ${i === index ? 'w-6 bg-pink' : 'w-2 bg-cloud/25 hover:bg-cloud/50'}`}
+                    className={`h-1 rounded-full transition-all ${i === index ? 'w-6 bg-accent' : 'w-2 bg-line-2 hover:bg-dim'}`}
                   />
                 ))}
               </div>
@@ -109,30 +109,30 @@ export default function Lightbox({ items, index, pixelated = false, onClose, onC
   )
 }
 
-const frame = { '--px-c': 'rgba(255,255,255,0.9)' }
+const frame = {}
 
 function Stage({ item, pixelated }) {
   const crisp = pixelated ? 'pixelated' : ''
   if (item.type === 'video') {
     if (!hasSource(item)) {
       return (
-        <div className="px-border relative max-h-[70vh] overflow-hidden bg-deep-2" style={frame}>
+        <div className="frame relative max-h-[70vh]" style={frame}>
           {item.poster && <img src={item.poster} alt={item.alt ?? ''} className={`max-h-[70vh] w-auto object-contain ${crisp}`} />}
-          <div className="absolute inset-0 grid place-items-center bg-deep/60">
-            <span className="px-chip">Recording coming soon</span>
+          <div className="absolute inset-0 grid place-items-center bg-bg/60">
+            <span className="chip">Recording coming soon</span>
           </div>
         </div>
       )
     }
     return (
-      <video src={item.src} poster={item.poster} controls autoPlay playsInline className="px-border max-h-[78vh] w-auto max-w-full bg-black" style={frame} />
+      <video src={item.src} poster={item.poster} controls autoPlay playsInline className="max-h-[78vh] w-auto max-w-full rounded-[6px] border border-line bg-black" style={frame} />
     )
   }
   return (
     <img
       src={item.src}
       alt={item.alt ?? ''}
-      className={`px-border max-h-[78vh] w-auto max-w-full bg-deep-2 object-contain ${crisp}`}
+      className={`max-h-[78vh] w-auto max-w-full rounded-[6px] border border-line bg-bg-2 object-contain ${crisp}`}
       style={frame}
       draggable={false}
     />
@@ -146,15 +146,9 @@ function NavButton({ side, onClick }) {
       type="button"
       onClick={onClick}
       aria-label={left ? 'Previous' : 'Next'}
-      className={`px-btn px-btn-ghost px-btn-icon absolute top-1/2 z-10 -translate-y-1/2 ${left ? 'left-2 sm:left-5' : 'right-2 sm:right-5'}`}
+      className={`btn btn-ghost absolute top-1/2 z-10 -translate-y-1/2 !px-3 ${left ? 'left-2 sm:left-5' : 'right-2 sm:right-5'}`}
     >
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" shapeRendering="crispEdges" aria-hidden>
-        {left ? (
-          <path d="M8 1h2v2H8zM6 3h2v2H6zM4 5h2v4H4zM6 9h2v2H6zM8 11h2v2H8z" />
-        ) : (
-          <path d="M4 1h2v2H4zM6 3h2v2H6zM8 5h2v4H8zM6 9h2v2H6zM4 11h2v2H4z" />
-        )}
-      </svg>
+      {left ? '←' : '→'}
     </button>
   )
 }
