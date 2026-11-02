@@ -53,7 +53,7 @@ UnityPortfolio/
 │   │   └── sections.js               ← section order, zones, depth labels, headings, nav labels
 │   │
 │   ├── components/                   ← building blocks (no content inside)
-│   │   ├── Start.jsx                 the opening screen: your Great Wave artwork in parallax layers
+│   │   ├── Start.jsx                 the opening screen: your Great Wave artwork
 │   │   ├── Ocean.jsx                 fixed layer: sun rays, bubbles, deep vignette, glow — driven by scroll depth
 │   │   ├── Zone.jsx / SeaLife.jsx    a stretch of water at one depth + the creatures that live there
 │   │   ├── sprites.js / PixelSprite.jsx   every fish, plant and ruin as text pixel art
@@ -202,7 +202,7 @@ continuous stretch of water in `Home.jsx`.
 
 Everything visual is driven by the tokens at the top of `src/index.css`.
 
-**The water.** The page is four stretches of water (`Zone.jsx`): shallow (About Me), mid (Skills), deep (Projects) and abyss (Contact), in a restrained indigo-to-navy palette. Each zone's gradient ends on the colour the next one starts with, so the dive is continuous. `Ocean.jsx` sits on a fixed layer and reads a **depth** value (0 at the top of the page → 4 at the bottom) to fade light rays in and out, drift a few particles once you are under, darken the edges in the deep and light sparse bioluminescence. `Start.jsx` is the surface: Alecson's own pixel-art Great Wave (`AlecsonPhotos/Pixel Art Great Wave with Fuji.png`), cut into five transparent layers in `public/media/start/` (sun, clouds, Fuji with the far sea, the far wave, the great wave). Each layer slides at its own rate on scroll; the sun breathes, the clouds drift and the waves sway. The top third of the screen is left empty for a title (`#start-title`).
+**The water.** The page is four stretches of water (`Zone.jsx`): shallow (About Me), mid (Skills), deep (Projects) and abyss (Contact), in a restrained indigo-to-navy palette. Each zone's gradient ends on the colour the next one starts with, so the dive is continuous. `Ocean.jsx` sits on a fixed layer and reads a **depth** value (0 at the top of the page → 4 at the bottom) to fade light rays in and out, drift a few particles once you are under, darken the edges in the deep and light sparse bioluminescence. `Start.jsx` is the surface: Alecson's own pixel-art Great Wave (`public/media/start/great-wave.webp`), placed as is, anchored to the bottom of the screen. The top third of the screen is left empty for a title (`#start-title`).
 
 **The creatures.** Every fish, jellyfish, squid, anglerfish, plant and ruin is
 text pixel art in `src/components/sprites.js`, drawn by `PixelSprite.jsx`.

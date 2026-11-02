@@ -305,29 +305,6 @@ body {
   mask-image: linear-gradient(180deg, rgba(0,0,0,0.9), rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.9));
 }
 
-/* The Start artwork in motion: the sun breathes, clouds drift, waves sway and heave */
-@keyframes sun-breathe {
-  0%, 100% { filter: drop-shadow(0 0 10px rgba(252,201,104,0.35)) drop-shadow(0 0 30px rgba(252,201,104,0.15)); transform: translateY(0); }
-  50%      { filter: drop-shadow(0 0 16px rgba(252,201,104,0.6)) drop-shadow(0 0 44px rgba(252,201,104,0.3)); transform: translateY(-1.5%); }
-}
-.sun-breathe { animation: sun-breathe 9s ease-in-out infinite; }
-@keyframes cloud-drift {
-  0%, 100% { transform: translateX(-1.6%); }
-  50%      { transform: translateX(1.6%); }
-}
-.cloud-drift { animation: cloud-drift 46s ease-in-out infinite; }
-@keyframes wave-sway {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  35%      { transform: translate(-0.9%, 0.8%) rotate(-0.35deg); }
-  70%      { transform: translate(0.7%, -0.6%) rotate(0.3deg); }
-}
-.wave-sway { animation: wave-sway 11s ease-in-out infinite; }
-@keyframes wave-far-sway {
-  0%, 100% { transform: translate(0, 0); }
-  50%      { transform: translate(0.8%, 1%); }
-}
-.wave-far-sway { animation: wave-far-sway 13s ease-in-out infinite; animation-delay: -4s; }
-
 /* The sea breathing: a slow sideways sway for the wave art */
 @keyframes sway-x {
   0%, 100% { transform: translateX(0) scale(1.02); }
@@ -373,7 +350,7 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cloud, .drift-back, .swim, .bob, .bob-slow, .bob-xs, .drift-y, .sway, .sway-x, .sun-breathe, .cloud-drift, .wave-sway, .wave-far-sway, .flap, .sparkle, .wave, .ray, .mote, .glowmote, .surface-line, .cursor-blink::after { animation: none !important; }
+  .cloud, .drift-back, .swim, .bob, .bob-slow, .bob-xs, .drift-y, .sway, .sway-x, .flap, .sparkle, .wave, .ray, .mote, .glowmote, .surface-line, .cursor-blink::after { animation: none !important; }
 }
 
 :focus-visible {
