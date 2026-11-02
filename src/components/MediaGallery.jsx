@@ -2,14 +2,14 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Lightbox from './Lightbox.jsx'
 import VideoShowcase from './VideoShowcase.jsx'
-import MediaFrame from './MediaFrame.jsx'
+import PixelWindow from './PixelWindow.jsx'
 import EmptyState from './EmptyState.jsx'
 
 /**
  * Lays out the media of one feature:
  *   1. recordings, full width, each in its own player
  *   2. large screenshots (≥ 1000px wide) in a two-column grid at their own aspect ratio
- *   3. small UI crops (< 1000px wide) at natural size on a quiet stage
+ *   3. small UI crops (< 1000px wide) on dark "display stages" at their natural size
  * Clicking any image opens the Lightbox. Nothing is ever cropped.
  */
 export default function MediaGallery({ items = [], label, pixelated = false, emptyMessage = 'Media coming soon.' }) {
@@ -22,13 +22,13 @@ export default function MediaGallery({ items = [], label, pixelated = false, emp
   const small = indexed.filter(({ it }) => it.type !== 'video' && (it.width ?? 1920) < 1000)
 
   return (
-    <div className="space-y-8 sm:space-y-10">
+    <div className="space-y-6 sm:space-y-8">
       {videos.map(({ it, i }) => (
         <VideoShowcase key={i} item={it} label={label} pixelated={pixelated} onExpand={() => setOpen(i)} />
       ))}
 
       {large.length > 0 && (
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           {large.map(({ it, i }, idx) => (
             <Shot
               key={i}
@@ -56,7 +56,7 @@ export default function MediaGallery({ items = [], label, pixelated = false, emp
 }
 
 const reveal = (delay) => ({
-  initial: { opacity: 0, y: 14 },
+  initial: { opacity: 0, y: 18 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, margin: '-5% 0px' },
   transition: { duration: 0.6, delay: Math.min(delay * 0.05, 0.25), ease: [0.16, 1, 0.3, 1] },
@@ -66,22 +66,26 @@ const reveal = (delay) => ({
 function Shot({ item, index, pixelated, onOpen, className = '' }) {
   return (
     <motion.figure className={className} {...reveal(index)}>
-      <button type="button" onClick={onOpen} className="group block w-full cursor-zoom-in text-left" aria-label={`Open ${item.alt ?? 'image'} in viewer`}>
-        <MediaFrame label={item.caption ?? item.alt} badge={String(index + 1).padStart(2, '0')}>
-          <img src={item.src} alt={item.alt ?? ''} loading="lazy" width={item.width} height={item.height} className={`transition duration-500 group-hover:opacity-90 ${pixelated ? 'pixelated' : ''}`} />
-        </MediaFrame>
+      <button type="button" onClick={onOpen} className="block w-full cursor-zoom-in text-left" aria-label={`Open ${item.alt ?? 'image'} in viewer`}>
+        <PixelWindow label={item.alt} badge={String(index + 1).padStart(2, '0')} className="px-card-lift">
+          <img src={item.src} alt={item.alt ?? ''} loading="lazy" width={item.width} height={item.height} className={pixelated ? 'pixelated' : ''} />
+        </PixelWindow>
       </button>
+      {item.caption && <figcaption className="mt-3 text-sm text-ink-2">{item.caption}</figcaption>}
     </motion.figure>
   )
 }
 
-/** A small UI element shown at natural size on a quiet stage. */
+/** A small UI element shown at natural size on a dark stage. */
 function Crop({ item, index, onOpen }) {
   return (
     <motion.figure {...reveal(index)}>
-      <button type="button" onClick={onOpen} className="group block w-full cursor-zoom-in text-left" aria-label={`Open ${item.alt ?? 'image'} in viewer`}>
-        <MediaFrame label={item.caption ?? item.alt} badge={String(index + 1).padStart(2, '0')}>
-          <div className="flex h-40 items-center justify-center bg-bg-2 p-3 transition group-hover:bg-[#161618] sm:h-52">
+      <button type="button" onClick={onOpen} className="block w-full cursor-zoom-in text-left" aria-label={`Open ${item.alt ?? 'image'} in viewer`}>
+        <PixelWindow label={item.alt} badge={String(index + 1).padStart(2, '0')} className="px-card-lift">
+          <div
+            className="flex h-40 items-center justify-center p-3 sm:h-52"
+            style={{ backgroundImage: 'radial-gradient(rgba(255,255,255,0.09) 1px, transparent 1px)', backgroundSize: '12px 12px' }}
+          >
             <img
               src={item.src}
               alt={item.alt ?? ''}
@@ -92,8 +96,9 @@ function Crop({ item, index, onOpen }) {
               style={{ width: 'auto', height: 'auto' }}
             />
           </div>
-        </MediaFrame>
+        </PixelWindow>
       </button>
+      {item.caption && <figcaption className="mt-3 text-sm text-ink-2">{item.caption}</figcaption>}
     </motion.figure>
   )
 }

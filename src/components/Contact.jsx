@@ -1,47 +1,48 @@
 import Reveal from './Reveal.jsx'
+import PixelIcon from './PixelIcon.jsx'
+import PixelSprite from './PixelSprite.jsx'
 import Txt from './Txt.jsx'
 import { PROFILE } from '../content/profile.js'
 import { shouldShow, isPlaceholder } from '../lib/content.js'
 
-/**
- * The close: a label, one big line, the email as the main link, then the
- * other links in a row. Centred, with nothing else around it.
- */
-export default function Contact({ meta }) {
+const ICON = { email: 'mail', github: 'code', linkedin: 'person', facebook: 'chat' }
+
+export default function Contact() {
   const { contact } = PROFILE
   const links = contact.links.filter((l) => shouldShow(l.label))
-  const email = links.find((l) => l.kind === 'email')
-  const others = links.filter((l) => l !== email)
-
   return (
     <Reveal>
-      <div className="flex flex-col items-center py-10 text-center sm:py-16">
-        {meta?.label && <p className="label"><span className="text-accent">/</span>{meta.label}</p>}
-        {meta?.heading && (
-          <h2 className="mt-6 max-w-4xl font-display text-[2.75rem] font-extrabold leading-[0.98] tracking-[-0.03em] text-balance sm:text-6xl lg:text-7xl xl:text-[5.5rem]">
-            {meta.heading}
-          </h2>
-        )}
-        <p className="mt-8 max-w-md text-lg text-ink-2">{contact.text}</p>
-
-        {email && (
-          <a href={email.href} className="link mt-10 font-display text-2xl font-semibold tracking-tight sm:text-3xl">{email.label}</a>
-        )}
-
-        {(others.length > 0 || contact.cv) && (
-          <ul className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
-            {others.map((l) => (
+      <div className="px-card relative p-6 sm:p-12">
+        <PixelSprite name="angler" className="pointer-events-none absolute right-10 -top-12 hidden w-24 lg:block" glow="rgba(255,224,102,0.35)" aria-hidden />
+        <div className="relative grid grid-cols-1 gap-10 lg:grid-cols-12">
+          <div className="lg:col-span-6">
+            <p className="max-w-md text-lg leading-relaxed text-ink-2">{contact.text}</p>
+            <Txt as="p" value={contact.availability} className="mt-4 px-chip normal-case tracking-normal font-sans text-sm" />
+            {contact.cv && (
+              <a href={contact.cv} className="px-btn px-btn-primary mt-8">Download CV</a>
+            )}
+          </div>
+          <ul className="grid grid-cols-1 gap-4 lg:col-span-6">
+            {links.length === 0 && (
+              <li className="px-chip w-max">Links coming soon</li>
+            )}
+            {links.map((l) => (
               <li key={l.kind + l.href}>
-                <a href={l.href} target={l.href.startsWith('http') ? '_blank' : undefined} rel="noreferrer" className={`label transition hover:text-ink ${isPlaceholder(l.label) ? 'placeholder-text' : ''}`}>
-                  {l.kind} ↗
+                <a
+                  href={l.href}
+                  target={l.href.startsWith('http') ? '_blank' : undefined}
+                  rel="noreferrer"
+                  className={`px-card px-card-lift group flex items-center gap-4 px-4 py-3.5 ${isPlaceholder(l.label) ? 'placeholder-text' : ''}`}
+                >
+                  <span className="grid h-9 w-9 shrink-0 place-items-center bg-white/10 px-border"><PixelIcon name={ICON[l.kind] ?? 'star'} size={18} /></span>
+                  <span className="hidden w-20 shrink-0 font-pixel text-[12px] tracking-[0.08em] text-purple uppercase sm:block">{l.kind}</span>
+                  <span className="min-w-0 flex-1 truncate">{l.label}</span>
+                  <span className="font-pixel text-[12px] text-dim transition group-hover:text-purple">▶</span>
                 </a>
               </li>
             ))}
-            {contact.cv && <li><a href={contact.cv} className="label transition hover:text-ink">Download CV ↓</a></li>}
           </ul>
-        )}
-
-        <Txt as="p" value={contact.availability} className="label mt-14 flex items-center gap-2.5 before:inline-block before:h-1.5 before:w-1.5 before:rounded-full before:bg-accent" />
+        </div>
       </div>
     </Reveal>
   )
