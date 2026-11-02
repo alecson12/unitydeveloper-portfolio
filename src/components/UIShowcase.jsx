@@ -64,7 +64,7 @@ function CategoryBar({ cats, active }) {
           {cats.map((c) => (
             <li key={c.id}>
               <a href={`#cat-${c.id}`} className={`px-chip whitespace-nowrap transition-colors ${active === c.id ? 'px-chip-active' : 'hover:bg-white/15'}`}>
-                <PixelIcon name={c.icon} size={12} accent={active === c.id ? '#ffb6d8' : undefined} />
+                <PixelIcon name={c.icon} size={12} accent={active === c.id ? '#9fb4dc' : undefined} />
                 {c.name}
               </a>
             </li>
@@ -81,7 +81,7 @@ function CategoryHeader({ category: c, index }) {
       <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
         <div className="flex items-start gap-4 sm:gap-5">
           <span className="px-card grid h-14 w-14 shrink-0 place-items-center sm:h-16 sm:w-16">
-            <PixelIcon name={c.icon} size={30} accent="#ffb6d8" />
+            <PixelIcon name={c.icon} size={30} accent="#9fb4dc" />
           </span>
           <div>
             <p className="eyebrow">Category {String(index + 1).padStart(2, '0')}</p>

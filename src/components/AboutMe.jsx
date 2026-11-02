@@ -34,7 +34,7 @@ export function Intro() {
                 {/* a fish passing behind */}
                 <div className="absolute left-0 top-[42%] w-full" style={{ height: 28 }}>
                   <div className="swim swim-r h-full" style={{ '--dur': '34s', '--delay': '-9s', animation: reduce ? 'none' : undefined, left: reduce ? '10%' : undefined }}>
-                    <PixelSprite name="tang" flip className="w-7" />
+                    <PixelSprite name="reef" flip className="w-8 opacity-70" />
                   </div>
                 </div>
               </div>
@@ -43,16 +43,10 @@ export function Intro() {
                   <img src={intro.photo} alt={intro.photoAlt ?? name} width="1000" height="1422" className="relative z-10 mx-auto block w-[78%]" fetchPriority="high" />
                 )}
                 {/* the sand you stand on, with plants in front */}
-                <svg aria-hidden className="relative z-20 -mt-[12%] block w-full" viewBox="0 0 100 14" preserveAspectRatio="none" shapeRendering="crispEdges">
-                  <path d="M0 14V9h8V7h10V5h12V4h20V3h20V5h12V7h10V9h8v5z" fill="#2a3461" />
-                  <path d="M8 7h10V5h12V4h20V3h20V5h12V7h3v1H8z" fill="#3a4677" />
-                  <path d="M30 4h6v1h-6zM56 3h8v1h-8zM72 5h5v1h-5z" fill="#4b5a92" />
-                </svg>
-                <PixelSprite name="seaweed" className="sway absolute bottom-[8%] left-[4%] z-30 w-7 sm:w-9" style={{ animation: reduce ? 'none' : undefined }} />
-                <PixelSprite name="kelp" className="sway absolute bottom-[10%] left-[14%] z-30 w-5" style={{ '--delay': '-2s', animation: reduce ? 'none' : undefined }} />
-                <PixelSprite name="seaweed" className="sway absolute bottom-[8%] right-[5%] z-30 w-8 sm:w-10" style={{ '--delay': '-3s', animation: reduce ? 'none' : undefined }} />
-                <PixelSprite name="starfish" className="absolute bottom-[14%] right-[20%] z-30 w-5" />
-                <PixelSprite name="coral" className="absolute bottom-[10%] left-[1%] z-[5] w-14 opacity-80 sm:w-16" />
+                <PixelSprite name="ledge" className="relative z-20 -mt-[13%] block w-full" />
+                <PixelSprite name="kelp" className="sway absolute bottom-[6%] left-[5%] z-30 w-6 sm:w-7" style={{ animation: reduce ? 'none' : undefined }} />
+                <PixelSprite name="seaweed" className="sway absolute bottom-[6%] right-[6%] z-30 w-8 sm:w-10" style={{ '--delay': '-3s', animation: reduce ? 'none' : undefined }} />
+                <PixelSprite name="spire" className="absolute bottom-[5%] left-[-2%] z-[5] w-12 opacity-80 sm:w-14" />
               </div>
             </div>
           </div>
@@ -130,7 +124,7 @@ export function Background() {
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
               <div className="lg:col-span-3">
                 <p className="eyebrow flex items-center gap-3"><span className="inline-block h-2 w-2 bg-purple" />In my words</p>
-                <PixelSprite name="turtle" className="bob mt-6 hidden w-24 lg:block" />
+                <PixelSprite name="turtle" className="bob mt-6 hidden w-28 opacity-80 lg:block" />
               </div>
               <div className="space-y-4 text-lg leading-relaxed lg:col-span-9 lg:max-w-3xl">
                 {statementParas.map((p, i) => <Txt key={i} as="p" value={p} />)}
@@ -174,7 +168,7 @@ export function Services() {
         <Reveal key={s.id} delay={Math.min(i * 0.05, 0.3)}>
           <article className={`px-card px-card-lift h-full p-6 ${isDraft(s) ? 'placeholder-text' : ''}`}>
             <div className="flex items-start justify-between gap-3">
-              <span className="px-card grid h-12 w-12 shrink-0 place-items-center"><PixelIcon name={s.icon} size={22} accent="#ffb6d8" /></span>
+              <span className="px-card grid h-12 w-12 shrink-0 place-items-center"><PixelIcon name={s.icon} size={22} accent="#9fb4dc" /></span>
               {isDraft(s) && <span className="px-chip">To confirm</span>}
             </div>
             <h3 className="mt-5 font-display text-3xl leading-tight tracking-tight">{s.name}</h3>
@@ -216,7 +210,7 @@ export function Highlights() {
               <ul className="mt-4 space-y-3">
                 {notable.map((n, i) => (
                   <li key={i} className="flex gap-3 text-sm leading-relaxed">
-                    <PixelIcon name="star" size={14} accent="#ffd166" className="mt-0.5 shrink-0 text-pink" />
+                    <PixelIcon name="star" size={14} accent="#d8b4a0" className="mt-0.5 shrink-0 text-pink" />
                     <Txt value={n} />
                   </li>
                 ))}

@@ -6,22 +6,20 @@ import { motion, useMotionValue, useReducedMotion, useTransform } from 'framer-m
  * driven by DEPTH — a number from 0 (the surface, at the top of the page)
  * to 4 (the abyss, at the bottom) — so it changes smoothly as you scroll:
  *
- *   sun rays      fade in as you go under, gone by the mid water
- *   bubbles       appear once you are under the surface
- *   deep vignette darkens the edges of the screen in the deep water
- *   glow motes    bioluminescent specks that only live in the deep
+ *   light rays    fade in under the surface, gone by the mid water
+ *   particles     a few slow motes once you are under
+ *   deep fog      darkens the edges of the screen in the deep water
+ *   glow          sparse bioluminescent specks that only live in the deep
  *
- * Depth is read from where the main sections sit on the page, so it stays
- * right however long each section is. The coloured water itself is drawn by
- * the <Zone> wrappers in Home.jsx; this layer only adds light and particles.
+ * Depth is read from where the main sections sit on the page. The coloured
+ * water itself is drawn by the <Zone> wrappers in Home.jsx.
  */
 
-// Section id → the depth at the moment that section reaches mid-screen.
 const STOPS = [['about', 1], ['skills', 2], ['projects', 3], ['contact', 4]]
 
-const RAYS = [[38, 7, -16, 0], [46, 11, -8, 1.6], [53, 6, 4, 0.8], [60, 12, 12, 2.4], [30, 5, -24, 3.1], [68, 7, 20, 1.2]]
-const BUBBLES = [[6, 7, 17, 0], [14, 5, 22, 5], [23, 9, 15, 9], [31, 6, 19, 2], [42, 4, 24, 12], [50, 8, 16, 7], [58, 5, 21, 3], [66, 7, 18, 14], [74, 4, 23, 1], [82, 9, 14, 10], [90, 6, 20, 6], [96, 5, 17, 11]]
-const MOTES = [[8, 20, 7, 0, '#7cf7ff'], [18, 64, 9, 2, '#b8a3ff'], [27, 36, 6, 4, '#7cf7ff'], [41, 78, 8, 1, '#ffe066'], [56, 18, 7, 3, '#7cf7ff'], [63, 55, 9, 5, '#b8a3ff'], [77, 30, 6, 2, '#7cf7ff'], [85, 70, 8, 6, '#ffe066'], [93, 44, 7, 1, '#7cf7ff']]
+const RAYS = [[36, 6, -14, 0], [45, 9, -6, 1.6], [53, 5, 5, 0.8], [61, 10, 13, 2.4], [28, 4, -22, 3.1]]
+const MOTES = [[8, 7, 21, 0], [22, 5, 26, 6], [37, 6, 19, 10], [58, 4, 28, 3], [73, 6, 23, 8], [91, 5, 25, 12]]
+const GLOW = [[9, 24, 8, 0, '#8fe3ff'], [26, 66, 10, 3, '#a39cd9'], [48, 38, 7, 5, '#8fe3ff'], [71, 76, 9, 1, '#dcefa8'], [88, 30, 8, 4, '#8fe3ff']]
 
 export function useDepth(mode = 'home') {
   const depth = useMotionValue(mode === 'home' ? 0 : 3.2)
@@ -49,7 +47,7 @@ export function useDepth(mode = 'home') {
     calc()
     window.addEventListener('scroll', onScroll, { passive: true })
     window.addEventListener('resize', onScroll)
-    const t = setInterval(calc, 1500) // sections change height as media loads
+    const t = setInterval(calc, 1500)
     return () => { window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll); clearInterval(t); cancelAnimationFrame(raf) }
   }, [mode, depth])
   return depth
@@ -58,48 +56,30 @@ export function useDepth(mode = 'home') {
 export default function Ocean({ mode = 'home' }) {
   const reduce = useReducedMotion()
   const depth = useDepth(mode)
-  const rays = useTransform(depth, [0.35, 0.9, 1.4, 2.1], [0, 0.9, 0.75, 0])
-  const bubbles = useTransform(depth, [0.6, 1], [0, 1])
-  const vignette = useTransform(depth, [2.2, 3.4], [0, 0.55])
-  const motes = useTransform(depth, [2.7, 3.4], [0, 1])
+  const rays = useTransform(depth, [0.35, 0.9, 1.4, 2.1], [0, 0.7, 0.55, 0])
+  const motes = useTransform(depth, [0.6, 1], [0, 1])
+  const fog = useTransform(depth, [2.0, 3.4], [0, 0.6])
+  const glow = useTransform(depth, [2.7, 3.4], [0, 1])
   const anim = reduce ? 'none' : undefined
 
   return (
     <div aria-hidden className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-      {/* sun rays from the surface */}
       <motion.div style={{ opacity: rays }} className="absolute inset-0">
         {RAYS.map(([left, w, skew, delay], i) => (
-          <span
-            key={i}
-            className="ray"
-            style={{ left: `${left}%`, width: `${w}vw`, transform: `skewX(${skew}deg)`, '--delay': `${delay}s`, animation: anim }}
-          />
+          <span key={i} className="ray" style={{ left: `${left}%`, width: `${w}vw`, transform: `skewX(${skew}deg)`, '--delay': `${delay}s`, animation: anim }} />
         ))}
       </motion.div>
 
-      {/* bubbles rising */}
-      <motion.div style={{ opacity: bubbles }} className="absolute inset-0">
-        {BUBBLES.map(([left, size, dur, delay], i) => (
-          <span
-            key={i}
-            className={`bubble ${i % 3 === 0 ? '' : 'hidden sm:block'}`}
-            style={{ left: `${left}%`, width: size, height: size, '--d': `${dur}s`, '--delay': `-${delay}s`, animation: anim, opacity: reduce ? 0.4 : undefined }}
-          />
-        ))}
-      </motion.div>
-
-      {/* the deep: darker edges and bioluminescence */}
-      <motion.div
-        style={{ opacity: vignette, background: 'radial-gradient(ellipse at 50% 45%, rgba(2,6,24,0) 40%, rgba(2,6,24,0.9) 100%)' }}
-        className="absolute inset-0"
-      />
       <motion.div style={{ opacity: motes }} className="absolute inset-0">
-        {MOTES.map(([x, y, d, delay, c], i) => (
-          <span
-            key={i}
-            className={`glowmote ${i % 2 ? 'hidden sm:block' : ''}`}
-            style={{ left: `${x}%`, top: `${y}%`, '--d': `${d}s`, '--delay': `-${delay}s`, background: c, boxShadow: `0 0 8px 2px ${c}`, animation: anim }}
-          />
+        {MOTES.map(([left, size, dur, delay], i) => (
+          <span key={i} className={`mote ${i % 2 ? 'hidden sm:block' : ''}`} style={{ left: `${left}%`, width: size, height: size, '--d': `${dur}s`, '--delay': `-${delay}s`, animation: anim, opacity: reduce ? 0.3 : undefined }} />
+        ))}
+      </motion.div>
+
+      <motion.div style={{ opacity: fog, background: 'radial-gradient(ellipse at 50% 45%, rgba(2,5,16,0) 38%, rgba(2,5,16,0.92) 100%)' }} className="absolute inset-0" />
+      <motion.div style={{ opacity: glow }} className="absolute inset-0">
+        {GLOW.map(([x, y, d, delay, c], i) => (
+          <span key={i} className={`glowmote ${i % 2 ? 'hidden sm:block' : ''}`} style={{ left: `${x}%`, top: `${y}%`, '--d': `${d}s`, '--delay': `-${delay}s`, background: c, boxShadow: `0 0 6px 1px ${c}`, animation: anim }} />
         ))}
       </motion.div>
     </div>

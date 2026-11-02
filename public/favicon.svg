@@ -1,15 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges">
-  <rect width="16" height="16" fill="#0b2a6b"/>
-  <rect x="0" y="0" width="16" height="4" fill="#1d8fe4"/>
-  <rect x="2" y="2" width="3" height="1" fill="#fff"/>
-  <rect x="9" y="1" width="4" height="1" fill="#fff"/>
-  <rect x="6" y="7" width="5" height="1" fill="#ffb347"/>
-  <rect x="4" y="8" width="8" height="1" fill="#ffb347"/>
-  <rect x="3" y="9" width="10" height="1" fill="#ffb347"/>
-  <rect x="4" y="10" width="8" height="1" fill="#ffb347"/>
-  <rect x="6" y="11" width="5" height="1" fill="#ffb347"/>
-  <rect x="12" y="8" width="2" height="3" fill="#ff7a2f"/>
-  <rect x="5" y="9" width="1" height="1" fill="#0b2a6b"/>
-  <rect x="2" y="13" width="1" height="1" fill="#7cf7ff"/>
-  <rect x="13" y="14" width="1" height="1" fill="#7cf7ff"/>
+  <rect width="16" height="16" fill="#0a1530"/>
+  <rect x="0" y="0" width="16" height="5" fill="#8ea5b8"/>
+  <path d="M0 12h16v4H0zM1 10h3v1H1zM4 8h2v1H4zM6 6h2v1H6zM8 5h2v1H8zM10 4h3v1h-3zM13 5h1v1h-1zM12 6h1v1h-1zM11 7h1v1h-1zM8 7h2v1H8zM6 8h2v1H6zM4 10h2v1H4zM6 11h8v1H6z" fill="#22467a"/>
+  <path d="M10 3h3v1h-3zM13 4h1v1h-1zM6 5h2v1H6zM8 4h2v1H8z" fill="#eef0ea"/>
 </svg>

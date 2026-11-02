@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { PROFILE } from '../content/profile.js'
 import { SECTIONS } from '../content/sections.js'
-import PixelSprite from './PixelSprite.jsx'
 
 /**
  * Sticky top navigation. On the homepage it highlights the section that is
@@ -165,8 +164,10 @@ export default function Nav({ mode = 'home' }) {
 /** Logo mark: a small pixel fish in a square of water. */
 function Mark() {
   return (
-    <span className="px-border grid h-10 w-10 place-items-center bg-sky-deep transition group-hover:bg-sky" style={{ '--px-c': 'rgba(255,255,255,0.35)' }}>
-      <PixelSprite name="fish" className="w-6" />
+    <span className="px-border grid h-10 w-10 place-items-center bg-sky-deep transition group-hover:bg-[#1f4a7a]" style={{ '--px-c': 'rgba(255,255,255,0.3)' }}>
+      <svg viewBox="0 0 16 10" width="22" height="14" shapeRendering="crispEdges" aria-hidden>
+        <path d="M0 9h16v1H0zM1 7h3v1H1zM4 5h2v1H4zM6 3h2v1H6zM8 2h2v1H8zM10 1h3v1h-3zM13 2h1v1h-1zM12 3h1v1h-1zM11 4h1v1h-1zM8 4h2v1H8zM6 5h2v1H6zM4 7h2v1H4zM6 8h8v1H6z" fill="#eef0ea" />
+      </svg>
     </span>
   )
 }

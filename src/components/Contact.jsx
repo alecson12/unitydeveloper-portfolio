@@ -1,6 +1,5 @@
 import Reveal from './Reveal.jsx'
 import PixelIcon from './PixelIcon.jsx'
-import PixelSprite from './PixelSprite.jsx'
 import Txt from './Txt.jsx'
 import { PROFILE } from '../content/profile.js'
 import { shouldShow, isPlaceholder } from '../lib/content.js'
@@ -13,7 +12,6 @@ export default function Contact() {
   return (
     <Reveal>
       <div className="px-card relative p-6 sm:p-12">
-        <PixelSprite name="angler" className="pointer-events-none absolute right-10 -top-12 hidden w-24 lg:block" glow="rgba(255,224,102,0.35)" aria-hidden />
         <div className="relative grid grid-cols-1 gap-10 lg:grid-cols-12">
           <div className="lg:col-span-6">
             <p className="max-w-md text-lg leading-relaxed text-ink-2">{contact.text}</p>
