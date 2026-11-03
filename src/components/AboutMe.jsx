@@ -54,7 +54,7 @@ function Light({ reduce }) {
 function Name({ first, last }) {
   return (
     <div aria-hidden className="pointer-events-none select-none text-center">
-      <p className="font-pixel text-[13px] tracking-[0.6em] text-red uppercase sm:text-[15px]" style={{ textShadow: '0 0 12px rgba(217,38,28,0.45)' }}>{first}</p>
+      <p className="font-pixel text-[13px] tracking-[0.6em] text-white uppercase sm:text-[15px]" style={{ textShadow: '0 0 12px rgba(255,255,255,0.45)' }}>{first}</p>
       <p className="name-glow font-display leading-[0.85] tracking-tight text-white uppercase" style={{ fontSize: 'clamp(56px, 27cqw, 190px)' }}>{last}</p>
     </div>
   )
@@ -111,7 +111,7 @@ export function Intro() {
           </div>
 
           {/* ---- landscape centre: you, your name behind your head, no taller than the screen ---- */}
-          <div className="@container relative z-0 order-first flex flex-col lg:order-none lg:col-span-4 lg:-mb-8 lg:min-h-0 xl:col-span-6 xl:mb-0">
+          <div className="@container relative z-0 order-first flex flex-col lg:order-none lg:col-span-4 lg:min-h-0 xl:col-span-6">
             <div className="relative"><Name first={first} last={last} /></div>
             <div className="relative -mt-[14%] flex flex-1 items-end justify-center pb-[7%] lg:-mt-[18%]">
               {intro.photo && (

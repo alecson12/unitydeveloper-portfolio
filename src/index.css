@@ -178,12 +178,12 @@ html { scrollbar-color: #112c58 #ffffff; }
 }
 
 /* ---------- About Me: the photo and the name ----------
-   Phones: full width, stacked. Three-column laptops: taller than its
-   column and placed so the face sits mid-panel, spilling behind the side
-   panels (the panel clips the bottom). Wide screens: in its own column,
-   never taller than the screen. */
+   Phones: full width, stacked. Three-column widths (portrait monitors):
+   as tall as its column, spilling behind the side panels, nudged left so
+   the face sits between them. Wide screens: in its own column, never
+   taller than the screen. */
 @media (min-width: 64rem) and (max-width: 79.99rem) {
-  .about-photo { position: absolute; left: 50%; top: 10%; height: 122%; width: auto; max-width: none; transform: translateX(-50%); }
+  .about-photo { height: 100%; width: auto; max-width: 300%; object-fit: contain; object-position: bottom; transform: translateX(-4%); }
 }
 @media (min-width: 80rem) {
   .about-photo { height: 100%; width: auto; max-width: 165%; max-height: calc(100svh - 15rem); object-fit: contain; object-position: bottom; }
