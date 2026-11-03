@@ -18,7 +18,7 @@ export default function Skills() {
       {tools.length > 0 && (
         <Reveal>
           <div className="px-card p-5 sm:p-8">
-            <p className="eyebrow flex items-center gap-3"><span className="inline-block h-2 w-2 bg-purple" />Tools & technologies</p>
+            <p className="eyebrow flex items-center gap-3"><span className="inline-block h-2 w-2 bg-red" />Tools & technologies</p>
             <ul className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 xl:grid-cols-6">
               {tools.map((t) => (
                 <li key={t.name} className={`px-card px-card-lift flex flex-col items-start gap-4 p-4 ${isDraft(t) ? 'placeholder-text' : ''}`}>

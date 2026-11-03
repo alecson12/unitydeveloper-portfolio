@@ -94,7 +94,7 @@ export function Background() {
       <article className="px-card p-5 sm:p-8 lg:p-10 xl:p-12">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-14">
           <div className="lg:col-span-7">
-            <p className="eyebrow flex items-center gap-3"><span className="inline-block h-2 w-2 bg-purple" />Experience</p>
+            <p className="eyebrow flex items-center gap-3"><span className="inline-block h-2 w-2 bg-red" />Experience</p>
             <div className="mt-5 space-y-5 text-lg leading-relaxed text-ink-2">
               {paragraphs.map((p, i) => <Txt key={i} as="p" value={p} className={i === 0 ? 'text-ink' : ''} />)}
             </div>
@@ -123,7 +123,7 @@ export function Background() {
           <div className="mt-10 border-t border-line pt-8 lg:mt-12">
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
               <div className="lg:col-span-3">
-                <p className="eyebrow flex items-center gap-3"><span className="inline-block h-2 w-2 bg-purple" />In my words</p>
+                <p className="eyebrow flex items-center gap-3"><span className="inline-block h-2 w-2 bg-red" />In my words</p>
                 <PixelSprite name="turtle" className="bob mt-6 hidden w-28 opacity-80 lg:block" />
               </div>
               <div className="space-y-4 text-lg leading-relaxed lg:col-span-9 lg:max-w-3xl">
@@ -193,7 +193,7 @@ export function Highlights() {
       <div className="px-card p-5 sm:p-8 lg:p-10">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
           <div className="lg:col-span-7">
-            <p className="eyebrow flex items-center gap-3"><span className="inline-block h-2 w-2 bg-purple" />Highlights</p>
+            <p className="eyebrow flex items-center gap-3"><span className="inline-block h-2 w-2 bg-red" />Highlights</p>
             <dl className="mt-6 grid grid-cols-2 gap-5 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
               {stats.map((h) => (
                 <div key={h.label} className={`px-card p-4 ${isPlaceholder(h.value) ? 'placeholder-text' : ''}`}>

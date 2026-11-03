@@ -35,7 +35,7 @@ export default function Contact() {
                   <span className="grid h-9 w-9 shrink-0 place-items-center bg-white/10 px-border"><PixelIcon name={ICON[l.kind] ?? 'star'} size={18} /></span>
                   <span className="hidden w-20 shrink-0 font-pixel text-[12px] tracking-[0.08em] text-purple uppercase sm:block">{l.kind}</span>
                   <span className="min-w-0 flex-1 truncate">{l.label}</span>
-                  <span className="font-pixel text-[12px] text-dim transition group-hover:text-purple">▶</span>
+                  <span className="font-pixel text-[12px] text-dim transition group-hover:text-red">▶</span>
                 </a>
               </li>
             ))}

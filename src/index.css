@@ -153,7 +153,7 @@ html { scrollbar-color: #112c58 #ffffff; }
   }
   .px-btn:hover { transform: translateY(-1px); filter: brightness(1.08); }
   .px-btn:active { transform: translateY(1px); box-shadow: none; }
-  .px-btn-primary { --px-c: #5f8ccc; background: linear-gradient(180deg, #4a7bbf, #2f5a94); color: #fff; @apply px-5 py-3; }
+  .px-btn-primary { --px-c: #f07a6e; background: linear-gradient(180deg, #e23a2e, #b81f16); color: #fff; @apply px-5 py-3; }
   .px-btn-ghost { --px-c: rgba(255,255,255,0.28); background: rgba(255,255,255,0.07); color: var(--color-ink); backdrop-filter: blur(6px); @apply px-5 py-3; }
   .on-light .px-btn-ghost { --px-c: rgba(16,34,77,0.35); background: rgba(255,255,255,0.45); }
   .px-btn-pink { --px-c: #ef6a5e; background: var(--color-red); color: #fff; @apply px-5 py-3; }
@@ -170,7 +170,7 @@ html { scrollbar-color: #112c58 #ffffff; }
     border: 1px solid rgba(255, 255, 255, 0.16);
   }
   .on-light .px-chip { background: rgba(255,255,255,0.6); border-color: rgba(16,34,77,0.2); }
-  .px-chip-active { background: #3f6fb0; color: #fff; border-color: #5f8ccc; }
+  .px-chip-active { background: var(--color-red); color: #fff; border-color: #f07a6e; }
 }
 
 /* =====================================================================

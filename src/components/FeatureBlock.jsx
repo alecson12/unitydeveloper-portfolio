@@ -15,7 +15,7 @@ export default function FeatureBlock({ feature, index, total, project }) {
   const text = (
     <>
       <p className="eyebrow flex items-center gap-3">
-        <span className="inline-block h-2 w-2 bg-purple" />
+        <span className="inline-block h-2 w-2 bg-red" />
         Feature {String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
       </p>
       <h4 className="mt-3 font-display text-3xl leading-none tracking-tight sm:text-4xl">{feature.name}</h4>

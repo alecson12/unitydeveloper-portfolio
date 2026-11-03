@@ -35,7 +35,7 @@ export default function ProjectPage({ id }) {
       <section className="container-x pt-32 sm:pt-40">
         <Reveal>
           <a href="#projects" className="font-pixel text-[12px] tracking-[0.08em] text-ink-2 uppercase transition hover:text-ink">◀ All work</a>
-          <p className="eyebrow mb-4 mt-10 flex items-center gap-3"><span className="inline-block h-2 w-2 bg-purple" />Case study</p>
+          <p className="eyebrow mb-4 mt-10 flex items-center gap-3"><span className="inline-block h-2 w-2 bg-red" />Case study</p>
           <h1 className="font-display text-5xl leading-none tracking-tight sm:text-6xl lg:text-7xl">{project.title}</h1>
         </Reveal>
         <div className="mt-12">
@@ -49,7 +49,7 @@ export default function ProjectPage({ id }) {
 
       {others.length > 0 && (
         <section className="container-x py-24 sm:py-32">
-          <p className="eyebrow mb-8 flex items-center gap-3"><span className="inline-block h-2 w-2 bg-purple" />More work</p>
+          <p className="eyebrow mb-8 flex items-center gap-3"><span className="inline-block h-2 w-2 bg-red" />More work</p>
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {others.map((p, i) => <ProjectCard key={p.id} project={p} index={i} />)}
           </div>

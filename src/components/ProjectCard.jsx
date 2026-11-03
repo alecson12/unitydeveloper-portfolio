@@ -23,7 +23,7 @@ export default function ProjectCard({ project, index = 0 }) {
           <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-1 font-pixel text-[12px] tracking-[0.08em] text-dim uppercase">
             {project.platform && <span>{project.platform}</span>}
             <span>{counts.features} {counts.features === 1 ? 'interface' : 'interfaces'}</span>
-            <span className="ml-auto text-purple opacity-0 transition group-hover:opacity-100">Open ▶</span>
+            <span className="ml-auto text-red opacity-0 transition group-hover:opacity-100">Open ▶</span>
           </div>
         </div>
       </PixelWindow>

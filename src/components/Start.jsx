@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { PROFILE } from '../content/profile.js'
 
@@ -6,9 +6,10 @@ import { PROFILE } from '../content/profile.js'
  * The opening screen: Alecson's extended Great Wave, in the three layers he
  * painted it in, set in motion.
  *
- * THE WORDMARK sits in the sky: upper right on wide screens (over the
- * open sky between the crest and the sun), centred above the frame on
- * phones. It floats very slightly.
+ * THE WORDMARK sits in the sky, 15.5% of the way down. Landscape: upper
+ * right, 46% of the screen wide, 5% in from the right edge (over the open
+ * sky between the crest and the sun). Portrait: centred, 86% wide, above
+ * the frame. It floats very slightly.
  *
  * THE FRAME.  The artwork is 1798 × 875 px. The composition to show at rest
  * is the 1353 × 756 window at (267, 59) — the red frame in the reference.
@@ -55,6 +56,7 @@ export default function Start() {
   const { start } = PROFILE
   const reduce = useReducedMotion()
   const ref = useRef(null)
+  const [portrait, setPortrait] = useState(false)
   const { scrollY } = useScroll()
   // parallax rates: fraction of the scroll distance each layer slides down
   const rate = (k) => useTransform(scrollY, (v) => (reduce ? 0 : Math.min(v, 1200) * k))
@@ -71,6 +73,7 @@ export default function Start() {
     const fit = () => {
       const vw = window.innerWidth, vh = window.innerHeight
       const ratio = FRAME.w / FRAME.h
+      setPortrait(vw / vh < 1.15)
       if (vw / vh >= 1.15) {
         el.style.width = '100%'
         el.style.height = `${vw / ratio}px`
@@ -90,8 +93,8 @@ export default function Start() {
 
   return (
     <section id="start" className="relative isolate flex min-h-[100svh] flex-col overflow-hidden" style={{ background: '#1696fa' }}>
-      <div className="container-x relative z-10 flex flex-1 flex-col pt-24 sm:pt-28">
-        <div id="start-title" className="flex justify-center lg:mt-[3vh] lg:justify-end">
+      <div id="start-title" className="pointer-events-none absolute inset-x-0 z-10" style={{ top: 'max(96px, 15.5vh)' }}>
+        <div className={`flex ${portrait ? 'justify-center' : 'justify-end pr-[5vw]'}`}>
           {start.wordmark && (
             <motion.img
               src={start.wordmark}
@@ -102,8 +105,8 @@ export default function Start() {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
-              className="bob-slow block h-auto w-[min(92vw,560px)] lg:w-[46vw] lg:max-w-[900px]"
-              style={{ '--bob': '7s', animation: anim }}
+              className="bob-slow block h-auto"
+              style={{ width: portrait ? 'min(86vw, 900px)' : 'min(46vw, 960px)', animation: anim }}
             />
           )}
         </div>
@@ -145,7 +148,7 @@ export default function Start() {
 
       <a href="#about" className="absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 font-pixel text-[12px] tracking-[0.1em] text-[#eef0ea] uppercase drop-shadow-[0_1px_0_rgba(5,15,40,0.7)]">
         {start.hint}
-        <span className="bob inline-block" style={{ '--bob': '2.2s', animation: anim }}>▼</span>
+        <span className="bob inline-block text-red" style={{ '--bob': '2.2s', animation: anim }}>▼</span>
       </a>
     </section>
   )

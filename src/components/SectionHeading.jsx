@@ -7,7 +7,7 @@ export default function SectionHeading({ eyebrow, heading, intro, depth }) {
     <Reveal className={heading ? 'mb-10 sm:mb-14' : 'mb-6'}>
       {(eyebrow || depth) && (
         <p className="eyebrow mb-4 flex flex-wrap items-center gap-3">
-          {eyebrow && <><span className="inline-block h-2 w-2 bg-purple" />{eyebrow}</>}
+          {eyebrow && <><span className="inline-block h-2 w-2 bg-red" />{eyebrow}</>}
           {depth && <span className="px-chip ml-1 gap-1.5 normal-case"><span className="text-glow">▼</span>{depth}</span>}
         </p>
       )}
