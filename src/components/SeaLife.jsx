@@ -7,9 +7,11 @@ import PixelSprite from './PixelSprite.jsx'
  * a <Zone>. Restrained: a few large, well-placed things rather than many.
  *   swim   — crosses the screen slowly (right→left, or flipped)
  *   float  — drifts gently in place (jellyfish)
- *   fixed  — plants and rock on the floor or the edges
+ *   fixed  — plants, rock and the wreck on the floor or the edges
+ *            (never mid-air: loose stones away from the floor are  float  boulders)
  * Two parallax groups (far / near) shift slightly with the scroll. Items
- * marked  sm  are hidden on phones. Positions are percentages of the zone.
+ * marked  sm  are hidden on phones,  xs  shown only there. Positions are
+ * percentages of the zone.
  *
  *   { kind, name, top, left|right|bottom, w, dur, delay, flip, glow, sm, layer, op }
  */
@@ -31,6 +33,9 @@ const BANDS = {
     { kind: 'fixed', name: 'rock', bottom: 0, right: -2, w: 300, layer: 'near' },
     { kind: 'fixed', name: 'seaweed', bottom: 0, right: 9, w: 40, sway: true, delay: -3, layer: 'near' },
     { kind: 'fixed', name: 'spire', bottom: 0, right: 15, w: 60, sm: true },
+    { kind: 'float', name: 'seahorse', bottom: 3, left: 15, w: 30, delay: -5, layer: 'near' },
+    { kind: 'fixed', name: 'crab', bottom: 0, right: 23, w: 44, sm: true },
+    { kind: 'swim', name: 'diver', top: 46, w: 120, dur: 160, delay: -70 },
   ],
   mid: [
     { kind: 'swim', name: 'ray', top: 10, w: 220, dur: 200, delay: -60, layer: 'far', sm: true },
@@ -50,6 +55,10 @@ const BANDS = {
     { kind: 'fixed', name: 'spire', bottom: 0, right: 2, w: 90, layer: 'near' },
     { kind: 'fixed', name: 'coral', bottom: 0, right: 9, w: 56, layer: 'near' },
     { kind: 'fixed', name: 'rock', bottom: 0, right: 12, w: 260, sm: true },
+    { kind: 'swim', name: 'orca', top: 58, w: 300, dur: 230, delay: -90, flip: true, layer: 'far', sm: true },
+    { kind: 'fixed', name: 'octopus', bottom: 1, left: 7, w: 70, layer: 'near' },
+    { kind: 'float', name: 'seahorse', top: 72, right: 15, w: 28, delay: -8, sm: true },
+    { kind: 'float', name: 'boulder', top: 38, right: 5, w: 80, delay: -3, layer: 'far', sm: true },
   ],
   deep: [
     { kind: 'swim', name: 'squid', top: 5, w: 40, dur: 170, delay: -40, glow: 'rgba(92,84,160,0.35)' },
@@ -67,8 +76,11 @@ const BANDS = {
     { kind: 'swim', name: 'squid', top: 30, w: 30, dur: 130, delay: -75, school: 2, glow: 'rgba(92,84,160,0.3)', sm: true },
     { kind: 'swim', name: 'lantern', top: 92, w: 28, dur: 88, delay: -66, school: 4, flip: true, glow: 'rgba(143,227,255,0.45)', sm: true },
     { kind: 'float', name: 'jelly', top: 40, left: 5, w: 44, delay: -11, glow: 'rgba(122,115,184,0.3)' },
-    { kind: 'fixed', name: 'spire', top: 44, right: -1, w: 110, op: 0.9, sm: true },
-    { kind: 'fixed', name: 'rock', top: 46.5, right: 2, w: 320, op: 0.9, sm: true },
+    { kind: 'float', name: 'boulder', top: 44, right: 3, w: 130, delay: -4, sm: true },
+    { kind: 'float', name: 'boulder', top: 50, right: 12, w: 64, delay: -10, layer: 'far', sm: true },
+    { kind: 'float', name: 'boulder', top: 28, left: 4, w: 72, delay: -7 },
+    { kind: 'swim', name: 'shark', top: 64, w: 200, dur: 170, delay: -55 },
+    { kind: 'swim', name: 'diver', top: 35, w: 110, dur: 190, delay: -120, flip: true, sm: true },
     { kind: 'fixed', name: 'rock', bottom: 0, left: -5, w: 440, layer: 'near' },
     { kind: 'fixed', name: 'spire', bottom: 0, left: 14, w: 100, sm: true },
     { kind: 'fixed', name: 'spire', bottom: 0, right: 6, w: 130, layer: 'near' },
@@ -84,6 +96,11 @@ const BANDS = {
     { kind: 'fixed', name: 'spire', bottom: 0, left: 16, w: 110, sm: true, op: 0.9 },
     { kind: 'fixed', name: 'spire', bottom: 0, right: 3, w: 140, layer: 'near', op: 0.9 },
     { kind: 'fixed', name: 'rock', bottom: 0, right: 8, w: 320, sm: true, op: 0.9 },
+    { kind: 'fixed', name: 'wreck', bottom: 0, left: 24, w: 620, layer: 'near', sm: true },
+    { kind: 'fixed', name: 'wreck', bottom: 0, left: -10, w: 380, layer: 'near', xs: true },
+    { kind: 'fixed', name: 'octopus', bottom: 0, left: 58, w: 64, layer: 'near', sm: true },
+    { kind: 'swim', name: 'shark', top: 30, w: 260, dur: 260, delay: -130, layer: 'far', sm: true },
+    { kind: 'float', name: 'boulder', top: 20, right: 10, w: 70, delay: -6, sm: true },
   ],
 }
 
@@ -106,8 +123,8 @@ export default function SeaLife({ band = 'shallow' }) {
   )
 }
 
-function Creature({ kind, name, top, left, right, bottom, w, dur = 120, delay = 0, flip = false, glow, sm = false, school = 0, sway = false, op = 1, reduce }) {
-  const vis = sm ? 'hidden sm:block' : ''
+function Creature({ kind, name, top, left, right, bottom, w, dur = 120, delay = 0, flip = false, glow, sm = false, xs = false, school = 0, sway = false, op = 1, reduce }) {
+  const vis = sm ? 'hidden sm:block' : xs ? 'sm:hidden' : ''
   const pos = { top: top != null ? `${top}%` : undefined, bottom: bottom != null ? `${bottom}%` : undefined, left: left != null ? `${left}%` : undefined, right: right != null ? `${right}%` : undefined, opacity: op }
 
   if (kind === 'swim') {
