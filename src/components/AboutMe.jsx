@@ -197,7 +197,7 @@ export function Highlights() {
             <dl className="mt-6 grid grid-cols-2 gap-5 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
               {stats.map((h) => (
                 <div key={h.label} className={`px-card p-4 ${isPlaceholder(h.value) ? 'placeholder-text' : ''}`}>
-                  <dd className="font-display text-5xl leading-none tracking-tight text-pink sm:text-6xl">{h.value}</dd>
+                  <dd className="font-display text-5xl leading-none tracking-tight text-beige sm:text-6xl">{h.value}</dd>
                   <dt className="mt-3 text-sm leading-snug">{h.label}</dt>
                   <Txt as="p" value={h.note} className="mt-1 font-pixel text-[13px] tracking-[0.06em] text-dim uppercase" />
                 </div>
@@ -210,7 +210,7 @@ export function Highlights() {
               <ul className="mt-4 space-y-3">
                 {notable.map((n, i) => (
                   <li key={i} className="flex gap-3 text-sm leading-relaxed">
-                    <PixelIcon name="star" size={14} accent="var(--color-red)" className="mt-0.5 shrink-0 text-pink" />
+                    <PixelIcon name="star" size={14} accent="var(--color-gold)" className="mt-0.5 shrink-0 text-gold" />
                     <Txt value={n} />
                   </li>
                 ))}

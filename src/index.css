@@ -27,6 +27,8 @@
   --color-lavender: #a39cd9;
   --color-purple: #9fb4dc;     /* accent: links, active states */
   --color-accent: #3f6fb0;     /* buttons */
+  --color-beige: #e8d9b5;      /* big numbers */
+  --color-gold: #f2b632;       /* stars */
   --color-red: #d9261c;        /* the red of the wordmark: one accent, used sparingly */
   --color-pink: #d9261c;       /* warm accent = the red (kept under its old name) */
   --color-mint: #7fc0d6;
