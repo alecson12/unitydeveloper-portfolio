@@ -13,7 +13,7 @@ export default function SectionHeading({ eyebrow, heading, intro, depth }) {
       )}
       {heading && (
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-          <h2 className="font-display text-5xl leading-none tracking-tight text-balance sm:text-6xl lg:text-7xl" style={{ textShadow: '0 2px 0 rgba(0,10,40,0.35)' }}>
+          <h2 className="font-display text-5xl leading-none tracking-tight text-balance text-beige sm:text-6xl lg:text-7xl" style={{ textShadow: '0 2px 0 rgba(0,10,40,0.35)' }}>
             {heading}
           </h2>
           {intro && <p className="max-w-md text-balance text-ink-2 sm:text-right">{intro}</p>}
