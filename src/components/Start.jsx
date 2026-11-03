@@ -3,29 +3,29 @@ import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion
 import { PROFILE } from '../content/profile.js'
 
 /**
- * The opening screen: Alecson's extended Great Wave, cut into layers and
- * set in motion.
+ * The opening screen: Alecson's extended Great Wave, in the three layers he
+ * painted it in, set in motion.
  *
  * THE FRAME.  The artwork is 1798 × 875 px. The composition to show at rest
  * is the 1353 × 756 window at (267, 59) — the red frame in the reference.
  * The rest of the image (267 px spare on the left, 179 on the right, ~60
  * above and below) is only there so layers can move without ever showing
  * an edge. The stage below is that window; the layers are laid out on the
- * full artwork inside it, positioned by the pixel boxes they were cut
- * from, so they line up exactly.
+ * full artwork inside it at the pixel offsets they were painted at, so
+ * they line up exactly (stacked, they reproduce the original picture).
  *
- * THE LAYERS, back to front:
- *   sky (CSS gradient sampled from the picture) · sun · high clouds ·
- *   low clouds · far (Fuji, horizon, the right wave, its boats) ·
- *   the great wave · the foreground swell
- * Rear layers carry a 28 px copy of whatever sits in front of them, so a
- * shift never opens a gap.
+ * THE LAYERS, back to front (public/media/start/, used as supplied):
+ *   sky colour (CSS gradient sampled from the picture)
+ *   sky.webp        1798 × 643 at (0, 0)    sky, clouds, sun, horizon
+ *   mountains.webp  1167 × 298 at (0, 369)  Fuji and the far-left swell
+ *   waves.webp      1798 × 657 at (0, 218)  the great wave and the sea
  *
  * MOTION.  Two kinds, both small:
- *   - continuous: clouds drift (two speeds), the sun's glow breathes, the
- *     waves heave and sway on their own rhythms — all in CSS, transform only
+ *   - continuous: the sky drifts sideways (clouds and sun together), the
+ *     sun's glow breathes, the far swell and the great wave heave on their
+ *     own rhythms — all in CSS, transform only
  *   - parallax: as you scroll, each layer slides down at its own rate,
- *     distant ones least, the foreground most
+ *     the sky least, the waves most
  * Everything stops under prefers-reduced-motion.
  *
  * SIZE.  Landscape: the frame is as wide as the screen, anchored to the
@@ -35,13 +35,12 @@ import { PROFILE } from '../content/profile.js'
 const ART = { W: 1798, H: 875 }
 const FRAME = { x: 267, y: 59, w: 1353, h: 756 }
 const L = {
-  sun: { x: 1318, y: 245, w: 138, h: 123 },
-  cloudsHigh: { x: 0, y: 0, w: 1798, h: 401 },
-  cloudsLow: { x: 0, y: 330, w: 1735, h: 219 },
-  far: { x: 832, y: 394, w: 966, h: 310 },
-  main: { x: 0, y: 215, w: 991, h: 489 },
-  front: { x: 0, y: 534, w: 1798, h: 341 },
+  sky: { x: 0, y: 0, w: 1798, h: 643 },
+  mountains: { x: 0, y: 369, w: 1167, h: 298 },
+  waves: { x: 0, y: 218, w: 1798, h: 657 },
 }
+// where the sun sits in the sky layer (for its glow)
+const SUN = { x: 1318, y: 245, w: 138, h: 123 }
 // sky colours sampled from the picture, top to horizon (as fractions of the full image height)
 const SKY = 'linear-gradient(180deg, #1696fa 0%, #1898fb 14%, #1b9dfd 27%, #1ea4fd 34%, #28b1fd 41%, #35bdfd 48%, #38bffd 55%, #8edbfd 62%, #90dbfd 69%, #90dbfd 100%)'
 const pct = (v, of) => `${(v / of) * 100}%`
@@ -54,7 +53,7 @@ export default function Start() {
   const { scrollY } = useScroll()
   // parallax rates: fraction of the scroll distance each layer slides down
   const rate = (k) => useTransform(scrollY, (v) => (reduce ? 0 : Math.min(v, 1200) * k))
-  const ySun = rate(0.03), yHigh = rate(0.05), yLow = rate(0.08), yFar = rate(0.07), yMain = rate(0.11), yFront = rate(0.16)
+  const ySky = rate(0.04), yMountains = rate(0.07), yWaves = rate(0.12)
   // the tree is nearest of all, so it slides most — and the other way, rising as the scene sinks
   const yTree = useTransform(scrollY, (v) => (reduce ? 0 : -Math.min(v, 1200) * 0.1))
   const tree = start.tree?.src ? start.tree : null
@@ -95,15 +94,13 @@ export default function Start() {
         <div ref={ref} className="relative shrink-0 overflow-hidden" style={{ transform: 'translateX(var(--shift, 0px))' }}>
           {/* the full artwork box, offset so the frame window is what the stage shows */}
           <div className="absolute" style={{ left: pct(-FRAME.x, FRAME.w), top: pct(-FRAME.y, FRAME.h), width: pct(ART.W, FRAME.w), height: pct(ART.H, FRAME.h), background: SKY }}>
-            <motion.div className="absolute" style={{ ...box(L.sun), y: ySun }}>
-              <span className="sun-glow absolute rounded-full" style={{ inset: '-45%', animation: anim }} />
-              <img src="/media/start/sun.webp" alt="" width={L.sun.w} height={L.sun.h} className="pixelated relative block w-full" />
+            <motion.div className="absolute" style={{ ...box(L.sky), y: ySky }}>
+              <img src="/media/start/sky.webp" alt="" width={L.sky.w} height={L.sky.h} className="pixelated drift-sky block w-full" style={{ animation: anim }} />
+              {/* the sun's glow, breathing over the painted sun */}
+              <span className="sun-glow absolute rounded-full" style={{ left: pct(SUN.x - SUN.w * 0.45, L.sky.w), top: pct(SUN.y - SUN.h * 0.45, L.sky.h), width: pct(SUN.w * 1.9, L.sky.w), height: pct(SUN.h * 1.9, L.sky.h), animation: anim }} />
             </motion.div>
-            <motion.img src="/media/start/clouds-high.webp" alt="" width={L.cloudsHigh.w} height={L.cloudsHigh.h} className="pixelated drift-high absolute" style={{ ...box(L.cloudsHigh), y: yHigh, animation: anim }} />
-            <motion.img src="/media/start/clouds-low.webp" alt="" width={L.cloudsLow.w} height={L.cloudsLow.h} className="pixelated drift-low absolute" style={{ ...box(L.cloudsLow), y: yLow, animation: anim }} />
-            <motion.img src="/media/start/far.webp" alt="" width={L.far.w} height={L.far.h} className="pixelated heave-far absolute" style={{ ...box(L.far), y: yFar, animation: anim }} />
-            <motion.img src="/media/start/main.webp" alt="The Great Wave, in pixel art" width={L.main.w} height={L.main.h} className="pixelated heave-main absolute" style={{ ...box(L.main), y: yMain, animation: anim, transformOrigin: '55% 100%' }} fetchPriority="high" />
-            <motion.img src="/media/start/front.webp" alt="" width={L.front.w} height={L.front.h} className="pixelated heave-front absolute" style={{ ...box(L.front), y: yFront, animation: anim }} />
+            <motion.img src="/media/start/mountains.webp" alt="" width={L.mountains.w} height={L.mountains.h} className="pixelated heave-far absolute" style={{ ...box(L.mountains), y: yMountains, animation: anim }} />
+            <motion.img src="/media/start/waves.webp" alt="The Great Wave, in pixel art" width={L.waves.w} height={L.waves.h} className="pixelated heave-waves absolute" style={{ ...box(L.waves), y: yWaves, animation: anim, transformOrigin: '40% 100%' }} fetchPriority="high" />
           </div>
         </div>
         {/* the surface darkens into the water below */}

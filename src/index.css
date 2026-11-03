@@ -307,24 +307,20 @@ body {
 
 /* The Start artwork in motion. All transform/opacity only; amplitudes are
    fractions of each layer's own box, kept well inside the spare margins. */
-@keyframes drift-high { 0%, 100% { transform: translateX(-0.9%); } 50% { transform: translateX(0.9%); } }
-.drift-high { animation: drift-high 90s ease-in-out infinite; }
-@keyframes drift-low { 0%, 100% { transform: translateX(1.4%); } 50% { transform: translateX(-1.4%); } }
-.drift-low { animation: drift-low 70s ease-in-out infinite; animation-delay: -20s; }
-@keyframes sun-glow { 0%, 100% { opacity: 0.35; } 50% { opacity: 0.6; } }
-.sun-glow { background: radial-gradient(circle, rgba(255,214,120,0.55) 0 30%, rgba(255,214,120,0) 70%); animation: sun-glow 8s ease-in-out infinite; }
-@keyframes heave-far { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(0.3%, 0.9%); } }
+@keyframes drift-sky { 0%, 100% { transform: translateX(-0.5%); } 50% { transform: translateX(0.5%); } }
+.drift-sky { animation: drift-sky 80s ease-in-out infinite; }
+@keyframes sun-glow { 0%, 100% { opacity: 0.25; } 50% { opacity: 0.5; } }
+.sun-glow { background: radial-gradient(circle, rgba(255,214,120,0.5) 0 28%, rgba(255,214,120,0) 68%); animation: sun-glow 8s ease-in-out infinite; }
+@keyframes heave-far { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(0.25%, 0.7%); } }
 .heave-far { animation: heave-far 13s ease-in-out infinite; animation-delay: -5s; }
-@keyframes heave-main {
+@keyframes heave-waves {
   0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  40%      { transform: translate(-0.35%, 0.6%) rotate(-0.2deg); }
-  70%      { transform: translate(0.3%, -0.4%) rotate(0.15deg); }
+  40%      { transform: translate(-0.3%, 0.5%) rotate(-0.15deg); }
+  70%      { transform: translate(0.25%, -0.35%) rotate(0.12deg); }
 }
-.heave-main { animation: heave-main 11s ease-in-out infinite; }
-@keyframes heave-front { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(0.7%, -1%); } }
+.heave-waves { animation: heave-waves 11s ease-in-out infinite; }
 @keyframes tree-sway { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(0.6deg); } }
 .tree-sway { animation: tree-sway 9s ease-in-out infinite; animation-delay: -2s; }
-.heave-front { animation: heave-front 8s ease-in-out infinite; animation-delay: -3s; }
 
 /* The sea breathing: a slow sideways sway for the wave art */
 @keyframes sway-x {
@@ -371,7 +367,7 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cloud, .drift-back, .swim, .bob, .bob-slow, .bob-xs, .drift-y, .sway, .sway-x, .drift-high, .drift-low, .sun-glow, .heave-far, .heave-main, .heave-front, .tree-sway, .flap, .sparkle, .wave, .ray, .mote, .glowmote, .surface-line, .cursor-blink::after { animation: none !important; }
+  .cloud, .drift-back, .swim, .bob, .bob-slow, .bob-xs, .drift-y, .sway, .sway-x, .drift-sky, .sun-glow, .heave-far, .heave-waves, .tree-sway, .flap, .sparkle, .wave, .ray, .mote, .glowmote, .surface-line, .cursor-blink::after { animation: none !important; }
 }
 
 :focus-visible {
