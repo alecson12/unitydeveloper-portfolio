@@ -54,8 +54,8 @@ function Light({ reduce }) {
 function Name({ first, last }) {
   return (
     <div aria-hidden className="pointer-events-none select-none text-center">
-      <p className="font-pixel text-[13px] tracking-[0.6em] text-ink-2 uppercase sm:text-[15px]">{first}</p>
-      <p className="font-display leading-[0.85] tracking-tight text-white/[0.08] uppercase" style={{ fontSize: 'clamp(56px, 27cqw, 190px)' }}>{last}</p>
+      <p className="font-pixel text-[13px] tracking-[0.6em] text-red uppercase sm:text-[15px]" style={{ textShadow: '0 0 12px rgba(217,38,28,0.45)' }}>{first}</p>
+      <p className="font-display leading-[0.85] tracking-tight uppercase" style={{ fontSize: 'clamp(56px, 27cqw, 190px)', color: 'rgba(232,217,181,0.42)', textShadow: '0 0 24px rgba(232,217,181,0.25), 0 3px 0 rgba(5,12,32,0.6)' }}>{last}</p>
     </div>
   )
 }
@@ -89,20 +89,9 @@ export function Intro() {
       <article className="@container px-card relative overflow-hidden p-5 sm:p-8">
         <Light reduce={reduce} />
 
-        {/* ---- portrait: you, large, behind the panels ---- */}
-        {intro.photo && (
-          <div aria-hidden className="@container pointer-events-none absolute inset-x-0 top-0 z-0 lg:hidden">
-            <div className="pt-5 sm:pt-8"><Name first={first} last={last} /></div>
-            <div className="relative -mt-[6cqw]">
-              <img src={intro.photo} alt="" width="1200" height="1200" className="relative z-10 mx-auto block w-[118%] max-w-none -translate-x-[7.6%]" />
-              <Ledge reduce={reduce} />
-            </div>
-          </div>
-        )}
-
-        <div className="relative z-10 grid grid-cols-1 gap-5 pt-[88cqw] lg:grid-cols-12 lg:gap-6 lg:pt-0 xl:gap-8">
+        <div className="relative z-10 grid grid-cols-1 gap-5 lg:grid-cols-12 lg:gap-6 xl:gap-8">
           {/* ---- left: who I am, then the journey ---- */}
-          <div className="flex flex-col gap-5 lg:col-span-4 xl:col-span-3">
+          <div className="relative z-10 flex flex-col gap-5 lg:col-span-4 xl:col-span-3">
             <Panel label="Who I am">
               <h2 className="mt-3 font-display text-2xl leading-[0.95] tracking-tight text-balance xl:text-3xl">{intro.headline}</h2>
               <dl className="mt-4 space-y-1">
@@ -122,18 +111,18 @@ export function Intro() {
           </div>
 
           {/* ---- landscape centre: you, your name behind your head, no taller than the screen ---- */}
-          <div className="@container relative hidden flex-col lg:col-span-4 lg:flex lg:min-h-0 xl:col-span-6">
-            <div className="absolute inset-x-0 top-0"><Name first={first} last={last} /></div>
-            <div className="relative mt-[6%] flex flex-1 items-end justify-center pb-[7%]">
+          <div className="@container relative order-first flex flex-col lg:order-none lg:col-span-4 lg:min-h-0 xl:col-span-6">
+            <div className="relative"><Name first={first} last={last} /></div>
+            <div className="relative -mt-[14%] flex flex-1 items-end justify-center pb-[7%] lg:-mt-[18%]">
               {intro.photo && (
-                <img src={intro.photo} alt={alt} width="1200" height="1200" className="relative z-10 block h-full w-auto max-w-[165%] object-contain object-bottom" style={{ maxHeight: 'calc(100svh - 15rem)' }} fetchPriority="high" />
+                <img src={intro.photo} alt={alt} width="1200" height="1200" className="relative z-10 block w-full lg:h-full lg:w-auto lg:max-w-[300%] lg:object-contain lg:object-bottom xl:max-w-[165%]" style={{ maxHeight: 'calc(100svh - 15rem)' }} fetchPriority="high" />
               )}
               <Ledge reduce={reduce} plants="lg:hidden xl:block" />
             </div>
           </div>
 
           {/* ---- right: education, then strengths with the buttons ---- */}
-          <div className="flex flex-col gap-5 lg:col-span-4 xl:col-span-3">
+          <div className="relative z-10 flex flex-col gap-5 lg:col-span-4 xl:col-span-3">
             <Education items={background.education} />
             <Panel label="Strengths" className="flex flex-1 flex-col">
               {strengths.length > 0 && (
@@ -146,7 +135,7 @@ export function Intro() {
                   ))}
                 </ul>
               )}
-              <div className="mt-6 flex flex-1 flex-col items-end justify-end gap-3">
+              <div className="mt-6 flex flex-1 flex-col items-center justify-end gap-3">
                 <a href={intro.primaryButton.href} className="px-btn px-btn-primary">{intro.primaryButton.label}</a>
                 <a href={intro.secondaryButton.href} className="px-btn px-btn-ghost">{intro.secondaryButton.label}</a>
               </div>
