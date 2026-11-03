@@ -57,7 +57,7 @@ export const ABOUT = {
     { id: 'csharp', name: 'C# Programming', icon: 'code', confirmed: true },
     { id: 'systems', name: 'Game Systems', icon: 'gear', confirmed: true },
     { id: 'gameplay', name: 'Gameplay Programming', icon: 'star', confirmed: true },
-    { id: 'optimisation', name: 'Bug Fixing & Optimisation', icon: 'trophy', confirmed: true },
+    { id: 'optimization', name: 'Bug Fixing & Optimization', icon: 'trophy', confirmed: true },
     { id: 'ui-design', name: 'UI Design', icon: 'map', confirmed: true },
   ],
 
@@ -77,7 +77,7 @@ export const ABOUT = {
   /* ---------- PROFESSIONAL HIGHLIGHTS ---------- */
   // Big numbers. 'auto' values are counted from projects.js; [brackets] stay hidden.
   highlights: [
-    { label: 'Interfaces shipped', value: 'auto:features', note: '' },
+    { label: 'Interfaces shipped', value: 'auto:features+', note: 'and counting' },
     { label: 'Recordings on this site', value: 'auto:videos', note: '' },
     { label: 'Years in Unity', value: '5', note: 'since 2021' },
     { label: 'Players on Rivalis', value: '100K', note: 'almost · live now' },

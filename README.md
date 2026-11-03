@@ -174,7 +174,7 @@ appear only in local preview, outlined and labelled "To confirm". Flip one to
 `true` once it is real and it goes live. The published site never claims a
 skill you have not confirmed.
 
-**Highlights.** A value of `'auto:features'` or `'auto:videos'` is counted
+**Highlights.** A value of `'auto:features'` or `'auto:videos'` is counted (add a trailing `+`, as in `'auto:features+'`, to show "21+")
 from `projects.js`; values in `[brackets]` stay hidden until filled.
 
 **Photo.** The About Me photo is a cut-out with a transparent background,

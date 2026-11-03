@@ -107,7 +107,7 @@ export function Intro() {
                 {statementParas.map((p, i) => <Txt key={`s${i}`} as="p" value={p} />)}
               </div>
             </Panel>
-            <Journey items={background.timeline} ctas={[intro.primaryButton, intro.secondaryButton]} />
+            <Journey items={background.timeline} ctas={[intro.primaryButton]} />
           </div>
 
           {/* ---- landscape centre: you, your name behind your head, no taller than the screen ---- */}
@@ -121,7 +121,7 @@ export function Intro() {
             </div>
           </div>
 
-          {/* ---- right: education, then strengths (buttons here on phones only) ---- */}
+          {/* ---- right: education, then strengths with Get in touch (both buttons on phones) ---- */}
           <div className="relative z-10 flex flex-col gap-5 lg:col-span-4 xl:col-span-3">
             <Education items={background.education} />
             <Panel label="Strengths" className="flex flex-1 flex-col">
@@ -140,8 +140,8 @@ export function Intro() {
                   ))}
                 </ul>
               )}
-              <div className="mt-6 flex flex-col items-center gap-3 lg:hidden">
-                <a href={intro.primaryButton.href} className="px-btn px-btn-primary">{intro.primaryButton.label}</a>
+              <div className="mt-6 flex flex-1 flex-col items-center justify-end gap-3">
+                <a href={intro.primaryButton.href} className="px-btn px-btn-primary lg:hidden">{intro.primaryButton.label}</a>
                 <a href={intro.secondaryButton.href} className="px-btn px-btn-ghost">{intro.secondaryButton.label}</a>
               </div>
             </Panel>

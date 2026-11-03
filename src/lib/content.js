@@ -64,8 +64,11 @@ export const shouldShowItem = (item) => Boolean(item) && (!isDraft(item) || impo
 /** Resolve 'auto:<key>' highlight values from the content. */
 export const resolveAuto = (value) => {
   if (typeof value !== 'string' || !value.startsWith('auto:')) return value
-  const t = totals()
-  return String(t[value.slice(5)] ?? '')
+  // "auto:features" counts the listed features; a trailing "+" (auto:features+) keeps it as "21+".
+  const [, key, plus] = value.match(/^auto:(\w+)(\+?)$/) ?? []
+  if (!key) return ''
+  const n = totals()[key]
+  return n == null ? '' : String(n) + plus
 }
 
 /** A public path such as '/media/x.webp', prefixed with the site base so it works when the site lives in a subfolder (GitHub Pages). */
