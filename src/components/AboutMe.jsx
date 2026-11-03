@@ -107,7 +107,7 @@ export function Intro() {
                 {statementParas.map((p, i) => <Txt key={`s${i}`} as="p" value={p} />)}
               </div>
             </Panel>
-            <Journey items={background.timeline} cta={intro.primaryButton} />
+            <Journey items={background.timeline} ctas={[intro.primaryButton, intro.secondaryButton]} />
           </div>
 
           {/* ---- landscape centre: you, your name behind your head, no taller than the screen ---- */}
@@ -121,27 +121,27 @@ export function Intro() {
             </div>
           </div>
 
-          {/* ---- right: education, then strengths with the buttons ---- */}
+          {/* ---- right: education, then strengths (buttons here on phones only) ---- */}
           <div className="relative z-10 flex flex-col gap-5 lg:col-span-4 xl:col-span-3">
             <Education items={background.education} />
             <Panel label="Strengths" className="flex flex-1 flex-col">
               {strengths.length > 0 && (
-                <ul className="mt-3 space-y-2">
+                <ul className="mt-3 space-y-1.5">
                   {strengths.map((s, i) => (
                     <li key={i} className="flex gap-3 leading-snug">
-                      <span className="mt-[7px] h-1.5 w-1.5 shrink-0 bg-red" />
+                      <span className="mt-[6px] h-1.5 w-1.5 shrink-0 bg-purple" />
                       {typeof s === 'string' ? <Txt value={s} className="text-sm" /> : (
-                        <span>
-                          <Txt as="span" value={s.title} className="block text-sm font-semibold text-beige" />
-                          {shouldShow(s.text) && <Txt as="span" value={s.text} className="mt-0.5 block text-[13px] text-ink-2" />}
+                        <span className="text-[13px]">
+                          <Txt as="span" value={s.title} className="font-semibold text-beige" />
+                          {shouldShow(s.text) && <Txt as="span" value={` ${s.text}`} className="text-ink-2" />}
                         </span>
                       )}
                     </li>
                   ))}
                 </ul>
               )}
-              <div className="mt-6 flex flex-1 flex-col items-center justify-end gap-3">
-                <a href={intro.primaryButton.href} className="px-btn px-btn-primary lg:hidden">{intro.primaryButton.label}</a>
+              <div className="mt-6 flex flex-col items-center gap-3 lg:hidden">
+                <a href={intro.primaryButton.href} className="px-btn px-btn-primary">{intro.primaryButton.label}</a>
                 <a href={intro.secondaryButton.href} className="px-btn px-btn-ghost">{intro.secondaryButton.label}</a>
               </div>
             </Panel>
@@ -152,13 +152,13 @@ export function Intro() {
   )
 }
 
-/** A pixel node on the timeline's line. The latest entry (last) is red. */
+/** A pixel node on the timeline's line. The latest entry (last) is light blue; only section titles use red. */
 function Node({ latest }) {
-  return <span className={`absolute -left-[27px] top-1 h-3 w-3 ${latest ? 'bg-red' : 'bg-purple'}`} style={{ boxShadow: '0 0 0 2px var(--color-deep)' }} />
+  return <span className={`absolute -left-[27px] top-1 h-3 w-3 ${latest ? 'bg-purple' : 'bg-dim'}`} style={{ boxShadow: '0 0 0 2px var(--color-deep)' }} />
 }
 
 /** Work, oldest at the top, latest at the bottom. */
-function Journey({ items = [], cta }) {
+function Journey({ items = [], ctas = [] }) {
   const work = items.filter((t) => shouldShow(t.title) || shouldShow(t.place) || shouldShow(t.note))
   if (!work.length) return null
   return (
@@ -173,9 +173,9 @@ function Journey({ items = [], cta }) {
           </li>
         ))}
       </ol>
-      {cta && (
-        <div className="mt-6 hidden flex-1 items-end justify-center lg:flex">
-          <a href={cta.href} className="px-btn px-btn-primary">{cta.label}</a>
+      {ctas.length > 0 && (
+        <div className="mt-6 hidden flex-1 flex-col items-center justify-end gap-3 lg:flex">
+          {ctas.map((c, i) => <a key={c.href} href={c.href} className={`px-btn ${i === 0 ? 'px-btn-primary' : 'px-btn-ghost'}`}>{c.label}</a>)}
         </div>
       )}
     </Panel>

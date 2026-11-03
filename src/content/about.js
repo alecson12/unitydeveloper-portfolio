@@ -40,12 +40,12 @@ export const ABOUT = {
     // Three short lines.
     // Each one: a short title and one line on what it means.
     strengths: [
-      { title: 'UI/UX Development', text: 'Turning visual mockups and concepts into fully functional in-game interfaces.' },
-      { title: 'Mobile Game Interface Design', text: 'Creating touch-friendly layouts, thumb-reach HUDs, virtual joysticks, and radial menus optimized for mobile gameplay.' },
-      { title: 'Game Systems & Feature Development', text: 'Building custom gameplay mechanics, interactive features, and functional systems based on game requirements.' },
-      { title: 'Consistent Visual Direction', text: 'Creating cohesive UI themes and visual styles that match the game’s identity and the client’s vision.' },
-      { title: 'Data-Driven Interface Development', text: 'Building information-heavy interfaces such as inventories, shops, trading systems, rankings, and other data-based screens.' },
-      { title: 'Player-Centered Development', text: 'Applying years of gaming experience to understand player expectations and create intuitive, engaging gameplay experiences.' },
+      { title: 'UI/UX Development', text: 'Mock-ups into working in-game screens.' },
+      { title: 'Mobile Interface Design', text: 'Thumb-reach HUDs, joysticks, radial menus.' },
+      { title: 'Game Systems & Features', text: 'Custom mechanics built to the brief.' },
+      { title: 'Consistent Visual Direction', text: 'UI themes that fit the game and the client.' },
+      { title: 'Data-Driven Interfaces', text: 'Inventories, shops, trading, rankings.' },
+      { title: 'Player-Centered', text: 'Years of play, so screens feel intuitive.' },
     ],
   },
 
