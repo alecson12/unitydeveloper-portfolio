@@ -9,13 +9,23 @@ import { isPlaceholder, resolveAuto, shouldShow, shouldShowItem, isDraft } from 
 
 /* =====================================================================
    The About Me blocks, each one a dark panel:
-     <Intro />        one poster-like panel: the journey (work + school) on
+     <Intro />        one poster-like panel: who I am and the work journey on
                       the left, you in the shallows with your name large
-                      behind you in the middle, strengths and who you are
-                      on the right. On phones the columns stack, photo first.
+                      behind you in the middle, education and strengths on
+                      the right. Lists run oldest → latest. Phones stack, photo first.
      <Services />     what I do (confirmed items only in production)
      <Highlights />   big numbers + notable contributions
    ===================================================================== */
+
+/** A small inset panel with a red-marked beige eyebrow. */
+function Panel({ label, className = '', children }) {
+  return (
+    <div className={`px-card p-5 sm:p-6 ${className}`}>
+      <p className="eyebrow flex items-center gap-3 text-beige"><span className="inline-block h-2 w-2 bg-red" />{label}</p>
+      {children}
+    </div>
+  )
+}
 
 /** Who you are, on one screen. */
 export function Intro() {
@@ -32,9 +42,24 @@ export function Intro() {
     <Reveal>
       <article className="px-card overflow-hidden p-5 sm:p-8 lg:p-10 xl:p-12">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-8 xl:gap-10">
-          {/* ---- left: the journey ---- */}
-          <div className="lg:col-span-4 xl:col-span-3">
-            <Journey timeline={background.timeline} education={background.education} />
+          {/* ---- left: who I am, then the journey ---- */}
+          <div className="flex flex-col gap-6 lg:col-span-4 xl:col-span-3">
+            <Panel label="Who I am">
+              <h2 className="mt-4 font-display text-3xl leading-[0.95] tracking-tight text-balance">{intro.headline}</h2>
+              <dl className="mt-4 space-y-1">
+                {intro.facts.map((f) => (
+                  <div key={f.label} className="flex items-baseline gap-2 font-pixel text-[12px] tracking-[0.06em] uppercase">
+                    <dt className="text-dim">{f.label}</dt>
+                    <dd className="text-beige">{f.value}</dd>
+                  </div>
+                ))}
+              </dl>
+              <div className="mt-4 space-y-3 text-sm leading-relaxed text-ink-2">
+                {paragraphs.map((p, i) => <Txt key={i} as="p" value={p} className={i === 0 ? 'text-ink' : ''} />)}
+                {statementParas.map((p, i) => <Txt key={`s${i}`} as="p" value={p} />)}
+              </div>
+            </Panel>
+            <Journey items={background.timeline} />
           </div>
 
           {/* ---- centre: you, with your name behind you ---- */}
@@ -42,10 +67,10 @@ export function Intro() {
             <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 select-none text-center">
               <p className="font-pixel text-[13px] tracking-[0.6em] text-ink-2 uppercase sm:text-[15px]">{first}</p>
               <p className="font-display leading-[0.85] tracking-tight text-white/[0.08] uppercase" style={{ fontSize: 'clamp(56px, 27cqw, 170px)' }}>{last}</p>
-              <p className="font-pixel text-[12px] tracking-[0.3em] text-red uppercase sm:text-[13px]">{title}</p>
+              <p className="hidden font-pixel text-[13px] tracking-[0.3em] text-red uppercase xl:block">{title}</p>
             </div>
 
-            <div className="relative mx-auto mt-[22%] max-w-[420px] sm:mt-[18%] lg:mt-[26%]">
+            <div className="relative mx-auto mt-[16%] max-w-[640px] lg:mt-[20%] xl:mt-[25%]">
               <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden rounded-xl">
                 {/* light from above */}
                 <span className="ray" style={{ left: '18%', width: '22%', transform: 'skewX(-14deg)', '--delay': '0s', animation: reduce ? 'none' : undefined }} />
@@ -60,13 +85,13 @@ export function Intro() {
               </div>
               <div className="relative">
                 {intro.photo && (
-                  <img src={intro.photo} alt={intro.photoAlt ?? name} width="1000" height="1000" className="relative z-10 mx-auto block w-[82%]" fetchPriority="high" />
+                  <img src={intro.photo} alt={intro.photoAlt ?? name} width="1200" height="1200" className="relative z-10 mx-auto block w-full" fetchPriority="high" />
                 )}
                 {/* the sand you stand on, with plants in front */}
-                <PixelSprite name="ledge" className="relative z-20 -mt-[13%] block w-full" />
-                <PixelSprite name="kelp" className="sway absolute bottom-[6%] left-[5%] z-30 w-6 sm:w-7" style={{ animation: reduce ? 'none' : undefined }} />
-                <PixelSprite name="seaweed" className="sway absolute bottom-[6%] right-[6%] z-30 w-8 sm:w-10" style={{ '--delay': '-3s', animation: reduce ? 'none' : undefined }} />
-                <PixelSprite name="spire" className="absolute bottom-[5%] left-[-2%] z-[5] w-12 opacity-80 sm:w-14" />
+                <PixelSprite name="ledge" className="relative z-20 -mt-[11%] block w-full" />
+                <PixelSprite name="kelp" className="sway absolute bottom-[6%] left-[5%] z-30 w-6 sm:w-8" style={{ animation: reduce ? 'none' : undefined }} />
+                <PixelSprite name="seaweed" className="sway absolute bottom-[6%] right-[6%] z-30 w-8 sm:w-12" style={{ '--delay': '-3s', animation: reduce ? 'none' : undefined }} />
+                <PixelSprite name="spire" className="absolute bottom-[5%] left-[-2%] z-[5] w-12 opacity-80 sm:w-16" />
               </div>
             </div>
 
@@ -76,11 +101,11 @@ export function Intro() {
             </div>
           </div>
 
-          {/* ---- right: strengths, then who you are ---- */}
+          {/* ---- right: education, then strengths ---- */}
           <div className="flex flex-col gap-6 lg:col-span-4 xl:col-span-3">
+            <Education items={background.education} />
             {strengths.length > 0 && (
-              <div className="px-card p-5 sm:p-6">
-                <p className="eyebrow flex items-center gap-3 text-beige"><span className="inline-block h-2 w-2 bg-red" />Strengths</p>
+              <Panel label="Strengths" className="flex-1">
                 <ul className="mt-4 space-y-2.5">
                   {strengths.map((s, i) => (
                     <li key={i} className="flex gap-3 text-sm leading-snug">
@@ -89,25 +114,8 @@ export function Intro() {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </Panel>
             )}
-
-            <div className="px-card flex-1 p-5 sm:p-6">
-              <p className="eyebrow flex items-center gap-3 text-beige"><span className="inline-block h-2 w-2 bg-red" />Who I am</p>
-              <h2 className="mt-4 font-display text-3xl leading-[0.95] tracking-tight text-balance">{intro.headline}</h2>
-              <dl className="mt-4 space-y-1">
-                {intro.facts.map((f) => (
-                  <div key={f.label} className="flex items-baseline gap-2 font-pixel text-[12px] tracking-[0.06em] uppercase">
-                    <dt className="text-dim">{f.label}</dt>
-                    <dd className="text-beige">{f.value}</dd>
-                  </div>
-                ))}
-              </dl>
-              <div className="mt-4 space-y-3 text-sm leading-relaxed text-ink-2">
-                {paragraphs.map((p, i) => <Txt key={i} as="p" value={p} className={i === 0 ? 'text-ink' : ''} />)}
-                {statementParas.map((p, i) => <Txt key={`s${i}`} as="p" value={p} />)}
-              </div>
-            </div>
           </div>
         </div>
       </article>
@@ -115,42 +123,49 @@ export function Intro() {
   )
 }
 
-/** Work, newest first, then school. Pixel nodes down a line. */
-function Journey({ timeline = [], education = [] }) {
-  const work = timeline.filter((t) => shouldShow(t.title) || shouldShow(t.place) || shouldShow(t.note))
-  const school = education.filter((e) => shouldShow(e.school))
-  if (!work.length && !school.length) return null
+/** A pixel node on the timeline's line. The latest entry (last) is red. */
+function Node({ latest }) {
+  return <span className={`absolute -left-[27px] top-1 h-3 w-3 ${latest ? 'bg-red' : 'bg-purple'}`} style={{ boxShadow: '0 0 0 2px var(--color-deep)' }} />
+}
+
+/** Work, oldest at the top, latest at the bottom. */
+function Journey({ items = [] }) {
+  const work = items.filter((t) => shouldShow(t.title) || shouldShow(t.place) || shouldShow(t.note))
+  if (!work.length) return null
   return (
-    <div className="px-card h-full p-5 sm:p-6">
-      <p className="eyebrow flex items-center gap-3 text-beige"><span className="inline-block h-2 w-2 bg-red" />My journey</p>
+    <Panel label="My journey" className="flex-1">
       <ol className="relative mt-5 space-y-5 border-l-2 border-line pl-5">
         {work.map((t, i) => (
           <li key={i} className="relative">
-            <span className={`absolute -left-[27px] top-1 h-3 w-3 ${i === 0 ? 'bg-red' : 'bg-purple'}`} style={{ boxShadow: '0 0 0 2px var(--color-deep)' }} />
+            <Node latest={i === work.length - 1} />
             <Txt as="p" value={t.title} className="text-sm font-medium leading-tight" />
             <Txt as="p" value={t.place} className="mt-0.5 text-xs leading-snug text-ink-2" />
             <Txt as="p" value={t.period} className="mt-1 font-pixel text-[11px] tracking-[0.08em] text-dim uppercase" />
           </li>
         ))}
       </ol>
+    </Panel>
+  )
+}
 
-      {school.length > 0 && (
-        <>
-          <p className="mt-8 font-pixel text-[12px] tracking-[0.08em] text-dim uppercase">Education</p>
-          <ol className="relative mt-4 space-y-4 border-l-2 border-line pl-5">
-            {school.map((e, i) => (
-              <li key={i} className="relative">
-                <span className="absolute -left-[27px] top-1 h-3 w-3 bg-purple" style={{ boxShadow: '0 0 0 2px var(--color-deep)' }} />
-                <p className="font-pixel text-[11px] tracking-[0.08em] text-dim uppercase">{e.level}</p>
-                <Txt as="p" value={e.school} className="mt-0.5 text-sm font-medium leading-tight" />
-                {e.course && <Txt as="p" value={e.course} className="mt-0.5 text-xs leading-snug text-ink-2 italic" />}
-                <Txt as="p" value={e.period} className={`mt-1 font-pixel text-[11px] tracking-[0.08em] uppercase ${/graduat/i.test(e.period) ? 'text-beige' : 'text-dim'}`} />
-              </li>
-            ))}
-          </ol>
-        </>
-      )}
-    </div>
+/** School, oldest at the top, latest at the bottom. */
+function Education({ items = [] }) {
+  const school = items.filter((e) => shouldShow(e.school))
+  if (!school.length) return null
+  return (
+    <Panel label="Education">
+      <ol className="relative mt-5 space-y-4 border-l-2 border-line pl-5">
+        {school.map((e, i) => (
+          <li key={i} className="relative">
+            <Node latest={i === school.length - 1} />
+            <p className="font-pixel text-[11px] tracking-[0.08em] text-dim uppercase">{e.level}</p>
+            <Txt as="p" value={e.school} className="mt-0.5 text-sm font-medium leading-tight" />
+            {e.course && <Txt as="p" value={e.course} className="mt-0.5 text-xs leading-snug text-ink-2 italic" />}
+            <Txt as="p" value={e.period} className={`mt-1 font-pixel text-[11px] tracking-[0.08em] uppercase ${/graduat/i.test(e.period) ? 'text-beige' : 'text-dim'}`} />
+          </li>
+        ))}
+      </ol>
+    </Panel>
   )
 }
 
