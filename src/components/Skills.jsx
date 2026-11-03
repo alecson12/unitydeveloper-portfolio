@@ -19,11 +19,13 @@ export default function Skills() {
         <Reveal>
           <div className="px-card p-5 sm:p-8">
             <p className="eyebrow flex items-center gap-3"><span className="inline-block h-2 w-2 bg-purple" />Tools & technologies</p>
-            <ul className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4 xl:grid-cols-8">
+            <ul className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 xl:grid-cols-6">
               {tools.map((t) => (
                 <li key={t.name} className={`px-card px-card-lift flex flex-col items-start gap-4 p-4 ${isDraft(t) ? 'placeholder-text' : ''}`}>
                   <span className="grid h-11 w-11 place-items-center bg-white/10 px-border font-display text-xl" style={{ '--px-c': 'rgba(255,255,255,0.25)' }}>
-                    {abbr(t.name)}
+                    {t.icon
+                      ? <span className="tool-icon block h-7 w-7" style={{ '--icon': `url(${t.icon})` }} />
+                      : abbr(t.name)}
                   </span>
                   <span>
                     <span className="block font-display text-lg leading-none">{t.name}</span>

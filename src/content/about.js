@@ -50,15 +50,16 @@ export const ABOUT = {
   ],
 
   /* ---------- TOOLS & TECHNOLOGIES ---------- */
+  // The apps you work in. Icons live in  public/media/icons/  (SVG; drawn in
+  // the site's colour, so any single-colour icon works). Languages go in the
+  // skill groups in profile.js, not here.
   tools: [
-    { name: 'Unity', kind: 'Engine', confirmed: true },
-    { name: 'C#', kind: 'Language', confirmed: true },
-    { name: 'Visual Studio', kind: 'IDE', confirmed: true },
-    { name: 'Git', kind: 'Workflow', confirmed: true },
-    { name: 'GitHub', kind: 'Workflow', confirmed: true },
-    { name: 'Photoshop', kind: 'Design', confirmed: true },
-    { name: 'Illustrator', kind: 'Design', confirmed: true },
-    { name: 'Trello', kind: 'Workflow', confirmed: true },
+    { name: 'Unity', kind: 'Engine', icon: '/media/icons/unity.svg', confirmed: true },
+    { name: 'Visual Studio', kind: 'IDE', icon: '/media/icons/visual-studio.svg', confirmed: true },
+    { name: 'GitHub', kind: 'Version control', icon: '/media/icons/github.svg', confirmed: true },
+    { name: 'Photoshop', kind: 'Design', icon: '/media/icons/photoshop.svg', confirmed: true },
+    { name: 'Illustrator', kind: 'Design', icon: '/media/icons/illustrator.svg', confirmed: true },
+    { name: 'Trello', kind: 'Planning', icon: '/media/icons/trello.svg', confirmed: true },
   ],
 
   /* ---------- PROFESSIONAL HIGHLIGHTS ---------- */

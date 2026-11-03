@@ -55,7 +55,15 @@ body {
   background: var(--color-abyss); /* overscroll below the page: the abyss */
 }
 ::selection { background: rgba(143, 227, 255, 0.3); }
-* { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.3) transparent; }
+/* Scrollbar: white track, dark blue handle */
+html { scrollbar-color: #112c58 #ffffff; }
+::-webkit-scrollbar { width: 12px; height: 12px; background: #ffffff; }
+::-webkit-scrollbar-track { background: #ffffff; }
+::-webkit-scrollbar-thumb { background: #112c58; border: 3px solid #ffffff; border-radius: 6px; }
+::-webkit-scrollbar-thumb:hover { background: #163a66; }
+
+/* Tool icons: any SVG, painted in the ink colour via a mask */
+.tool-icon { background: #eef0ea; -webkit-mask: var(--icon) center / contain no-repeat; mask: var(--icon) center / contain no-repeat; }
 
 /* ---------- Utilities ---------- */
 @utility container-x {
