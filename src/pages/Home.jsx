@@ -2,7 +2,7 @@ import Start from '../components/Start.jsx'
 import Zone from '../components/Zone.jsx'
 import Section from '../components/Section.jsx'
 import { Intro, Services, Highlights } from '../components/AboutMe.jsx'
-import FavouriteGames, { visibleGames } from '../components/FavouriteGames.jsx'
+import FavouriteGames from '../components/FavouriteGames.jsx'
 import Skills from '../components/Skills.jsx'
 import FeaturedProject from '../components/FeaturedProject.jsx'
 import UIShowcase from '../components/UIShowcase.jsx'
@@ -38,12 +38,8 @@ export default function Home() {
       <Zone depth="shallow">
         <Section id="about" meta={meta('about')}>
           <Intro />
+          <div id="games" className="mt-6"><FavouriteGames /></div>
         </Section>
-        {visibleGames().length > 0 && (
-          <Section id="games" meta={meta('games')} tight>
-            <FavouriteGames />
-          </Section>
-        )}
         <Section id="services" meta={meta('services')} tight>
           <Services />
           <div className="mt-6"><Highlights /></div>

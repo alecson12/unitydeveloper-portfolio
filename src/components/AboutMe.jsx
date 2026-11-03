@@ -29,7 +29,7 @@ function Panel({ label, className = '', children }) {
 
 /** Who you are, on one screen. */
 export function Intro() {
-  const { intro, name, title } = PROFILE
+  const { intro, name } = PROFILE
   const { background, statement } = ABOUT
   const reduce = useReducedMotion()
   const paragraphs = background.paragraphs.filter(shouldShow)
@@ -62,50 +62,44 @@ export function Intro() {
             <Journey items={background.timeline} />
           </div>
 
-          {/* ---- centre: you, with your name behind you ---- */}
-          <div className="@container relative order-first lg:order-none lg:col-span-4 lg:self-center xl:col-span-6">
-            <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 select-none text-center">
-              <p className="font-pixel text-[13px] tracking-[0.6em] text-ink-2 uppercase sm:text-[15px]">{first}</p>
-              <p className="font-display leading-[0.85] tracking-tight text-white/[0.08] uppercase" style={{ fontSize: 'clamp(56px, 27cqw, 170px)' }}>{last}</p>
-              <p className="hidden font-pixel text-[13px] tracking-[0.3em] text-red uppercase xl:block">{title}</p>
-            </div>
-
-            <div className="relative mx-auto mt-[16%] max-w-[640px] lg:mt-[20%] xl:mt-[25%]">
-              <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden rounded-xl">
-                {/* light from above */}
-                <span className="ray" style={{ left: '18%', width: '22%', transform: 'skewX(-14deg)', '--delay': '0s', animation: reduce ? 'none' : undefined }} />
-                <span className="ray" style={{ left: '52%', width: '16%', transform: 'skewX(10deg)', '--delay': '2s', animation: reduce ? 'none' : undefined }} />
-                <span className="ray" style={{ left: '72%', width: '10%', transform: 'skewX(18deg)', '--delay': '3.5s', animation: reduce ? 'none' : undefined }} />
-                {/* a fish passing behind */}
-                <div className="absolute left-0 top-[42%] w-full" style={{ height: 28 }}>
-                  <div className="swim swim-r h-full" style={{ '--dur': '34s', '--delay': '-9s', animation: reduce ? 'none' : undefined, left: reduce ? '10%' : undefined }}>
-                    <PixelSprite name="reef" flip className="w-8 opacity-70" />
-                  </div>
+          {/* ---- centre: you, lit from above, your name behind your head ---- */}
+          <div className="@container relative order-first flex flex-col lg:order-none lg:col-span-4 lg:min-h-0 xl:col-span-6">
+            {/* light from the surface, the full height of the column */}
+            <div aria-hidden className="pointer-events-none absolute -inset-x-6 -top-5 bottom-0 overflow-hidden sm:-top-8 lg:-top-10 xl:-top-12">
+              <span className="ray" style={{ left: '14%', width: '26%', transform: 'skewX(-12deg)', '--delay': '0s', animation: reduce ? 'none' : undefined }} />
+              <span className="ray" style={{ left: '46%', width: '20%', transform: 'skewX(8deg)', '--delay': '2s', animation: reduce ? 'none' : undefined }} />
+              <span className="ray" style={{ left: '70%', width: '14%', transform: 'skewX(16deg)', '--delay': '3.5s', animation: reduce ? 'none' : undefined }} />
+              <span className="ray" style={{ left: '2%', width: '10%', transform: 'skewX(-18deg)', '--delay': '5s', animation: reduce ? 'none' : undefined }} />
+              {/* a fish passing behind */}
+              <div className="absolute left-0 top-[46%] w-full" style={{ height: 28 }}>
+                <div className="swim swim-r h-full" style={{ '--dur': '34s', '--delay': '-9s', animation: reduce ? 'none' : undefined, left: reduce ? '10%' : undefined }}>
+                  <PixelSprite name="reef" flip className="w-8 opacity-70" />
                 </div>
               </div>
-              <div className="relative">
-                {intro.photo && (
-                  <img src={intro.photo} alt={intro.photoAlt ?? name} width="1200" height="1200" className="relative z-10 mx-auto block w-full" fetchPriority="high" />
-                )}
-                {/* the sand you stand on, with plants in front */}
-                <PixelSprite name="ledge" className="relative z-20 -mt-[11%] block w-full" />
-                <PixelSprite name="kelp" className="sway absolute bottom-[6%] left-[5%] z-30 w-6 sm:w-8" style={{ animation: reduce ? 'none' : undefined }} />
-                <PixelSprite name="seaweed" className="sway absolute bottom-[6%] right-[6%] z-30 w-8 sm:w-12" style={{ '--delay': '-3s', animation: reduce ? 'none' : undefined }} />
-                <PixelSprite name="spire" className="absolute bottom-[5%] left-[-2%] z-[5] w-12 opacity-80 sm:w-16" />
-              </div>
             </div>
 
-            <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
-              <a href={intro.primaryButton.href} className="px-btn px-btn-primary">{intro.primaryButton.label}</a>
-              <a href={intro.secondaryButton.href} className="px-btn px-btn-ghost">{intro.secondaryButton.label}</a>
+            <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 select-none text-center">
+              <p className="font-pixel text-[13px] tracking-[0.6em] text-ink-2 uppercase sm:text-[15px]">{first}</p>
+              <p className="font-display leading-[0.85] tracking-tight text-white/[0.08] uppercase" style={{ fontSize: 'clamp(56px, 27cqw, 190px)' }}>{last}</p>
+            </div>
+
+            <div className="relative mt-[14%] flex flex-1 items-end justify-center pb-[7%] lg:mt-[6%]">
+              {intro.photo && (
+                <img src={intro.photo} alt={intro.photoAlt ?? name} width="1200" height="1200" className="relative z-10 block w-full lg:h-full lg:w-auto lg:max-w-[165%] lg:object-contain lg:object-bottom" fetchPriority="high" />
+              )}
+              {/* the sand you stand on, with plants in front */}
+              <PixelSprite name="ledge" className="absolute inset-x-0 bottom-0 z-20 block w-full" />
+              <PixelSprite name="kelp" className="sway absolute bottom-[6%] left-[5%] z-30 w-6 sm:w-8 lg:hidden xl:block" style={{ animation: reduce ? 'none' : undefined }} />
+              <PixelSprite name="seaweed" className="sway absolute bottom-[6%] right-[6%] z-30 w-8 sm:w-12 lg:hidden xl:block" style={{ '--delay': '-3s', animation: reduce ? 'none' : undefined }} />
+              <PixelSprite name="spire" className="absolute bottom-[5%] left-[-2%] z-[5] w-12 opacity-80 sm:w-16 lg:hidden xl:block" />
             </div>
           </div>
 
-          {/* ---- right: education, then strengths ---- */}
+          {/* ---- right: education, then strengths with the buttons ---- */}
           <div className="flex flex-col gap-6 lg:col-span-4 xl:col-span-3">
             <Education items={background.education} />
-            {strengths.length > 0 && (
-              <Panel label="Strengths" className="flex-1">
+            <Panel label="Strengths" className="flex flex-1 flex-col">
+              {strengths.length > 0 && (
                 <ul className="mt-4 space-y-2.5">
                   {strengths.map((s, i) => (
                     <li key={i} className="flex gap-3 text-sm leading-snug">
@@ -114,8 +108,12 @@ export function Intro() {
                     </li>
                   ))}
                 </ul>
-              </Panel>
-            )}
+              )}
+              <div className="mt-8 flex flex-1 flex-col items-end justify-end gap-3">
+                <a href={intro.primaryButton.href} className="px-btn px-btn-primary">{intro.primaryButton.label}</a>
+                <a href={intro.secondaryButton.href} className="px-btn px-btn-ghost">{intro.secondaryButton.label}</a>
+              </div>
+            </Panel>
           </div>
         </div>
       </article>

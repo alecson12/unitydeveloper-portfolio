@@ -12,7 +12,6 @@
 export const SECTIONS = [
   { id: 'start', nav: 'Start' },
   { id: 'about', nav: 'About Me', zone: 'shallow', depth: '5 m', eyebrow: 'About me' },
-  { id: 'games', zone: 'shallow', depth: '20 m', eyebrow: 'Favourite games', heading: 'Games I keep coming back to' },
   { id: 'services', zone: 'shallow', depth: '40 m', eyebrow: 'What I do', heading: 'What I can build for you' },
   { id: 'skills', nav: 'Skills', zone: 'mid', depth: '200 m', eyebrow: 'Skills', heading: 'Tools & skills' },
   { id: 'projects', nav: 'Projects', zone: 'deep', depth: '1,000 m', eyebrow: 'Projects · flagship', heading: 'Rivalis Academia Nexus' },
