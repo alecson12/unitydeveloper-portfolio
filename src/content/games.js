@@ -1,6 +1,6 @@
 /**
  * =====================================================================
- *  FAVOURITE GAMES — the games you play and learn from
+ *  GAMES I KEEP COMING BACK TO — the games you play and learn from
  * =====================================================================
  *  Shown right under About Me, so a client can see the games you know
  *  well when they say "make it feel like X". Keep it to the ones you
@@ -24,8 +24,36 @@
  * ===================================================================== */
 
 export const GAMES = [
-  { title: '[Game title]', studio: '[Studio]', platform: '[Platform]', genre: '[Genre]', note: '[One line: what you take from it.]', cover: '' },
-  { title: '[Game title]', studio: '[Studio]', platform: '[Platform]', genre: '[Genre]', note: '[One line: what you take from it.]', cover: '' },
-  { title: '[Game title]', studio: '[Studio]', platform: '[Platform]', genre: '[Genre]', note: '[One line: what you take from it.]', cover: '' },
-  { title: '[Game title]', studio: '[Studio]', platform: '[Platform]', genre: '[Genre]', note: '[One line: what you take from it.]', cover: '' },
+  {
+    title: 'Persona',
+    studio: 'Atlus',
+    platform: '',
+    genre: 'JRPG · Persona 3, 4 & 5',
+    note: 'Unique art style, sound and UI/UX. Relatable characters and an engaging story.',
+    cover: '', // drop a Persona 3 / 4 / 5 poster in public/media/games/persona.jpg and set this to '/media/games/persona.jpg'
+  },
+  {
+    title: 'Monster Hunter',
+    studio: 'Capcom',
+    platform: '',
+    genre: 'Action RPG',
+    note: '[One line: what you take from it.]',
+    cover: '', // public/media/games/monster-hunter.jpg
+  },
+  {
+    title: 'Suikoden II',
+    studio: 'Konami',
+    platform: '',
+    genre: 'JRPG',
+    note: '[One line: what you take from it.]',
+    cover: '', // public/media/games/suikoden-2.jpg
+  },
+  {
+    title: 'Dota 2 & League of Legends',
+    studio: 'Valve · Riot Games',
+    platform: '',
+    genre: 'MOBA',
+    note: '[One line: what you take from it.]',
+    cover: '', // public/media/games/dota-league.jpg
+  },
 ]

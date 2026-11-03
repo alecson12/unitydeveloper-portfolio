@@ -8,7 +8,7 @@ import { isPlaceholder, shouldShow } from '../lib/content.js'
 export const visibleGames = () => GAMES.filter((g) => shouldShow(g.title))
 
 /**
- * Favourite games: a small panel right under About Me, like the Tools
+ * Games I keep coming back to: a small panel right under About Me, like the Tools
  * panel in Skills. A shelf of little cover tiles, each a floating card:
  * cover on top, title and one line under it. Renders nothing when no
  * real game is listed.
@@ -19,7 +19,7 @@ export default function FavouriteGames() {
   return (
     <Reveal>
       <div className="px-card p-5 sm:p-8">
-        <p className="eyebrow flex items-center gap-3"><span className="inline-block h-2 w-2 bg-red" />Favourite games</p>
+        <p className="eyebrow flex items-center gap-3 text-beige"><span className="inline-block h-2 w-2 bg-red" />Games I keep coming back to</p>
         <ul className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-5">
           {games.map((g, i) => (
             <li key={`${g.title}-${i}`} className={`px-card px-card-lift flex h-full flex-col overflow-hidden ${isPlaceholder(g.title) ? 'placeholder-text' : ''}`}>

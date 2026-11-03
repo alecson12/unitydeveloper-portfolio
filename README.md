@@ -161,7 +161,7 @@ Everything about you is in two files:
 | Wordmark on the Start screen, scroll hint | `profile.js` → `start` |
 | Full name, short name, title, headline and intro, photo, quick facts | `profile.js` → `name`, `shortName`, `title`, `intro` |
 | Background paragraphs, work timeline, education, strengths (oldest first) | `about.js` → `background` |
-| Favourite games (small panel under About Me; hidden until one real game is listed) | `games.js` → `GAMES` |
+| Games I keep coming back to (small panel under About Me; hidden until one real game is listed) | `games.js` → `GAMES` |
 | What I do (service cards) | `about.js` → `services` — each has `confirmed: true/false` |
 | Tools & technologies (tiles in Skills) | `about.js` → `tools` — each has `confirmed: true/false` |
 | Professional highlights (big numbers) and notable contributions | `about.js` → `highlights`, `notable` |
