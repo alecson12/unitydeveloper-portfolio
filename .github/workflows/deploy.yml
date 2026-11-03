@@ -1,5 +1,5 @@
 # Builds the site and publishes it to GitHub Pages on every push to master.
-# One-time setup on GitHub: Settings → Pages → Source: GitHub Actions.
+# configure-pages turns Pages on for the repo the first time; nothing to click on GitHub.
 name: Deploy to GitHub Pages
 
 on:
@@ -21,6 +21,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
       - uses: actions/setup-node@v4
         with:
           node-version: 22
