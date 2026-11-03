@@ -40,7 +40,7 @@ export function Intro() {
               </div>
               <div className="relative pt-6">
                 {intro.photo && (
-                  <img src={intro.photo} alt={intro.photoAlt ?? name} width="1000" height="1422" className="relative z-10 mx-auto block w-[78%]" fetchPriority="high" />
+                  <img src={intro.photo} alt={intro.photoAlt ?? name} width="1000" height="1000" className="relative z-10 mx-auto block w-[78%]" fetchPriority="high" />
                 )}
                 {/* the sand you stand on, with plants in front */}
                 <PixelSprite name="ledge" className="relative z-20 -mt-[13%] block w-full" />

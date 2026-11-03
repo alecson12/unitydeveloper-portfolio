@@ -52,7 +52,7 @@ export const PROFILE = {
     ],
     // Your photo, cut out on a transparent background, so you stand in the water.
     // Put files in  public/media/profile/
-    photo: '/media/profile/alecson-unity-developer-cutout.webp',
+    photo: '/media/profile/alecson-unity-developer-white.webp',
     photoAlt: 'Alecson Marwin B. Gantica, Unity developer',
   },
 

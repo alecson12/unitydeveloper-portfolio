@@ -7,7 +7,7 @@ import PixelSprite from './PixelSprite.jsx'
  * a <Zone>. Restrained: a few large, well-placed things rather than many.
  *   swim   — crosses the screen slowly (right→left, or flipped)
  *   float  — drifts gently in place (jellyfish)
- *   fixed  — plants, rock and the wreck on the floor or the edges
+ *   fixed  — plants and rock on the floor or the edges
  *            (never mid-air: loose stones away from the floor are  float  boulders)
  * Two parallax groups (far / near) shift slightly with the scroll. Items
  * marked  sm  are hidden on phones,  xs  shown only there. Positions are
@@ -96,8 +96,6 @@ const BANDS = {
     { kind: 'fixed', name: 'spire', bottom: 0, left: 16, w: 110, sm: true, op: 0.9 },
     { kind: 'fixed', name: 'spire', bottom: 0, right: 3, w: 140, layer: 'near', op: 0.9 },
     { kind: 'fixed', name: 'rock', bottom: 0, right: 8, w: 320, sm: true, op: 0.9 },
-    { kind: 'fixed', name: 'wreck', bottom: 0, left: 24, w: 620, layer: 'near', sm: true },
-    { kind: 'fixed', name: 'wreck', bottom: 0, left: -10, w: 380, layer: 'near', xs: true },
     { kind: 'fixed', name: 'octopus', bottom: 0, left: 58, w: 64, layer: 'near', sm: true },
     { kind: 'swim', name: 'shark', top: 30, w: 260, dur: 260, delay: -130, layer: 'far', sm: true },
     { kind: 'float', name: 'boulder', top: 20, right: 10, w: 70, delay: -6, sm: true },
