@@ -55,7 +55,7 @@ function Name({ first, last }) {
   return (
     <div aria-hidden className="pointer-events-none select-none text-center">
       <p className="font-pixel text-[13px] tracking-[0.6em] text-red uppercase sm:text-[15px]" style={{ textShadow: '0 0 12px rgba(217,38,28,0.45)' }}>{first}</p>
-      <p className="font-display leading-[0.85] tracking-tight uppercase" style={{ fontSize: 'clamp(56px, 27cqw, 190px)', color: 'rgba(232,217,181,0.42)', textShadow: '0 0 24px rgba(232,217,181,0.25), 0 3px 0 rgba(5,12,32,0.6)' }}>{last}</p>
+      <p className="name-glow font-display leading-[0.85] tracking-tight text-white uppercase" style={{ fontSize: 'clamp(56px, 27cqw, 190px)' }}>{last}</p>
     </div>
   )
 }
@@ -107,15 +107,15 @@ export function Intro() {
                 {statementParas.map((p, i) => <Txt key={`s${i}`} as="p" value={p} />)}
               </div>
             </Panel>
-            <Journey items={background.timeline} />
+            <Journey items={background.timeline} cta={intro.primaryButton} />
           </div>
 
           {/* ---- landscape centre: you, your name behind your head, no taller than the screen ---- */}
-          <div className="@container relative order-first flex flex-col lg:order-none lg:col-span-4 lg:min-h-0 xl:col-span-6">
+          <div className="@container relative z-0 order-first flex flex-col lg:order-none lg:col-span-4 lg:-mb-8 lg:min-h-0 xl:col-span-6 xl:mb-0">
             <div className="relative"><Name first={first} last={last} /></div>
             <div className="relative -mt-[14%] flex flex-1 items-end justify-center pb-[7%] lg:-mt-[18%]">
               {intro.photo && (
-                <img src={intro.photo} alt={alt} width="1200" height="1200" className="relative z-10 block w-full lg:h-full lg:w-auto lg:max-w-[300%] lg:object-contain lg:object-bottom xl:max-w-[165%]" style={{ maxHeight: 'calc(100svh - 15rem)' }} fetchPriority="high" />
+                <img src={intro.photo} alt={alt} width="1200" height="1200" className="about-photo relative z-10 block w-full" fetchPriority="high" />
               )}
               <Ledge reduce={reduce} plants="lg:hidden xl:block" />
             </div>
@@ -136,7 +136,7 @@ export function Intro() {
                 </ul>
               )}
               <div className="mt-6 flex flex-1 flex-col items-center justify-end gap-3">
-                <a href={intro.primaryButton.href} className="px-btn px-btn-primary">{intro.primaryButton.label}</a>
+                <a href={intro.primaryButton.href} className="px-btn px-btn-primary lg:hidden">{intro.primaryButton.label}</a>
                 <a href={intro.secondaryButton.href} className="px-btn px-btn-ghost">{intro.secondaryButton.label}</a>
               </div>
             </Panel>
@@ -153,11 +153,11 @@ function Node({ latest }) {
 }
 
 /** Work, oldest at the top, latest at the bottom. */
-function Journey({ items = [] }) {
+function Journey({ items = [], cta }) {
   const work = items.filter((t) => shouldShow(t.title) || shouldShow(t.place) || shouldShow(t.note))
   if (!work.length) return null
   return (
-    <Panel label="My journey" className="flex-1">
+    <Panel label="My journey" className="flex flex-1 flex-col">
       <ol className="relative mt-4 space-y-4 border-l-2 border-line pl-5">
         {work.map((t, i) => (
           <li key={i} className="relative">
@@ -168,6 +168,11 @@ function Journey({ items = [] }) {
           </li>
         ))}
       </ol>
+      {cta && (
+        <div className="mt-6 hidden flex-1 items-end justify-center lg:flex">
+          <a href={cta.href} className="px-btn px-btn-primary">{cta.label}</a>
+        </div>
+      )}
     </Panel>
   )
 }

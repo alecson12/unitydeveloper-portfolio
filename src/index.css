@@ -177,6 +177,23 @@ html { scrollbar-color: #112c58 #ffffff; }
   .px-chip-active { background: var(--color-red); color: #fff; border-color: #f07a6e; }
 }
 
+/* ---------- About Me: the photo and the name ----------
+   Phones: full width, stacked. Three-column laptops: taller than its
+   column and placed so the face sits mid-panel, spilling behind the side
+   panels (the panel clips the bottom). Wide screens: in its own column,
+   never taller than the screen. */
+@media (min-width: 64rem) and (max-width: 79.99rem) {
+  .about-photo { position: absolute; left: 50%; top: 10%; height: 122%; width: auto; max-width: none; transform: translateX(-50%); }
+}
+@media (min-width: 80rem) {
+  .about-photo { height: 100%; width: auto; max-width: 165%; max-height: calc(100svh - 15rem); object-fit: contain; object-position: bottom; }
+}
+@keyframes name-pulse {
+  0%, 100% { text-shadow: 0 0 14px rgba(255,255,255,0.35), 0 0 36px rgba(232,217,181,0.35), 3px 3px 0 #d9261c, 0 6px 0 rgba(5,12,32,0.75); }
+  50%      { text-shadow: 0 0 22px rgba(255,255,255,0.6), 0 0 60px rgba(232,217,181,0.55), 3px 3px 0 #d9261c, 0 6px 0 rgba(5,12,32,0.75); }
+}
+.name-glow { opacity: 0.92; text-shadow: 0 0 14px rgba(255,255,255,0.35), 0 0 36px rgba(232,217,181,0.35), 3px 3px 0 #d9261c, 0 6px 0 rgba(5,12,32,0.75); animation: name-pulse 6s ease-in-out infinite; }
+
 /* =====================================================================
    THE WATER — animations. All transform/opacity only.
    ===================================================================== */
@@ -385,7 +402,7 @@ html { scrollbar-color: #112c58 #ffffff; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cloud, .drift-back, .swim, .bob, .bob-slow, .bob-xs, .drift-y, .sway, .sway-x, .drift-sky, .sun-glow, .heave-far, .heave-waves, .tree-sway, .flap, .sparkle, .wave, .ray, .mote, .glowmote, .surface-line, .cursor-blink::after { animation: none !important; }
+  .cloud, .drift-back, .swim, .bob, .bob-slow, .bob-xs, .drift-y, .sway, .sway-x, .drift-sky, .sun-glow, .heave-far, .heave-waves, .tree-sway, .flap, .sparkle, .wave, .ray, .name-glow, .mote, .glowmote, .surface-line, .cursor-blink::after { animation: none !important; }
 }
 
 :focus-visible {
