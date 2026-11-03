@@ -63,8 +63,8 @@ function CategoryBar({ cats, active }) {
         <ul className="flex min-w-max gap-2">
           {cats.map((c) => (
             <li key={c.id}>
-              <a href={`#cat-${c.id}`} className={`px-chip whitespace-nowrap transition-colors ${active === c.id ? 'px-chip-active' : 'text-beige hover:bg-white/15'}`}>
-                <PixelIcon name={c.icon} size={12} accent={active === c.id ? '#ffd9d4' : 'var(--color-beige)'} />
+              <a href={`#cat-${c.id}`} className={`px-chip whitespace-nowrap transition-colors ${active === c.id ? 'px-chip-active' : 'hover:bg-white/15'}`}>
+                <PixelIcon name={c.icon} size={12} accent={active === c.id ? '#9fb4dc' : undefined} />
                 {c.name}
               </a>
             </li>

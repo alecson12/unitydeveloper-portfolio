@@ -80,7 +80,7 @@ export default function FeaturedProject({ project, full = false }) {
             <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4 xl:grid-cols-8">
               {cats.map((c) => (
                 <li key={c.id}>
-                  <a href={`#cat-${c.id}`} className="px-card px-card-lift flex h-full items-center gap-3 px-3 py-3">
+                  <a href={`#cat-${c.id}`} className="px-card px-card-lift flex h-full items-center gap-3 px-3 py-3 text-beige">
                     <PixelIcon name={c.icon} size={20} className="shrink-0" />
                     <span className="font-pixel text-[12px] leading-snug tracking-[0.08em] uppercase">{c.name}</span>
                   </a>
