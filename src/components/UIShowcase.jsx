@@ -85,7 +85,7 @@ function CategoryHeader({ category: c, index }) {
           </span>
           <div>
             <p className="eyebrow">Category {String(index + 1).padStart(2, '0')}</p>
-            <h3 className="mt-2 font-display text-4xl leading-none tracking-tight sm:text-5xl">{c.name}</h3>
+            <h3 className="mt-2 font-display text-4xl leading-none tracking-tight text-beige sm:text-5xl">{c.name}</h3>
             {c.blurb && <p className="mt-3 max-w-xl text-ink-2">{c.blurb}</p>}
           </div>
         </div>

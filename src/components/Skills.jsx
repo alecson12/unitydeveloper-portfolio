@@ -28,7 +28,7 @@ export default function Skills() {
                       : abbr(t.name)}
                   </span>
                   <span>
-                    <span className="block font-display text-lg leading-none">{t.name}</span>
+                    <span className="block font-display text-lg leading-none text-beige">{t.name}</span>
                     <span className="mt-1.5 block font-pixel text-[12px] tracking-[0.08em] text-dim uppercase">{isDraft(t) ? 'To confirm' : t.kind}</span>
                   </span>
                 </li>
@@ -43,7 +43,7 @@ export default function Skills() {
           <Reveal key={g.group} delay={i * 0.06}>
             <div className="px-card px-card-lift h-full p-5">
               <p className="eyebrow">{String(i + 1).padStart(2, '0')}</p>
-              <h3 className="mt-2 font-display text-2xl leading-none tracking-tight">{g.group}</h3>
+              <h3 className="mt-2 font-display text-2xl leading-none tracking-tight text-beige">{g.group}</h3>
               <ul className="mt-5 flex flex-wrap gap-2">
                 {g.items.map((s) => <Txt key={s} as="li" value={s} className="px-chip normal-case tracking-normal font-sans text-sm" />)}
               </ul>

@@ -66,7 +66,7 @@ html { scrollbar-color: #112c58 #ffffff; }
 ::-webkit-scrollbar-thumb:hover { background: #163a66; }
 
 /* Tool icons: any SVG, painted in the ink colour via a mask */
-.tool-icon { background: #eef0ea; -webkit-mask: var(--icon) center / contain no-repeat; mask: var(--icon) center / contain no-repeat; }
+.tool-icon { background: var(--color-beige); -webkit-mask: var(--icon) center / contain no-repeat; mask: var(--icon) center / contain no-repeat; }
 
 /* ---------- Utilities ---------- */
 @utility container-x {
