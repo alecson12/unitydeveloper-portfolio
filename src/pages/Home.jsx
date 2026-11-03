@@ -1,7 +1,7 @@
 import Start from '../components/Start.jsx'
 import Zone from '../components/Zone.jsx'
 import Section from '../components/Section.jsx'
-import { Intro, Background, Services, Highlights } from '../components/AboutMe.jsx'
+import { Intro, Services, Highlights } from '../components/AboutMe.jsx'
 import Skills from '../components/Skills.jsx'
 import FeaturedProject from '../components/FeaturedProject.jsx'
 import UIShowcase from '../components/UIShowcase.jsx'
@@ -18,7 +18,7 @@ const meta = (id) => SECTIONS.find((s) => s.id === id) ?? { id }
 /**
  * The dive, top to bottom:
  *   Start      — above the surface: the wordmark
- *   About Me   — shallow water: introduction, background, what I do
+ *   About Me   — shallow water: who I am (photo, journey, education, strengths), what I do
  *   Skills     — mid water: tools and skills
  *   Projects   — deep water: the flagship case study, feature by feature
  *   Contact    — the floor
@@ -37,9 +37,6 @@ export default function Home() {
       <Zone depth="shallow">
         <Section id="about" meta={meta('about')}>
           <Intro />
-        </Section>
-        <Section id="profile" meta={meta('profile')} tight>
-          <Background />
         </Section>
         <Section id="services" meta={meta('services')} tight>
           <Services />

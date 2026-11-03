@@ -9,23 +9,43 @@ import { isPlaceholder, resolveAuto, shouldShow, shouldShowItem, isDraft } from 
 
 /* =====================================================================
    The About Me blocks, each one a dark panel:
-     <Intro />        photo in the shallows + name, headline, facts
-     <Background />   paragraphs + timeline + strengths + statement
+     <Intro />        one poster-like panel: the journey (work + school) on
+                      the left, you in the shallows with your name large
+                      behind you in the middle, strengths and who you are
+                      on the right. On phones the columns stack, photo first.
      <Services />     what I do (confirmed items only in production)
      <Highlights />   big numbers + notable contributions
    ===================================================================== */
 
-/** The first thing under the surface: you, standing in the shallows, and who you are. */
+/** Who you are, on one screen. */
 export function Intro() {
   const { intro, name, title } = PROFILE
+  const { background, statement } = ABOUT
   const reduce = useReducedMotion()
+  const paragraphs = background.paragraphs.filter(shouldShow)
+  const strengths = background.strengths.filter(shouldShow)
+  const statementParas = statement.filter(shouldShow)
+  const [first, ...rest] = name.split(' ')
+  const last = rest.length ? rest[rest.length - 1] : ''
+
   return (
     <Reveal>
       <article className="px-card overflow-hidden p-5 sm:p-8 lg:p-10 xl:p-12">
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-center lg:gap-12">
-          {/* ---- the photo, in the water ---- */}
-          <div className="order-first lg:col-span-5">
-            <div className="relative mx-auto max-w-[400px]">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-8 xl:gap-10">
+          {/* ---- left: the journey ---- */}
+          <div className="lg:col-span-4 xl:col-span-3">
+            <Journey timeline={background.timeline} education={background.education} />
+          </div>
+
+          {/* ---- centre: you, with your name behind you ---- */}
+          <div className="@container relative order-first lg:order-none lg:col-span-4 lg:self-center xl:col-span-6">
+            <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 select-none text-center">
+              <p className="font-pixel text-[13px] tracking-[0.6em] text-ink-2 uppercase sm:text-[15px]">{first}</p>
+              <p className="font-display leading-[0.85] tracking-tight text-white/[0.08] uppercase" style={{ fontSize: 'clamp(56px, 27cqw, 170px)' }}>{last}</p>
+              <p className="font-pixel text-[12px] tracking-[0.3em] text-red uppercase sm:text-[13px]">{title}</p>
+            </div>
+
+            <div className="relative mx-auto mt-[22%] max-w-[420px] sm:mt-[18%] lg:mt-[26%]">
               <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden rounded-xl">
                 {/* light from above */}
                 <span className="ray" style={{ left: '18%', width: '22%', transform: 'skewX(-14deg)', '--delay': '0s', animation: reduce ? 'none' : undefined }} />
@@ -38,9 +58,9 @@ export function Intro() {
                   </div>
                 </div>
               </div>
-              <div className="relative pt-6">
+              <div className="relative">
                 {intro.photo && (
-                  <img src={intro.photo} alt={intro.photoAlt ?? name} width="1000" height="1000" className="relative z-10 mx-auto block w-[78%]" fetchPriority="high" />
+                  <img src={intro.photo} alt={intro.photoAlt ?? name} width="1000" height="1000" className="relative z-10 mx-auto block w-[82%]" fetchPriority="high" />
                 )}
                 {/* the sand you stand on, with plants in front */}
                 <PixelSprite name="ledge" className="relative z-20 -mt-[13%] block w-full" />
@@ -49,112 +69,87 @@ export function Intro() {
                 <PixelSprite name="spire" className="absolute bottom-[5%] left-[-2%] z-[5] w-12 opacity-80 sm:w-14" />
               </div>
             </div>
-          </div>
 
-          {/* ---- who you are ---- */}
-          <div className="lg:col-span-7">
-            <p className="flex flex-wrap items-center gap-3">
-              <span className="px-chip">{name}</span>
-              <span className="eyebrow">{intro.eyebrow}</span>
-            </p>
-            <h2 className="mt-6 font-display text-5xl leading-[0.95] tracking-tight text-balance sm:text-6xl xl:text-7xl">{intro.headline}</h2>
-            <p className="mt-6 max-w-2xl text-base leading-relaxed text-ink-2 sm:text-lg">{intro.intro}</p>
-            <div className="mt-8 flex flex-wrap items-center gap-4">
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
               <a href={intro.primaryButton.href} className="px-btn px-btn-primary">{intro.primaryButton.label}</a>
               <a href={intro.secondaryButton.href} className="px-btn px-btn-ghost">{intro.secondaryButton.label}</a>
             </div>
-            <dl className="mt-10 grid max-w-lg grid-cols-3 gap-4 border-t border-line pt-6">
-              <div>
-                <dt className="font-pixel text-[12px] tracking-[0.08em] text-dim uppercase">Role</dt>
-                <dd className="mt-1.5 text-sm font-medium sm:text-base">{title}</dd>
-              </div>
-              {intro.facts.slice(0, 2).map((f) => (
-                <div key={f.label}>
-                  <dt className="font-pixel text-[12px] tracking-[0.08em] text-dim uppercase">{f.label}</dt>
-                  <dd className="mt-1.5 text-sm font-medium sm:text-base">{f.value}</dd>
-                </div>
-              ))}
-            </dl>
           </div>
-        </div>
-      </article>
-    </Reveal>
-  )
-}
 
-/** Professional background: story on the left, timeline on the right, statement across the bottom. */
-export function Background() {
-  const { background, statement } = ABOUT
-  const paragraphs = background.paragraphs.filter(shouldShow)
-  const strengths = background.strengths.filter(shouldShow)
-  const statementParas = statement.filter(shouldShow)
-
-  return (
-    <Reveal>
-      <article className="px-card p-5 sm:p-8 lg:p-10 xl:p-12">
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-14">
-          <div className="lg:col-span-7">
-            <p className="eyebrow flex items-center gap-3"><span className="inline-block h-2 w-2 bg-red" />Experience</p>
-            <div className="mt-5 space-y-5 text-lg leading-relaxed text-ink-2">
-              {paragraphs.map((p, i) => <Txt key={i} as="p" value={p} className={i === 0 ? 'text-ink' : ''} />)}
-            </div>
-
+          {/* ---- right: strengths, then who you are ---- */}
+          <div className="flex flex-col gap-6 lg:col-span-4 xl:col-span-3">
             {strengths.length > 0 && (
-              <div className="mt-10 border-t border-line pt-8">
-                <p className="font-pixel text-[12px] tracking-[0.08em] text-dim uppercase">Strengths</p>
-                <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <div className="px-card p-5 sm:p-6">
+                <p className="eyebrow flex items-center gap-3 text-beige"><span className="inline-block h-2 w-2 bg-red" />Strengths</p>
+                <ul className="mt-4 space-y-2.5">
                   {strengths.map((s, i) => (
-                    <li key={i} className="flex gap-3 text-sm leading-relaxed">
-                      <span className="mt-[7px] h-1.5 w-1.5 shrink-0 bg-pink" />
+                    <li key={i} className="flex gap-3 text-sm leading-snug">
+                      <span className="mt-[7px] h-1.5 w-1.5 shrink-0 bg-red" />
                       <Txt value={s} />
                     </li>
                   ))}
                 </ul>
               </div>
             )}
-          </div>
 
-          <div className="lg:col-span-5">
-            <Timeline items={background.timeline} />
-          </div>
-        </div>
-
-        {statementParas.length > 0 && (
-          <div className="mt-10 border-t border-line pt-8 lg:mt-12">
-            <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
-              <div className="lg:col-span-3">
-                <p className="eyebrow flex items-center gap-3"><span className="inline-block h-2 w-2 bg-red" />In my words</p>
-                <PixelSprite name="turtle" className="bob mt-6 hidden w-28 opacity-80 lg:block" />
-              </div>
-              <div className="space-y-4 text-lg leading-relaxed lg:col-span-9 lg:max-w-3xl">
-                {statementParas.map((p, i) => <Txt key={i} as="p" value={p} />)}
+            <div className="px-card flex-1 p-5 sm:p-6">
+              <p className="eyebrow flex items-center gap-3 text-beige"><span className="inline-block h-2 w-2 bg-red" />Who I am</p>
+              <h2 className="mt-4 font-display text-3xl leading-[0.95] tracking-tight text-balance">{intro.headline}</h2>
+              <dl className="mt-4 space-y-1">
+                {intro.facts.map((f) => (
+                  <div key={f.label} className="flex items-baseline gap-2 font-pixel text-[12px] tracking-[0.06em] uppercase">
+                    <dt className="text-dim">{f.label}</dt>
+                    <dd className="text-beige">{f.value}</dd>
+                  </div>
+                ))}
+              </dl>
+              <div className="mt-4 space-y-3 text-sm leading-relaxed text-ink-2">
+                {paragraphs.map((p, i) => <Txt key={i} as="p" value={p} className={i === 0 ? 'text-ink' : ''} />)}
+                {statementParas.map((p, i) => <Txt key={`s${i}`} as="p" value={p} />)}
               </div>
             </div>
           </div>
-        )}
+        </div>
       </article>
     </Reveal>
   )
 }
 
-/** A vertical timeline with pixel nodes. Newest first. */
-function Timeline({ items = [] }) {
-  const visible = items.filter((t) => shouldShow(t.title) || shouldShow(t.place) || shouldShow(t.note))
-  if (!visible.length) return null
+/** Work, newest first, then school. Pixel nodes down a line. */
+function Journey({ timeline = [], education = [] }) {
+  const work = timeline.filter((t) => shouldShow(t.title) || shouldShow(t.place) || shouldShow(t.note))
+  const school = education.filter((e) => shouldShow(e.school))
+  if (!work.length && !school.length) return null
   return (
     <div className="px-card h-full p-5 sm:p-6">
-      <p className="font-pixel text-[12px] tracking-[0.08em] text-dim uppercase">Timeline</p>
-      <ol className="relative mt-5 space-y-6 border-l-2 border-line pl-6">
-        {visible.map((t, i) => (
+      <p className="eyebrow flex items-center gap-3 text-beige"><span className="inline-block h-2 w-2 bg-red" />My journey</p>
+      <ol className="relative mt-5 space-y-5 border-l-2 border-line pl-5">
+        {work.map((t, i) => (
           <li key={i} className="relative">
-            <span className={`absolute -left-[31px] top-1 h-3 w-3 ${i === 0 ? 'bg-pink' : 'bg-purple'}`} style={{ boxShadow: '0 0 0 2px var(--color-deep)' }} />
-            <Txt as="p" value={t.period} className="font-pixel text-[12px] tracking-[0.08em] text-dim uppercase" />
-            <Txt as="p" value={t.title} className="mt-1 font-display text-2xl leading-tight" />
-            <Txt as="p" value={t.place} className="text-sm text-ink-2" />
-            <Txt as="p" value={t.note} className="mt-1.5 text-sm leading-relaxed" />
+            <span className={`absolute -left-[27px] top-1 h-3 w-3 ${i === 0 ? 'bg-red' : 'bg-purple'}`} style={{ boxShadow: '0 0 0 2px var(--color-deep)' }} />
+            <Txt as="p" value={t.title} className="text-sm font-medium leading-tight" />
+            <Txt as="p" value={t.place} className="mt-0.5 text-xs leading-snug text-ink-2" />
+            <Txt as="p" value={t.period} className="mt-1 font-pixel text-[11px] tracking-[0.08em] text-dim uppercase" />
           </li>
         ))}
       </ol>
+
+      {school.length > 0 && (
+        <>
+          <p className="mt-8 font-pixel text-[12px] tracking-[0.08em] text-dim uppercase">Education</p>
+          <ol className="relative mt-4 space-y-4 border-l-2 border-line pl-5">
+            {school.map((e, i) => (
+              <li key={i} className="relative">
+                <span className="absolute -left-[27px] top-1 h-3 w-3 bg-purple" style={{ boxShadow: '0 0 0 2px var(--color-deep)' }} />
+                <p className="font-pixel text-[11px] tracking-[0.08em] text-dim uppercase">{e.level}</p>
+                <Txt as="p" value={e.school} className="mt-0.5 text-sm font-medium leading-tight" />
+                {e.course && <Txt as="p" value={e.course} className="mt-0.5 text-xs leading-snug text-ink-2 italic" />}
+                <Txt as="p" value={e.period} className={`mt-1 font-pixel text-[11px] tracking-[0.08em] uppercase ${/graduat/i.test(e.period) ? 'text-beige' : 'text-dim'}`} />
+              </li>
+            ))}
+          </ol>
+        </>
+      )}
     </div>
   )
 }

@@ -1,6 +1,6 @@
 /**
  * =====================================================================
- *  ABOUT ME — background, what you do, tools, highlights, statement
+ *  ABOUT ME — background, education, what you do, tools, highlights, statement
  * =====================================================================
  *  Everything on the About Me part of the site comes from this file.
  *  Short facts (name, title, photo, contact) live in profile.js.
@@ -28,6 +28,13 @@ export const ABOUT = {
     timeline: [
       { period: '2023 — Present', title: 'Unity Developer', place: 'VIIBYTE · Rivalis Academia Nexus', note: '21 in-game interfaces, Unity + C#. Implemented all, designed some.' },
       { period: '2021', title: 'Started with Unity', place: 'Self-taught, in college', note: 'School projects.' },
+    ],
+    // Schooling, newest first. level · school · course (optional) · period
+    education: [
+      { level: 'Tertiary', school: 'Pambayang Dalubhasaan ng Marilao', course: 'Bachelor of Science in Information Technology', period: 'Graduate' },
+      { level: 'Secondary', school: 'St. Michael School of Marilao', course: 'Science, Technology, Engineering and Mathematics', period: '2013 — 2019' },
+      { level: 'Primary', school: 'Calvario Elementary School', period: '2009 — 2013' },
+      { level: 'Primary', school: 'St. Mary’s College of Meycauayan', period: '2006 — 2009' },
     ],
     // Three short lines.
     strengths: [
