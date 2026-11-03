@@ -21,8 +21,9 @@ export const ABOUT = {
   background: {
     // One or two short paragraphs.
     paragraphs: [
-      'Unity Developer at VIIBYTE on Rivalis Academia Nexus since 2023. I implemented all 21 in-game interfaces, from login to settings, and designed some of them myself.',
-      'Developing games is my dream, so I taught myself Unity in college, starting with school projects.',
+      'Creating games has been a childhood dream of mine, and I’m glad I get to turn that dream into something real.',
+      'I’ve been a Unity Developer at VIIBYTE, working on Rivalis Academia Nexus since 2023. I’ve implemented all 21 in-game interfaces, from login to settings, while also designing several of them myself.',
+      'I started learning Unity in college through self-study and small projects. Since then, I’ve been turning my curiosity into real experiences, one game interface at a time.',
     ],
     // Oldest first, so the latest sits at the bottom. Only real entries.
     timeline: [

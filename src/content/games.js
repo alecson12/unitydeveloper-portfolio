@@ -30,30 +30,30 @@ export const GAMES = [
     platform: '',
     genre: 'JRPG · Persona 3, 4 & 5',
     note: 'Unique art style, sound and UI/UX. Relatable characters and an engaging story.',
-    cover: '', // drop a Persona 3 / 4 / 5 poster in public/media/games/persona.jpg and set this to '/media/games/persona.jpg'
+    cover: '/media/games/persona.webp',
   },
   {
     title: 'Monster Hunter',
     studio: 'Capcom',
     platform: '',
     genre: 'Action RPG',
-    note: '[One line: what you take from it.]',
-    cover: '', // public/media/games/monster-hunter.jpg
+    note: 'Weighty combat and readable feedback. Every hit, roar and menu tells you something.',
+    cover: '/media/games/monster-hunter.webp',
   },
   {
     title: 'Suikoden II',
     studio: 'Konami',
     platform: '',
     genre: 'JRPG',
-    note: '[One line: what you take from it.]',
-    cover: '', // public/media/games/suikoden-2.jpg
+    note: 'A huge cast and a story that still holds up. Proof that pixel art and good writing age well.',
+    cover: '/media/games/suikoden-2.webp',
   },
   {
     title: 'Dota 2 & League of Legends',
     studio: 'Valve · Riot Games',
     platform: '',
     genre: 'MOBA',
-    note: '[One line: what you take from it.]',
-    cover: '', // public/media/games/dota-league.jpg
+    note: 'Dense HUDs that stay clear under pressure. Clarity and timing matter in every frame.',
+    cover: '/media/games/dota-league.webp',
   },
 ]
