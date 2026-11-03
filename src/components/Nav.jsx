@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { PROFILE } from '../content/profile.js'
 import { SECTIONS } from '../content/sections.js'
@@ -11,6 +11,9 @@ export default function Nav({ mode = 'home' }) {
   const [active, setActive] = useState('')
   const [scrolled, setScrolled] = useState(false)
   const [menu, setMenu] = useState(false)
+  // Where to scroll once the phone menu has finished closing: a section id, 'top', or null.
+  // (Scrolling while the menu collapses gets cancelled by the browser, so we wait for it.)
+  const pending = useRef(null)
   const sections = SECTIONS.filter((s) => s.nav)
   const links = sections.filter((s) => s.id !== 'contact')
   // At the very top the nav sits on the bright sky, so its text goes dark.
@@ -45,11 +48,10 @@ export default function Nav({ mode = 'home' }) {
     return () => window.removeEventListener('keydown', onKey)
   }, [menu])
 
-  const go = (e, id) => {
-    e.preventDefault()
-    setMenu(false)
-    if (mode !== 'home') {
-      window.location.hash = `#${id}`
+  const scrollTo = (id) => {
+    if (id === 'top') {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      history.replaceState(null, '', window.location.pathname)
       return
     }
     const el = document.getElementById(id)
@@ -59,15 +61,35 @@ export default function Nav({ mode = 'home' }) {
     }
   }
 
-  const goTop = (e) => {
-    e.preventDefault()
-    setMenu(false)
+  // Scroll now, or after the menu has closed if it is open.
+  const navigate = (id) => {
     if (mode !== 'home') {
-      window.location.hash = ''
+      setMenu(false)
+      window.location.hash = id === 'top' ? '' : `#${id}`
       return
     }
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-    history.replaceState(null, '', window.location.pathname)
+    if (menu) {
+      pending.current = id
+      setMenu(false)
+    } else {
+      scrollTo(id)
+    }
+  }
+
+  const onMenuClosed = () => {
+    const id = pending.current
+    pending.current = null
+    if (id) scrollTo(id)
+  }
+
+  const go = (e, id) => {
+    e.preventDefault()
+    navigate(id)
+  }
+
+  const goTop = (e) => {
+    e.preventDefault()
+    navigate('top')
   }
 
   return (
@@ -126,7 +148,7 @@ export default function Nav({ mode = 'home' }) {
           </div>
         </div>
 
-        <AnimatePresence>
+        <AnimatePresence onExitComplete={onMenuClosed}>
           {menu && (
             <motion.nav
               key="mobile"
