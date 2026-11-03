@@ -20,10 +20,55 @@ import { isPlaceholder, resolveAuto, shouldShow, shouldShowItem, isDraft } from 
 /** A small inset panel with a red-marked beige eyebrow. */
 function Panel({ label, className = '', children }) {
   return (
-    <div className={`px-card p-5 sm:p-6 ${className}`}>
+    <div className={`px-card px-solid p-5 ${className}`}>
       <p className="eyebrow flex items-center gap-3 text-beige"><span className="inline-block h-2 w-2 bg-red" />{label}</p>
       {children}
     </div>
+  )
+}
+
+/** Light from the surface: rays down the whole panel, and a fish passing. */
+function Light({ reduce }) {
+  const rays = [
+    { left: '4%', width: '12%', skew: -16, delay: 0 },
+    { left: '20%', width: '20%', skew: -10, delay: 2.5 },
+    { left: '44%', width: '18%', skew: 4, delay: 1 },
+    { left: '63%', width: '14%', skew: 12, delay: 3.5 },
+    { left: '82%', width: '12%', skew: 18, delay: 5 },
+  ]
+  return (
+    <div aria-hidden className="pointer-events-none absolute inset-0 z-0 overflow-hidden" style={{ borderRadius: 'inherit' }}>
+      {rays.map((r, i) => (
+        <span key={i} className="ray" style={{ left: r.left, width: r.width, transform: `skewX(${r.skew}deg)`, '--delay': `${r.delay}s`, animation: reduce ? 'none' : undefined }} />
+      ))}
+      <div className="absolute left-0 top-[46%] w-full" style={{ height: 28 }}>
+        <div className="swim swim-r h-full" style={{ '--dur': '40s', '--delay': '-9s', animation: reduce ? 'none' : undefined, left: reduce ? '10%' : undefined }}>
+          <PixelSprite name="reef" flip className="w-8 opacity-70" />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/** Your name, large and faded, with your first name small above it. */
+function Name({ first, last }) {
+  return (
+    <div aria-hidden className="pointer-events-none select-none text-center">
+      <p className="font-pixel text-[13px] tracking-[0.6em] text-ink-2 uppercase sm:text-[15px]">{first}</p>
+      <p className="font-display leading-[0.85] tracking-tight text-white/[0.08] uppercase" style={{ fontSize: 'clamp(56px, 27cqw, 190px)' }}>{last}</p>
+    </div>
+  )
+}
+
+/** The sand you stand on, with plants in front. `plants` can be hidden where they would land on you. */
+function Ledge({ reduce, plants = '' }) {
+  return (
+    <>
+      <PixelSprite name="ledge" className="absolute inset-x-0 bottom-0 z-20 block w-full" />
+      <PixelSprite name="kelp" className={`sway absolute bottom-[6%] left-[5%] z-30 w-6 sm:w-8 ${plants}`} style={{ animation: reduce ? 'none' : undefined }} />
+      <PixelSprite name="seaweed" className={`sway absolute bottom-[6%] right-[6%] z-30 w-8 sm:w-12 ${plants}`} style={{ '--delay': '-3s', animation: reduce ? 'none' : undefined }} />
+      <PixelSprite name="spire" className={`absolute bottom-[5%] left-[-2%] z-[5] w-12 opacity-80 sm:w-16 ${plants}`} />
+    </>
   )
 }
 
@@ -37,15 +82,29 @@ export function Intro() {
   const statementParas = statement.filter(shouldShow)
   const [first, ...rest] = name.split(' ')
   const last = rest.length ? rest[rest.length - 1] : ''
+  const alt = intro.photoAlt ?? name
 
   return (
     <Reveal>
-      <article className="px-card overflow-hidden p-5 sm:p-8 lg:p-10 xl:p-12">
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-8 xl:gap-10">
+      <article className="@container px-card relative overflow-hidden p-5 sm:p-8">
+        <Light reduce={reduce} />
+
+        {/* ---- portrait: you, large, behind the panels ---- */}
+        {intro.photo && (
+          <div aria-hidden className="@container pointer-events-none absolute inset-x-0 top-0 z-0 lg:hidden">
+            <div className="pt-5 sm:pt-8"><Name first={first} last={last} /></div>
+            <div className="relative -mt-[6cqw]">
+              <img src={intro.photo} alt="" width="1200" height="1200" className="relative z-10 mx-auto block w-[118%] max-w-none -translate-x-[7.6%]" />
+              <Ledge reduce={reduce} />
+            </div>
+          </div>
+        )}
+
+        <div className="relative z-10 grid grid-cols-1 gap-5 pt-[88cqw] lg:grid-cols-12 lg:gap-6 lg:pt-0 xl:gap-8">
           {/* ---- left: who I am, then the journey ---- */}
-          <div className="flex flex-col gap-6 lg:col-span-4 xl:col-span-3">
+          <div className="flex flex-col gap-5 lg:col-span-4 xl:col-span-3">
             <Panel label="Who I am">
-              <h2 className="mt-4 font-display text-3xl leading-[0.95] tracking-tight text-balance">{intro.headline}</h2>
+              <h2 className="mt-3 font-display text-2xl leading-[0.95] tracking-tight text-balance xl:text-3xl">{intro.headline}</h2>
               <dl className="mt-4 space-y-1">
                 {intro.facts.map((f) => (
                   <div key={f.label} className="flex items-baseline gap-2 font-pixel text-[12px] tracking-[0.06em] uppercase">
@@ -54,7 +113,7 @@ export function Intro() {
                   </div>
                 ))}
               </dl>
-              <div className="mt-4 space-y-3 text-sm leading-relaxed text-ink-2">
+              <div className="mt-3 space-y-2.5 text-[13px] leading-relaxed text-ink-2">
                 {paragraphs.map((p, i) => <Txt key={i} as="p" value={p} className={i === 0 ? 'text-ink' : ''} />)}
                 {statementParas.map((p, i) => <Txt key={`s${i}`} as="p" value={p} />)}
               </div>
@@ -62,45 +121,23 @@ export function Intro() {
             <Journey items={background.timeline} />
           </div>
 
-          {/* ---- centre: you, lit from above, your name behind your head ---- */}
-          <div className="@container relative order-first flex flex-col lg:order-none lg:col-span-4 lg:min-h-0 xl:col-span-6">
-            {/* light from the surface, the full height of the column */}
-            <div aria-hidden className="pointer-events-none absolute -inset-x-6 -top-5 bottom-0 overflow-hidden sm:-top-8 lg:-top-10 xl:-top-12">
-              <span className="ray" style={{ left: '14%', width: '26%', transform: 'skewX(-12deg)', '--delay': '0s', animation: reduce ? 'none' : undefined }} />
-              <span className="ray" style={{ left: '46%', width: '20%', transform: 'skewX(8deg)', '--delay': '2s', animation: reduce ? 'none' : undefined }} />
-              <span className="ray" style={{ left: '70%', width: '14%', transform: 'skewX(16deg)', '--delay': '3.5s', animation: reduce ? 'none' : undefined }} />
-              <span className="ray" style={{ left: '2%', width: '10%', transform: 'skewX(-18deg)', '--delay': '5s', animation: reduce ? 'none' : undefined }} />
-              {/* a fish passing behind */}
-              <div className="absolute left-0 top-[46%] w-full" style={{ height: 28 }}>
-                <div className="swim swim-r h-full" style={{ '--dur': '34s', '--delay': '-9s', animation: reduce ? 'none' : undefined, left: reduce ? '10%' : undefined }}>
-                  <PixelSprite name="reef" flip className="w-8 opacity-70" />
-                </div>
-              </div>
-            </div>
-
-            <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 select-none text-center">
-              <p className="font-pixel text-[13px] tracking-[0.6em] text-ink-2 uppercase sm:text-[15px]">{first}</p>
-              <p className="font-display leading-[0.85] tracking-tight text-white/[0.08] uppercase" style={{ fontSize: 'clamp(56px, 27cqw, 190px)' }}>{last}</p>
-            </div>
-
-            <div className="relative mt-[14%] flex flex-1 items-end justify-center pb-[7%] lg:mt-[6%]">
+          {/* ---- landscape centre: you, your name behind your head, no taller than the screen ---- */}
+          <div className="@container relative hidden flex-col lg:col-span-4 lg:flex lg:min-h-0 xl:col-span-6">
+            <div className="absolute inset-x-0 top-0"><Name first={first} last={last} /></div>
+            <div className="relative mt-[6%] flex flex-1 items-end justify-center pb-[7%]">
               {intro.photo && (
-                <img src={intro.photo} alt={intro.photoAlt ?? name} width="1200" height="1200" className="relative z-10 block w-full lg:h-full lg:w-auto lg:max-w-[165%] lg:object-contain lg:object-bottom" fetchPriority="high" />
+                <img src={intro.photo} alt={alt} width="1200" height="1200" className="relative z-10 block h-full w-auto max-w-[165%] object-contain object-bottom" style={{ maxHeight: 'calc(100svh - 15rem)' }} fetchPriority="high" />
               )}
-              {/* the sand you stand on, with plants in front */}
-              <PixelSprite name="ledge" className="absolute inset-x-0 bottom-0 z-20 block w-full" />
-              <PixelSprite name="kelp" className="sway absolute bottom-[6%] left-[5%] z-30 w-6 sm:w-8 lg:hidden xl:block" style={{ animation: reduce ? 'none' : undefined }} />
-              <PixelSprite name="seaweed" className="sway absolute bottom-[6%] right-[6%] z-30 w-8 sm:w-12 lg:hidden xl:block" style={{ '--delay': '-3s', animation: reduce ? 'none' : undefined }} />
-              <PixelSprite name="spire" className="absolute bottom-[5%] left-[-2%] z-[5] w-12 opacity-80 sm:w-16 lg:hidden xl:block" />
+              <Ledge reduce={reduce} plants="lg:hidden xl:block" />
             </div>
           </div>
 
           {/* ---- right: education, then strengths with the buttons ---- */}
-          <div className="flex flex-col gap-6 lg:col-span-4 xl:col-span-3">
+          <div className="flex flex-col gap-5 lg:col-span-4 xl:col-span-3">
             <Education items={background.education} />
             <Panel label="Strengths" className="flex flex-1 flex-col">
               {strengths.length > 0 && (
-                <ul className="mt-4 space-y-2.5">
+                <ul className="mt-3 space-y-2">
                   {strengths.map((s, i) => (
                     <li key={i} className="flex gap-3 text-sm leading-snug">
                       <span className="mt-[7px] h-1.5 w-1.5 shrink-0 bg-red" />
@@ -109,7 +146,7 @@ export function Intro() {
                   ))}
                 </ul>
               )}
-              <div className="mt-8 flex flex-1 flex-col items-end justify-end gap-3">
+              <div className="mt-6 flex flex-1 flex-col items-end justify-end gap-3">
                 <a href={intro.primaryButton.href} className="px-btn px-btn-primary">{intro.primaryButton.label}</a>
                 <a href={intro.secondaryButton.href} className="px-btn px-btn-ghost">{intro.secondaryButton.label}</a>
               </div>
@@ -132,7 +169,7 @@ function Journey({ items = [] }) {
   if (!work.length) return null
   return (
     <Panel label="My journey" className="flex-1">
-      <ol className="relative mt-5 space-y-5 border-l-2 border-line pl-5">
+      <ol className="relative mt-4 space-y-4 border-l-2 border-line pl-5">
         {work.map((t, i) => (
           <li key={i} className="relative">
             <Node latest={i === work.length - 1} />
@@ -152,7 +189,7 @@ function Education({ items = [] }) {
   if (!school.length) return null
   return (
     <Panel label="Education">
-      <ol className="relative mt-5 space-y-4 border-l-2 border-line pl-5">
+      <ol className="relative mt-4 space-y-3.5 border-l-2 border-line pl-5">
         {school.map((e, i) => (
           <li key={i} className="relative">
             <Node latest={i === school.length - 1} />

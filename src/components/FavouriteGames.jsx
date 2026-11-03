@@ -20,7 +20,7 @@ export default function FavouriteGames() {
     <Reveal>
       <div className="px-card p-5 sm:p-8">
         <p className="eyebrow flex items-center gap-3"><span className="inline-block h-2 w-2 bg-red" />Favourite games</p>
-        <ul className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+        <ul className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-5">
           {games.map((g, i) => (
             <li key={`${g.title}-${i}`} className={`px-card px-card-lift flex h-full flex-col overflow-hidden ${isPlaceholder(g.title) ? 'placeholder-text' : ''}`}>
               <div className="relative aspect-[3/4] overflow-hidden border-b border-line bg-white/[0.04]">
