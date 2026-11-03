@@ -1,6 +1,6 @@
 /**
  * =====================================================================
- *  GAMES I KEEP COMING BACK TO — the games you play and learn from
+ *  GAMES THAT INSPIRE MY WORK — the games you play and learn from
  * =====================================================================
  *  Shown right under About Me, so a client can see the games you know
  *  well when they say "make it feel like X". Keep it to the ones you

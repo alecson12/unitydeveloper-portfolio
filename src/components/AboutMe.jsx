@@ -78,7 +78,7 @@ export function Intro() {
   const { background, statement } = ABOUT
   const reduce = useReducedMotion()
   const paragraphs = background.paragraphs.filter(shouldShow)
-  const strengths = background.strengths.filter(shouldShow)
+  const strengths = background.strengths.filter((s) => shouldShow(typeof s === 'string' ? s : s.title))
   const statementParas = statement.filter(shouldShow)
   const [first, ...rest] = name.split(' ')
   const last = rest.length ? rest[rest.length - 1] : ''
@@ -128,9 +128,14 @@ export function Intro() {
               {strengths.length > 0 && (
                 <ul className="mt-3 space-y-2">
                   {strengths.map((s, i) => (
-                    <li key={i} className="flex gap-3 text-sm leading-snug">
+                    <li key={i} className="flex gap-3 leading-snug">
                       <span className="mt-[7px] h-1.5 w-1.5 shrink-0 bg-red" />
-                      <Txt value={s} />
+                      {typeof s === 'string' ? <Txt value={s} className="text-sm" /> : (
+                        <span>
+                          <Txt as="span" value={s.title} className="block text-sm font-semibold text-beige" />
+                          {shouldShow(s.text) && <Txt as="span" value={s.text} className="mt-0.5 block text-[13px] text-ink-2" />}
+                        </span>
+                      )}
                     </li>
                   ))}
                 </ul>
