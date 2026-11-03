@@ -83,17 +83,17 @@ export default function Nav({ mode = 'home' }) {
           </a>
 
           {mode === 'home' ? (
-            <nav className="hidden items-center gap-6 lg:flex xl:gap-7" aria-label="Sections">
+            <nav className="hidden h-[72px] items-stretch lg:flex" aria-label="Sections">
               {links.map((s) => (
                 <a
                   key={s.id}
                   href={`#${s.id}`}
                   onClick={(e) => go(e, s.id)}
-                  className={`relative py-2 font-pixel text-[12px] tracking-[0.08em] uppercase transition ${active === s.id ? 'text-ink' : 'text-ink-2 hover:text-ink'}`}
+                  className={`relative flex items-center px-4 font-pixel text-[15px] tracking-[0.14em] uppercase transition xl:px-6 xl:text-[16px] ${active === s.id ? 'text-ink' : 'text-ink-2 hover:text-ink'}`}
                 >
                   {s.nav}
                   {active === s.id && (
-                    <motion.span layoutId="nav-bar" className="absolute inset-x-0 -bottom-0.5 h-0.5 bg-purple" transition={{ type: 'spring', stiffness: 400, damping: 34 }} />
+                    <motion.span layoutId="nav-bar" className="absolute inset-x-3 bottom-0 h-[3px] bg-red xl:inset-x-4" transition={{ type: 'spring', stiffness: 400, damping: 34 }} />
                   )}
                 </a>
               ))}
@@ -146,9 +146,9 @@ export default function Nav({ mode = 'home' }) {
                     key={s.id}
                     href={`#${s.id}`}
                     onClick={(e) => go(e, s.id)}
-                    className={`flex items-center gap-3 px-3 py-3 font-pixel text-[13px] tracking-[0.08em] uppercase transition ${active === s.id ? 'text-purple' : 'text-ink-2 hover:text-ink'}`}
+                    className={`flex items-center gap-3 px-3 py-3 font-pixel text-[13px] tracking-[0.08em] uppercase transition ${active === s.id ? 'text-ink' : 'text-ink-2 hover:text-ink'}`}
                   >
-                    <span className={`h-2 w-2 ${active === s.id ? 'bg-purple' : 'bg-ink/20'}`} />
+                    <span className={`h-2 w-2 ${active === s.id ? 'bg-red' : 'bg-ink/20'}`} />
                     {s.nav}
                   </a>
                 ))}

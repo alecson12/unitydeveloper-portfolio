@@ -6,6 +6,10 @@ import { PROFILE } from '../content/profile.js'
  * The opening screen: Alecson's extended Great Wave, in the three layers he
  * painted it in, set in motion.
  *
+ * THE WORDMARK sits in the sky: upper right on wide screens (over the
+ * open sky between the crest and the sun), centred above the frame on
+ * phones. It floats very slightly.
+ *
  * THE FRAME.  The artwork is 1798 × 875 px. The composition to show at rest
  * is the 1353 × 756 window at (267, 59) — the red frame in the reference.
  * The rest of the image (267 px spare on the left, 179 on the right, ~60
@@ -17,7 +21,7 @@ import { PROFILE } from '../content/profile.js'
  * THE LAYERS, back to front (public/media/start/, used as supplied):
  *   sky colour (CSS gradient sampled from the picture)
  *   sky.webp        1798 × 875 at (0, 0)    sky, clouds, sun, horizon (solid down to the sea)
- *   mountains.webp  1167 × 298 at (0, 369)  Fuji and the far-left swell
+ *   mountains.webp  1798 × 875 at (0, 0)    Fuji and the far-left swell (on a full, otherwise clear canvas)
  *   waves.webp      1798 × 657 at (0, 218)  the great wave and the sea
  *
  * MOTION.  Two kinds, both small:
@@ -37,7 +41,7 @@ const ART = { W: 1798, H: 875 }
 const FRAME = { x: 267, y: 59, w: 1353, h: 756 }
 const L = {
   sky: { x: 0, y: 0, w: 1798, h: 875 },
-  mountains: { x: 0, y: 369, w: 1167, h: 298 },
+  mountains: { x: 0, y: 0, w: 1798, h: 875 },
   waves: { x: 0, y: 218, w: 1798, h: 657 },
 }
 // where the sun sits in the sky layer (for its glow)
@@ -87,7 +91,22 @@ export default function Start() {
   return (
     <section id="start" className="relative isolate flex min-h-[100svh] flex-col overflow-hidden" style={{ background: '#1696fa' }}>
       <div className="container-x relative z-10 flex flex-1 flex-col pt-24 sm:pt-28">
-        <div id="start-title" className="min-h-[30svh] sm:min-h-[32svh]" />
+        <div id="start-title" className="flex justify-center lg:mt-[3vh] lg:justify-end">
+          {start.wordmark && (
+            <motion.img
+              src={start.wordmark}
+              alt={start.wordmarkAlt ?? ''}
+              width={2404}
+              height={866}
+              fetchPriority="high"
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+              className="bob-slow block h-auto w-[min(92vw,560px)] lg:w-[46vw] lg:max-w-[900px]"
+              style={{ '--bob': '7s', animation: anim }}
+            />
+          )}
+        </div>
       </div>
 
       {/* ---- the stage: the framed window onto the artwork ---- */}

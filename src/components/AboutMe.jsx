@@ -210,7 +210,7 @@ export function Highlights() {
               <ul className="mt-4 space-y-3">
                 {notable.map((n, i) => (
                   <li key={i} className="flex gap-3 text-sm leading-relaxed">
-                    <PixelIcon name="star" size={14} accent="#d8b4a0" className="mt-0.5 shrink-0 text-pink" />
+                    <PixelIcon name="star" size={14} accent="var(--color-red)" className="mt-0.5 shrink-0 text-pink" />
                     <Txt value={n} />
                   </li>
                 ))}

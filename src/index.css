@@ -27,7 +27,8 @@
   --color-lavender: #a39cd9;
   --color-purple: #9fb4dc;     /* accent: links, active states */
   --color-accent: #3f6fb0;     /* buttons */
-  --color-pink: #d8b4a0;       /* warm accent, used sparingly */
+  --color-red: #d9261c;        /* the red of the wordmark: one accent, used sparingly */
+  --color-pink: #d9261c;       /* warm accent = the red (kept under its old name) */
   --color-mint: #7fc0d6;
   --color-glow: #8fe3ff;       /* bioluminescence */
 
@@ -155,7 +156,7 @@ html { scrollbar-color: #112c58 #ffffff; }
   .px-btn-primary { --px-c: #5f8ccc; background: linear-gradient(180deg, #4a7bbf, #2f5a94); color: #fff; @apply px-5 py-3; }
   .px-btn-ghost { --px-c: rgba(255,255,255,0.28); background: rgba(255,255,255,0.07); color: var(--color-ink); backdrop-filter: blur(6px); @apply px-5 py-3; }
   .on-light .px-btn-ghost { --px-c: rgba(16,34,77,0.35); background: rgba(255,255,255,0.45); }
-  .px-btn-pink { --px-c: #e8d2c4; background: var(--color-pink); color: #1a1f33; @apply px-5 py-3; }
+  .px-btn-pink { --px-c: #ef6a5e; background: var(--color-red); color: #fff; @apply px-5 py-3; }
   /* Size modifiers — declared after the colours so they win */
   .px-btn-sm { @apply px-3 py-2 text-[12px]; }
   .px-btn-icon { @apply p-3; }

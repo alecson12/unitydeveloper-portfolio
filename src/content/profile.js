@@ -63,7 +63,7 @@ export const PROFILE = {
     { group: 'Languages', items: ['C#'] },
     { group: 'Game UI', items: ['HUD & menus', 'Inventory & shops', 'Chat & social', 'Touch controls'] },
     { group: 'Design', items: ['UI design', 'Photoshop', 'Illustrator'] },
-    { group: 'Workflow', items: ['Git', 'GitHub', 'Visual Studio', 'Trello'] },
+    { group: 'Workflow', items: ['GitHub', 'Visual Studio', 'Trello'] },
   ],
 
   /* ---------- CONTACT ---------- */
