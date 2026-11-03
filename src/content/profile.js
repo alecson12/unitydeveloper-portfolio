@@ -74,7 +74,7 @@ export const PROFILE = {
     // Placeholder links are hidden on the published site until replaced.
     links: [
       { kind: 'email', label: 'alecsongantica12@gmail.com', href: 'mailto:alecsongantica12@gmail.com' },
-      { kind: 'github', label: 'github.com/Almarga', href: 'https://github.com/Almarga' },
+      { kind: 'github', label: 'github.com/alecson12', href: 'https://github.com/alecson12' },
       { kind: 'facebook', label: 'facebook.com/alecson.12', href: 'https://www.facebook.com/alecson.12' },
     ],
     // Optional downloadable CV. Put the file in  public/  and set e.g.

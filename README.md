@@ -237,4 +237,4 @@ no server configuration is needed.
 # Deploying
 
 Pushes to `main` build and publish the site to GitHub Pages via `.github/workflows/deploy.yml`.
-Live at https://almarga.github.io/unitydeveloper-portfolio/ (the subfolder is set as `base` in `vite.config.js`; media paths in content stay `/media/...` and are prefixed at render time by `asset()` in `src/lib/content.js`).
+Live at https://alecson12.github.io/unitydeveloper-portfolio/ (the subfolder is set as `base` in `vite.config.js`; media paths in content stay `/media/...` and are prefixed at render time by `asset()` in `src/lib/content.js`).

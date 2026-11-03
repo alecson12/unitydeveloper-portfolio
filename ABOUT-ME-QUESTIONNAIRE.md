@@ -21,7 +21,7 @@ Email to show on the site (currently alecsongantica12@gmail.com — keep, or rep
 > alecsongantica12@gmail.com
 
 GitHub link:
-> https://github.com/Almarga
+> https://github.com/alecson12
 
 LinkedIn link:
 > facebook link instead: https://www.facebook.com/alecson.12
