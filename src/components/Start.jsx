@@ -16,12 +16,13 @@ import { PROFILE } from '../content/profile.js'
  *
  * THE LAYERS, back to front (public/media/start/, used as supplied):
  *   sky colour (CSS gradient sampled from the picture)
- *   sky.webp        1798 × 643 at (0, 0)    sky, clouds, sun, horizon
+ *   sky.webp        1798 × 875 at (0, 0)    sky, clouds, sun, horizon (solid down to the sea)
  *   mountains.webp  1167 × 298 at (0, 369)  Fuji and the far-left swell
  *   waves.webp      1798 × 657 at (0, 218)  the great wave and the sea
  *
  * MOTION.  Two kinds, both small:
- *   - continuous: the sky drifts sideways (clouds and sun together), the
+ *   - continuous: the sky drifts slowly sideways and a touch up and down
+ *     (clouds and sun together), the
  *     sun's glow breathes, the far swell and the great wave heave on their
  *     own rhythms — all in CSS, transform only
  *   - parallax: as you scroll, each layer slides down at its own rate,
@@ -35,7 +36,7 @@ import { PROFILE } from '../content/profile.js'
 const ART = { W: 1798, H: 875 }
 const FRAME = { x: 267, y: 59, w: 1353, h: 756 }
 const L = {
-  sky: { x: 0, y: 0, w: 1798, h: 643 },
+  sky: { x: 0, y: 0, w: 1798, h: 875 },
   mountains: { x: 0, y: 369, w: 1167, h: 298 },
   waves: { x: 0, y: 218, w: 1798, h: 657 },
 }
@@ -53,7 +54,7 @@ export default function Start() {
   const { scrollY } = useScroll()
   // parallax rates: fraction of the scroll distance each layer slides down
   const rate = (k) => useTransform(scrollY, (v) => (reduce ? 0 : Math.min(v, 1200) * k))
-  const ySky = rate(0.04), yMountains = rate(0.07), yWaves = rate(0.12)
+  const ySky = rate(0.05), yMountains = rate(0.07), yWaves = rate(0.12)
   // the tree is nearest of all, so it slides most — and the other way, rising as the scene sinks
   const yTree = useTransform(scrollY, (v) => (reduce ? 0 : -Math.min(v, 1200) * 0.1))
   const tree = start.tree?.src ? start.tree : null
