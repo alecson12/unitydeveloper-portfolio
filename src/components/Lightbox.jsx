@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-import { hasSource } from '../lib/content.js'
+import { hasSource, asset } from '../lib/content.js'
 
 /**
  * Full-screen viewer for a list of media items.
@@ -117,7 +117,7 @@ function Stage({ item, pixelated }) {
     if (!hasSource(item)) {
       return (
         <div className="px-border relative max-h-[70vh] overflow-hidden bg-deep-2" style={frame}>
-          {item.poster && <img src={item.poster} alt={item.alt ?? ''} className={`max-h-[70vh] w-auto object-contain ${crisp}`} />}
+          {item.poster && <img src={asset(item.poster)} alt={item.alt ?? ''} className={`max-h-[70vh] w-auto object-contain ${crisp}`} />}
           <div className="absolute inset-0 grid place-items-center bg-deep/60">
             <span className="px-chip">Recording coming soon</span>
           </div>
@@ -125,12 +125,12 @@ function Stage({ item, pixelated }) {
       )
     }
     return (
-      <video src={item.src} poster={item.poster} controls autoPlay playsInline className="px-border max-h-[78vh] w-auto max-w-full bg-black" style={frame} />
+      <video src={asset(item.src)} poster={asset(item.poster)} controls autoPlay playsInline className="px-border max-h-[78vh] w-auto max-w-full bg-black" style={frame} />
     )
   }
   return (
     <img
-      src={item.src}
+      src={asset(item.src)}
       alt={item.alt ?? ''}
       className={`px-border max-h-[78vh] w-auto max-w-full bg-deep-2 object-contain ${crisp}`}
       style={frame}

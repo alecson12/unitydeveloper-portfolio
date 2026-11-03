@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { PROFILE } from '../content/profile.js'
+import { asset } from '../lib/content.js'
 
 /**
  * The opening screen: Alecson's extended Great Wave, in the three layers he
@@ -97,7 +98,7 @@ export default function Start() {
         <div className={`flex ${portrait ? 'justify-center' : 'justify-end pr-[5vw]'}`}>
           {start.wordmark && (
             <motion.img
-              src={start.wordmark}
+              src={asset(start.wordmark)}
               alt={start.wordmarkAlt ?? ''}
               width={2404}
               height={866}
@@ -118,12 +119,12 @@ export default function Start() {
           {/* the full artwork box, offset so the frame window is what the stage shows */}
           <div className="absolute" style={{ left: pct(-FRAME.x, FRAME.w), top: pct(-FRAME.y, FRAME.h), width: pct(ART.W, FRAME.w), height: pct(ART.H, FRAME.h), background: SKY }}>
             <motion.div className="absolute" style={{ ...box(L.sky), y: ySky }}>
-              <img src="/media/start/sky.webp" alt="" width={L.sky.w} height={L.sky.h} className="pixelated drift-sky block w-full" style={{ animation: anim }} />
+              <img src={asset('/media/start/sky.webp')} alt="" width={L.sky.w} height={L.sky.h} className="pixelated drift-sky block w-full" style={{ animation: anim }} />
               {/* the sun's glow, breathing over the painted sun */}
               <span className="sun-glow absolute rounded-full" style={{ left: pct(SUN.x - SUN.w * 0.45, L.sky.w), top: pct(SUN.y - SUN.h * 0.45, L.sky.h), width: pct(SUN.w * 1.9, L.sky.w), height: pct(SUN.h * 1.9, L.sky.h), animation: anim }} />
             </motion.div>
-            <motion.img src="/media/start/mountains.webp" alt="" width={L.mountains.w} height={L.mountains.h} className="pixelated heave-far absolute" style={{ ...box(L.mountains), y: yMountains, animation: anim }} />
-            <motion.img src="/media/start/waves.webp" alt="The Great Wave, in pixel art" width={L.waves.w} height={L.waves.h} className="pixelated heave-waves absolute" style={{ ...box(L.waves), y: yWaves, animation: anim, transformOrigin: '40% 100%' }} fetchPriority="high" />
+            <motion.img src={asset('/media/start/mountains.webp')} alt="" width={L.mountains.w} height={L.mountains.h} className="pixelated heave-far absolute" style={{ ...box(L.mountains), y: yMountains, animation: anim }} />
+            <motion.img src={asset('/media/start/waves.webp')} alt="The Great Wave, in pixel art" width={L.waves.w} height={L.waves.h} className="pixelated heave-waves absolute" style={{ ...box(L.waves), y: yWaves, animation: anim, transformOrigin: '40% 100%' }} fetchPriority="high" />
           </div>
         </div>
         {/* the surface darkens into the water below */}
@@ -138,7 +139,7 @@ export default function Start() {
           style={{ width: `${tree.width * 100}%`, minWidth: 160, maxWidth: 560, y: yTree }}
         >
           <img
-            src={tree.src}
+            src={asset(tree.src)}
             alt={tree.alt ?? ''}
             className="tree-sway pixelated block h-auto w-full"
             style={{ animation: anim, transformOrigin: tree.side === 'right' ? '100% 100%' : '0% 100%' }}

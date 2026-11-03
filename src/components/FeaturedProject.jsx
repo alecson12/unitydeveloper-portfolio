@@ -3,7 +3,7 @@ import PixelWindow from './PixelWindow.jsx'
 import PixelIcon from './PixelIcon.jsx'
 import VideoShowcase from './VideoShowcase.jsx'
 import Txt from './Txt.jsx'
-import { countMedia, hasSource } from '../lib/content.js'
+import { countMedia, hasSource, asset } from '../lib/content.js'
 import { projectHref } from '../lib/router.js'
 
 /**
@@ -26,7 +26,7 @@ export default function FeaturedProject({ project, full = false }) {
               <VideoShowcase item={project.lead} label={project.title} badge="Lead recording" pixelated={project.pixelArt} />
             ) : (
               <PixelWindow label={project.title} badge={project.status}>
-                <img src={project.cover} alt={project.coverAlt ?? project.title} className={`aspect-video object-cover ${project.pixelArt ? 'pixelated' : ''}`} />
+                <img src={asset(project.cover)} alt={project.coverAlt ?? project.title} className={`aspect-video object-cover ${project.pixelArt ? 'pixelated' : ''}`} />
               </PixelWindow>
             )}
 
@@ -57,7 +57,7 @@ export default function FeaturedProject({ project, full = false }) {
           <div className="order-first flex flex-col lg:order-none lg:col-span-5 xl:col-span-4">
             {project.logo ? (
               <div className="px-card relative overflow-hidden px-6 py-7 sm:px-8" style={{ background: 'radial-gradient(ellipse at 50% 60%, rgba(255,209,102,0.16), rgba(255,255,255,0.04) 70%)' }}>
-                <img src={project.logo} alt={`${project.title} logo`} width="1672" height="941" className="mx-auto w-full max-w-[360px]" />
+                <img src={asset(project.logo)} alt={`${project.title} logo`} width="1672" height="941" className="mx-auto w-full max-w-[360px]" />
               </div>
             ) : (
               <h3 className="font-display text-4xl leading-none tracking-tight sm:text-5xl">{project.title}</h3>

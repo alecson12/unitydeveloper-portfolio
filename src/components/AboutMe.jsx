@@ -5,7 +5,7 @@ import PixelIcon from './PixelIcon.jsx'
 import PixelSprite from './PixelSprite.jsx'
 import { PROFILE } from '../content/profile.js'
 import { ABOUT } from '../content/about.js'
-import { isPlaceholder, resolveAuto, shouldShow, shouldShowItem, isDraft } from '../lib/content.js'
+import { isPlaceholder, resolveAuto, shouldShow, shouldShowItem, isDraft, asset } from '../lib/content.js'
 
 /* =====================================================================
    The About Me blocks, each one a dark panel:
@@ -115,7 +115,7 @@ export function Intro() {
             <div className="relative"><Name first={first} last={last} /></div>
             <div className="relative -mt-[14%] flex flex-1 items-end justify-center pb-[7%] lg:-mt-[18%]">
               {intro.photo && (
-                <img src={intro.photo} alt={alt} width="1200" height="1200" className="about-photo relative z-10 block w-full" fetchPriority="high" />
+                <img src={asset(intro.photo)} alt={alt} width="1200" height="1200" className="about-photo relative z-10 block w-full" fetchPriority="high" />
               )}
               <Ledge reduce={reduce} plants="lg:hidden xl:block" />
             </div>

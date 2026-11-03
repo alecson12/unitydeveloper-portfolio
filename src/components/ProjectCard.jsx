@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import PixelWindow from './PixelWindow.jsx'
 import { projectHref } from '../lib/router.js'
-import { countMedia } from '../lib/content.js'
+import { countMedia, asset } from '../lib/content.js'
 
 /** Card for the "Other projects" grid. */
 export default function ProjectCard({ project, index = 0 }) {
@@ -16,7 +16,7 @@ export default function ProjectCard({ project, index = 0 }) {
       transition={{ duration: 0.7, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
     >
       <PixelWindow label={project.title} badge={project.status} className="px-card-lift">
-        <img src={project.cover} alt={project.coverAlt ?? project.title} className={`aspect-video object-cover ${project.pixelArt ? 'pixelated' : ''}`} />
+        <img src={asset(project.cover)} alt={project.coverAlt ?? project.title} className={`aspect-video object-cover ${project.pixelArt ? 'pixelated' : ''}`} />
         <div className="border-t-2 border-line p-5">
           <h3 className="font-display text-2xl leading-none tracking-tight">{project.title}</h3>
           <p className="mt-2 line-clamp-2 text-sm text-ink-2">{project.tagline}</p>

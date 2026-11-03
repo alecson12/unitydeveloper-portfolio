@@ -2,7 +2,7 @@ import Reveal from './Reveal.jsx'
 import Txt from './Txt.jsx'
 import { PROFILE } from '../content/profile.js'
 import { ABOUT } from '../content/about.js'
-import { isDraft, shouldShowItem } from '../lib/content.js'
+import { isDraft, shouldShowItem, asset } from '../lib/content.js'
 
 /**
  * Skills & expertise: the tool stack as tiles (unconfirmed tools only in
@@ -24,7 +24,7 @@ export default function Skills() {
                 <li key={t.name} className={`px-card px-card-lift flex flex-col items-start gap-4 p-4 ${isDraft(t) ? 'placeholder-text' : ''}`}>
                   <span className="grid h-11 w-11 place-items-center bg-white/10 px-border font-display text-xl" style={{ '--px-c': 'rgba(255,255,255,0.25)' }}>
                     {t.icon
-                      ? <span className="tool-icon block h-7 w-7" style={{ '--icon': `url(${t.icon})` }} />
+                      ? <span className="tool-icon block h-7 w-7" style={{ '--icon': `url(${asset(t.icon)})` }} />
                       : abbr(t.name)}
                   </span>
                   <span>

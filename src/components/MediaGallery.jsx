@@ -4,6 +4,7 @@ import Lightbox from './Lightbox.jsx'
 import VideoShowcase from './VideoShowcase.jsx'
 import PixelWindow from './PixelWindow.jsx'
 import EmptyState from './EmptyState.jsx'
+import { asset } from '../lib/content.js'
 
 /**
  * Lays out the media of one feature:
@@ -68,7 +69,7 @@ function Shot({ item, index, pixelated, onOpen, className = '' }) {
     <motion.figure className={className} {...reveal(index)}>
       <button type="button" onClick={onOpen} className="block w-full cursor-zoom-in text-left" aria-label={`Open ${item.alt ?? 'image'} in viewer`}>
         <PixelWindow label={item.alt} badge={String(index + 1).padStart(2, '0')} className="px-card-lift">
-          <img src={item.src} alt={item.alt ?? ''} loading="lazy" width={item.width} height={item.height} className={pixelated ? 'pixelated' : ''} />
+          <img src={asset(item.src)} alt={item.alt ?? ''} loading="lazy" width={item.width} height={item.height} className={pixelated ? 'pixelated' : ''} />
         </PixelWindow>
       </button>
       {item.caption && <figcaption className="mt-3 text-sm text-ink-2">{item.caption}</figcaption>}
@@ -87,7 +88,7 @@ function Crop({ item, index, onOpen }) {
             style={{ backgroundImage: 'radial-gradient(rgba(255,255,255,0.09) 1px, transparent 1px)', backgroundSize: '12px 12px' }}
           >
             <img
-              src={item.src}
+              src={asset(item.src)}
               alt={item.alt ?? ''}
               loading="lazy"
               width={item.width}

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import PixelWindow from './PixelWindow.jsx'
-import { aspectOf, hasSource } from '../lib/content.js'
+import { aspectOf, hasSource, asset } from '../lib/content.js'
 
 /**
  * Dedicated player for a screen recording, inside a pixel window.
@@ -18,8 +18,8 @@ export default function VideoShowcase({ item, label, badge = 'Recording', pixela
         <div className="relative w-full" style={{ aspectRatio: aspectOf(item) }}>
           {ready && playing ? (
             <video
-              src={item.src}
-              poster={item.poster}
+              src={asset(item.src)}
+              poster={asset(item.poster)}
               controls
               autoPlay
               playsInline
@@ -36,7 +36,7 @@ export default function VideoShowcase({ item, label, badge = 'Recording', pixela
             >
               {item.poster && (
                 <img
-                  src={item.poster}
+                  src={asset(item.poster)}
                   alt=""
                   loading="lazy"
                   width={item.width}

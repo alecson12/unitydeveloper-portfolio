@@ -2,7 +2,7 @@ import Reveal from './Reveal.jsx'
 import Txt from './Txt.jsx'
 import PixelIcon from './PixelIcon.jsx'
 import { GAMES } from '../content/games.js'
-import { isPlaceholder, shouldShow } from '../lib/content.js'
+import { isPlaceholder, shouldShow, asset } from '../lib/content.js'
 
 /** The games listed in games.js that may be shown (placeholders only in local preview). */
 export const visibleGames = () => GAMES.filter((g) => shouldShow(g.title))
@@ -25,7 +25,7 @@ export default function FavouriteGames() {
             <li key={`${g.title}-${i}`} className={`px-card px-card-lift flex h-full flex-col overflow-hidden ${isPlaceholder(g.title) ? 'placeholder-text' : ''}`}>
               <div className="relative aspect-[3/4] overflow-hidden border-b border-line bg-white/[0.04]">
                 {g.cover ? (
-                  <img src={g.cover} alt={g.title} loading="lazy" className="h-full w-full object-cover" />
+                  <img src={asset(g.cover)} alt={g.title} loading="lazy" className="h-full w-full object-cover" />
                 ) : (
                   <div className="grid h-full w-full place-items-center"><PixelIcon name="controller" size={30} accent="#9fb4dc" /></div>
                 )}

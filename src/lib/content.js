@@ -67,3 +67,6 @@ export const resolveAuto = (value) => {
   const t = totals()
   return String(t[value.slice(5)] ?? '')
 }
+
+/** A public path such as '/media/x.webp', prefixed with the site base so it works when the site lives in a subfolder (GitHub Pages). */
+export const asset = (p) => (typeof p === 'string' && p.startsWith('/') && !p.startsWith('//') ? import.meta.env.BASE_URL.replace(/\/$/, '') + p : p)
