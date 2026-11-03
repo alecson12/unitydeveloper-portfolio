@@ -18,7 +18,7 @@ export default function FeatureBlock({ feature, index, total, project }) {
         <span className="inline-block h-2 w-2 bg-red" />
         Feature {String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
       </p>
-      <h4 className="mt-3 font-display text-3xl leading-none tracking-tight text-beige sm:text-4xl">{feature.name}</h4>
+      <h4 className="mt-3 font-display text-3xl leading-none tracking-tight sm:text-4xl">{feature.name}</h4>
       {feature.summary && <p className="mt-4 max-w-2xl leading-relaxed text-ink-2">{feature.summary}</p>}
       {feature.contribution && (
         <div className="mt-5 border-l-4 border-pink pl-4">

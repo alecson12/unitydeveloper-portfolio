@@ -17,7 +17,7 @@ export default function ShowcaseList({ entries = [], empty, icon = 'code' }) {
             <div className="flex items-start gap-4">
               <span className="px-card grid h-12 w-12 shrink-0 place-items-center"><PixelIcon name={icon} size={22} /></span>
               <div className="min-w-0">
-                <h3 className="font-display text-2xl leading-none tracking-tight text-beige sm:text-3xl">{e.title}</h3>
+                <h3 className="font-display text-2xl leading-none tracking-tight sm:text-3xl">{e.title}</h3>
                 {e.summary && <p className="mt-3 leading-relaxed text-ink-2">{e.summary}</p>}
               </div>
             </div>

@@ -149,7 +149,7 @@ function Timeline({ items = [] }) {
           <li key={i} className="relative">
             <span className={`absolute -left-[31px] top-1 h-3 w-3 ${i === 0 ? 'bg-pink' : 'bg-purple'}`} style={{ boxShadow: '0 0 0 2px var(--color-deep)' }} />
             <Txt as="p" value={t.period} className="font-pixel text-[12px] tracking-[0.08em] text-dim uppercase" />
-            <Txt as="p" value={t.title} className="mt-1 font-display text-2xl leading-tight text-beige" />
+            <Txt as="p" value={t.title} className="mt-1 font-display text-2xl leading-tight" />
             <Txt as="p" value={t.place} className="text-sm text-ink-2" />
             <Txt as="p" value={t.note} className="mt-1.5 text-sm leading-relaxed" />
           </li>
@@ -171,7 +171,7 @@ export function Services() {
               <span className="px-card grid h-12 w-12 shrink-0 place-items-center"><PixelIcon name={s.icon} size={22} accent="#9fb4dc" /></span>
               {isDraft(s) && <span className="px-chip">To confirm</span>}
             </div>
-            <h3 className="mt-5 font-display text-3xl leading-tight tracking-tight text-beige">{s.name}</h3>
+            <h3 className="mt-5 font-display text-3xl leading-tight tracking-tight">{s.name}</h3>
             {s.blurb && <p className="mt-3 text-sm leading-relaxed text-ink-2">{s.blurb}</p>}
           </article>
         </Reveal>

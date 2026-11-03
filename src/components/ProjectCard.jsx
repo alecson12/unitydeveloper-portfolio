@@ -18,7 +18,7 @@ export default function ProjectCard({ project, index = 0 }) {
       <PixelWindow label={project.title} badge={project.status} className="px-card-lift">
         <img src={project.cover} alt={project.coverAlt ?? project.title} className={`aspect-video object-cover ${project.pixelArt ? 'pixelated' : ''}`} />
         <div className="border-t-2 border-line p-5">
-          <h3 className="font-display text-2xl leading-none tracking-tight text-beige">{project.title}</h3>
+          <h3 className="font-display text-2xl leading-none tracking-tight">{project.title}</h3>
           <p className="mt-2 line-clamp-2 text-sm text-ink-2">{project.tagline}</p>
           <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-1 font-pixel text-[12px] tracking-[0.08em] text-dim uppercase">
             {project.platform && <span>{project.platform}</span>}
