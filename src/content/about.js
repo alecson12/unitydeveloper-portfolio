@@ -85,8 +85,6 @@ export const ABOUT = {
   ],
 
   /* ---------- PERSONAL DEVELOPER STATEMENT ---------- */
-  // Your words. One short paragraph is enough.
-  statement: [
-    '[Placeholder — two or three sentences: what good game UI means to you, and what you want to build next.]',
-  ],
+  // Your words, optional. Add a short paragraph here and it shows under Who I am.
+  statement: [],
 }
